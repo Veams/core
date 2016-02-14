@@ -3,6 +3,8 @@
 
 ## What is Veams? 
 
+[![Join the chat at https://gitter.im/Sebastian-Fitzner/Veams](https://badges.gitter.im/Sebastian-Fitzner/Veams.svg)](https://gitter.im/Sebastian-Fitzner/Veams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Veams is a system to build scalable Web Apps and HTML5 web interfaces. It is extremely extensible and efficiently architected.
 
 Veams contains various (pluggable) instruments which are controlled by our custom command line interface.
