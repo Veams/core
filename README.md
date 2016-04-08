@@ -83,6 +83,7 @@ Veams-Components is a building blocks library to speed up templating in projects
 
 All components can be found here: https://github.com/Veams
 
+**Do you want to see the components in action? Here you go: http://examples.veams.org/**
 
 ## veams.org
 
