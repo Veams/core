@@ -12,11 +12,10 @@ import core from './core';
 /**
  * @namespace Veams
  */
-var Veams = window.Veams = window.Veams || {};
+let Veams = window.Veams = window.Veams || {};
 
 (function (window, document, undefined) {
 	'use strict';
-	console.log('veams: ');
 	// Version
 	Veams.version = '5.0.0-alpha.1';
 	// Dom handler
@@ -29,14 +28,14 @@ var Veams = window.Veams = window.Veams || {};
 	 */
 	Veams.helpers = Veams.helpers || {};
 	// Screen Size
-	Veams.screenSize = {
+	Veams.screenSize = Veams.screenSize || {
 		width: window.innerWidth,
 		height: window.innerHeight
 	};
 	// Feature detection
 	Veams.support = Veams.support || {};
 	// Current Media Query
-	Veams.currentMedia = '';
+	Veams.currentMedia = Veams.currentMedia || '';
 	// Core
 	Veams.core = Veams.core || core;
 })(window, document);

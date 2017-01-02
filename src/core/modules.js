@@ -1,8 +1,8 @@
 'use strict';
-var defaultsHelper = require('../utils/helpers/defaults');
-var queryHelper = require('../utils/helpers/query-selector-array');
-var forEachHelper = require('../utils/helpers/for-each');
-var checkElInContextHelper = require('../utils/helpers/check-element-in-context');
+const defaultsHelper = require('../utils/helpers/defaults');
+const queryHelper = require('../utils/helpers/query-selector-array');
+const forEachHelper = require('../utils/helpers/for-each');
+const checkElInContextHelper = require('../utils/helpers/check-element-in-context');
 
 class Modules {
 	constructor() {
@@ -42,7 +42,7 @@ class Modules {
 	 * @param {Object} [obj.options] - Optional: You can pass options to the module via JS (Useful for DOMChanged)
 	 *
 	 */
-	register(obj) {
+	registerOne(obj) {
 		if (!obj.domName) throw new Error('In order to work with register you need to define the module name as string!');
 		if (!obj.module) throw new Error('In order to work with loadModule you need to define a Module!');
 
@@ -66,6 +66,12 @@ class Modules {
 				// Provide callback function in which you can use module and options
 				if (obj.cb && typeof (obj.cb) === 'function') obj.cb(module, options);
 			}
+		});
+	}
+
+	register(arr) {
+		arr.forEach((module) => {
+			this.register(module);
 		});
 	}
 }

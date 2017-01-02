@@ -1,7 +1,17 @@
-import defaultsHelper from '../../utils/helpers/defaults';
-import mixinHelper from '../../utils/helpers/mixin';
+if (!window.Veams) {
+	throw new Error('Please initialize Veams!')
+}
 
-const $ = Veams.options.$;
+if (!window.Veams.helpers.mixin || !window.Veams.helpers.defaults) {
+	throw new Error('The mixin or defaults helper is missing!')
+}
+
+
+if (!window.Veams.$) {
+	throw new Error('Please add a Dom handler like jQuery to the window object!')
+}
+
+const $ = window.Veams.$;
 
 class Component {
 

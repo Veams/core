@@ -28,7 +28,6 @@ class Core {
 	}
 
 	initialize(opts) {
-		console.log('core: ');
 		/**
 		 * Set global options on initialize
 		 */
@@ -52,7 +51,6 @@ class Core {
 		if (!this.options.$) {
 			throw new Error('You need to pass a dom handler like jQuery or Veams-Query to VeamsCore by providing the option "$"!');
 		} else {
-			console.log('Veams: ', Veams);
 			window.Veams.$ = this.options.$;
 		}
 
