@@ -70,8 +70,12 @@ class Modules {
 	}
 
 	register(arr) {
+		if (!Array.isArray(arr)) {
+			throw new Error('You need to pass an array!');
+		}
+
 		arr.forEach((module) => {
-			this.register(module);
+			this.registerOne(module);
 		});
 	}
 }
