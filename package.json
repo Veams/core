@@ -3,9 +3,6 @@
 	"version": "5.0.0-alpha.1",
 	"description": "Veams framework",
 	"main": "lib/Veams.js",
-	"files": [
-		"src/common/component.js"
-	],
 	"scripts": {
 		"build": "webpack --mode=build",
 		"dev": "webpack --progress --colors --watch --mode=dev",
