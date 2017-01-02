@@ -13,7 +13,7 @@ if (!window.Veams.$) {
 
 const $ = window.Veams.$;
 
-class Component {
+class VeamsComponent {
 
 	/**
 	 * Contructor
@@ -43,7 +43,7 @@ class Component {
 	 * Save options by merging default options with passed options
 	 */
 	set _options(options) {
-		this.options = defaultsHelper(options || {}, this.options);
+		this.options = Veams.helpers.defaults(options || {}, this.options);
 	}
 
 	// STANDARD METHODS
@@ -103,6 +103,6 @@ class Component {
 /**
  * Add mixin functionality to extend module class
  */
-Component.mixin = mixinHelper;
+VeamsComponent.mixin = Veams.helpers.mixin;
 
-export default Component;
+export default VeamsComponent;

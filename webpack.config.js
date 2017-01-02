@@ -3,7 +3,7 @@ var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var path = require('path');
 var env = require('yargs').argv.mode;
 
-var libraryName = 'Veams';
+var libraryName = 'Veams.[name]';
 
 var plugins = [], outputFile;
 
@@ -13,14 +13,29 @@ if (env === 'build') {
 } else {
 	outputFile = libraryName + '.js';
 }
-
+// module.exports = {
+// 	entry: {
+// 		alpha: "./alpha",
+// 		beta: "./beta"
+// 	},
+// 	output: {
+// 		path: path.join(__dirname, "js"),
+// 		filename: "MyLibrary.[name].js",
+// 		library: ["MyLibrary", "[name]"],
+// 		libraryTarget: "umd"
+// 	}
+// }
 var config = {
-	entry: __dirname + '/src/index.js',
+	entry: {
+		main: __dirname + '/src/index.js',
+		component: __dirname + '/src/common/component.js'
+	},
 	devtool: 'source-map',
 	output: {
 		path: __dirname + '/lib',
 		filename: outputFile,
 		library: libraryName,
+		library: [libraryName, "[name]"],
 		libraryTarget: 'umd',
 		umdNamedDefine: true
 	},

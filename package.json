@@ -2,7 +2,11 @@
 	"name": "veams",
 	"version": "5.0.0-alpha.1",
 	"description": "Veams framework",
-	"main": "lib/Veams.js",
+	"main": "lib/Veams.main.js",
+	"files": [
+		"lib/Veams.main.js",
+		"lib/Veams.component.js"
+	],
 	"scripts": {
 		"build": "webpack --mode=build",
 		"dev": "webpack --progress --colors --watch --mode=dev",
