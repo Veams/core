@@ -1,14 +1,13 @@
 if (!window.Veams) {
-	throw new Error('Please initialize Veams!')
+	throw new Error('Please initialize Veams!');
 }
 
 if (!window.Veams.helpers.mixin || !window.Veams.helpers.defaults) {
-	throw new Error('The mixin or defaults helper is missing!')
+	throw new Error('The mixin or defaults helper is missing!');
 }
 
-
 if (!window.Veams.$) {
-	throw new Error('Please add a Dom handler like jQuery to the window object!')
+	throw new Error('Please add a Dom handler like jQuery or Veams-Query to the window object!');
 }
 
 const $ = window.Veams.$;
@@ -19,12 +18,14 @@ class VeamsComponent {
 	 * Contructor
 	 *
 	 * to save standard elements like el and options and
-	 * exeute initialize as default method
+	 * execute initialize as default method
 	 */
 	constructor(obj = {}, options = {}) {
 		this.el = obj.el;
 		this.$el = $(obj.el);
 		this.options = options;
+		this.namespace = obj.namespace;
+		this.evtNamespace = '.' + this.namespace;
 
 		this._options = obj.options;
 		this.initialize();
@@ -60,7 +61,8 @@ class VeamsComponent {
 	}
 
 	/**
-	 * Destroy module
+	 * Destroy component by unbinding events and
+	 * removing element from dom
 	 */
 	destroy() {
 		this.unbindEvents();
@@ -77,7 +79,7 @@ class VeamsComponent {
 	 * Unbind events
 	 */
 	unbindEvents() {
-		this.$el.off();
+		this.$el.off(this.evtNamespace);
 	}
 
 	/**

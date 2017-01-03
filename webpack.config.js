@@ -3,7 +3,7 @@ var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var path = require('path');
 var env = require('yargs').argv.mode;
 
-var libraryName = 'Veams.[name]';
+var libraryName = '[name]';
 
 var plugins = [], outputFile;
 
@@ -27,14 +27,13 @@ if (env === 'build') {
 // }
 var config = {
 	entry: {
-		main: __dirname + '/src/index.js',
-		component: __dirname + '/src/common/component.js'
+		veams: __dirname + '/src/index.js',
+		'common/component': __dirname + '/src/common/component.js'
 	},
 	devtool: 'source-map',
 	output: {
 		path: __dirname + '/lib',
 		filename: outputFile,
-		library: libraryName,
 		library: [libraryName, "[name]"],
 		libraryTarget: 'umd',
 		umdNamedDefine: true

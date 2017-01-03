@@ -35,7 +35,7 @@ class Modules {
 	 *
 	 * @param {Object} obj - Definition of our module
 	 * @param {string} obj.el - Required: element
-	 * @param {Object} obj.Module - Required: class which will be used to render your module
+	 * @param {Object} obj.module - Required: class which will be used to render your module
 	 * @param {boolean} [obj.render=true] - Optional: render the class, if false the class will only be initialized
 	 * @param {function} [obj.cb] - Optional: provide a function which will be executed after initialisation
 	 * @param {Object} [obj.context] - Optional: context of module
@@ -43,8 +43,8 @@ class Modules {
 	 *
 	 */
 	registerOne(obj) {
-		if (!obj.domName) throw new Error('In order to work with register you need to define the module name as string!');
-		if (!obj.module) throw new Error('In order to work with loadModule you need to define a Module!');
+		if (!obj.domName) throw new Error('In order to work with register() you need to define the module name as string!');
+		if (!obj.module) throw new Error('In order to work with register() you need to define a module!');
 
 		let context = obj.context || document.querySelector('html');
 		let renderOnInit = obj.render !== false;
@@ -58,7 +58,8 @@ class Modules {
 				let Module = obj.module;
 				let module = new Module({
 					el: el,
-					options: options
+					options: options,
+					namespace: obj.domName
 				});
 
 				// Render after initial module loading
