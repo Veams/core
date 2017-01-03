@@ -10,6 +10,18 @@ if (!window.Veams.$) {
 	throw new Error('Please add a Dom handler like jQuery or Veams-Query to the window object!');
 }
 
+if (!window.Veams.modules) {
+	throw new Error('Please initialize the core of Veams to use VeamsComponent!');
+}
+
+/**
+ * Imports
+ */
+import stringHelpers from '../utils/internal-helpers/string';
+
+/**
+ * Variables
+ */
 const $ = window.Veams.$;
 
 class VeamsComponent {
@@ -29,6 +41,8 @@ class VeamsComponent {
 
 		this._options = obj.options;
 		this.initialize();
+
+		Veams.modules.save(this.metaData, this.el);
 	}
 
 	// GETTER AND SETTER
@@ -45,6 +59,15 @@ class VeamsComponent {
 	 */
 	set _options(options) {
 		this.options = Veams.helpers.defaults(options || {}, this.options);
+	}
+
+	/**
+	 * Get module information
+	 */
+	get metaData() {
+		return {
+			name: stringHelpers.capitalizeFirstLetter(stringHelpers.toCamelCase(this.namespace))
+		};
 	}
 
 	// STANDARD METHODS

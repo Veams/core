@@ -16,6 +16,11 @@ class Modules {
 		this.currentInstances = queryHelper('[' + Veams.options.attrPrefix + '-module]');
 	}
 
+	/**
+	 * Save the module in Veams.modules.list.
+	 * @param {Object} module - module metadata object (@see VeamsComponent.metaData())
+	 * @param {Object} element - module element (this.el)
+	 */
 	save(module, element) {
 		if (!this.list[module.name]) {
 			this.list[module.name] = module;
@@ -70,6 +75,11 @@ class Modules {
 		});
 	}
 
+	/**
+	 * Register multiple modules.
+	 *
+	 * @param {Array} arr - Array which contains the modules as object.
+	 */
 	register(arr) {
 		if (!Array.isArray(arr)) {
 			throw new Error('You need to pass an array!');
