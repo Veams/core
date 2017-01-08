@@ -41,7 +41,8 @@ class Core {
 		 * Namespace of application
 		 */
 		if (!window[this.options.namespace]) {
-			window[this.options.namespace] = {};
+			window[this.options.namespace] = window[this.options.namespace] || {};
+			window[this.options.namespace].Templates = window[this.options.namespace].Templates || {};
 		}
 
 		/**

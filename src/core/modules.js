@@ -7,13 +7,13 @@ const checkElInContextHelper = require('../utils/helpers/check-element-in-contex
 class Modules {
 	constructor() {
 		this.list = {}; // Module list
-		this.currentInstances = []; // Save modules on current page
+		this.modulesInDOM = []; // Save modules on current page
 
 		this.initialize();
 	}
 
 	initialize() {
-		this.currentInstances = queryHelper('[' + Veams.options.attrPrefix + '-module]');
+		this.modulesInDOM = queryHelper('[' + Veams.options.attrPrefix + '-module]');
 	}
 
 	/**
@@ -54,7 +54,7 @@ class Modules {
 		let context = obj.context || document.querySelector('html');
 		let renderOnInit = obj.render !== false;
 
-		forEachHelper(this.currentInstances, (i, el) => {
+		forEachHelper(this.modulesInDOM, (i, el) => {
 			let dataModules = el.getAttribute('data-js-module').split(' ');
 
 			if (dataModules.indexOf(obj.domName) !== -1 && checkElInContextHelper(el, context)) {
