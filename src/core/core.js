@@ -5,6 +5,8 @@ const logger = require('../utils/logger');
 
 /**
  * Imports
+ *
+ * TODO: Clean up bindings
  */
 import Modules from './modules';
 
@@ -69,7 +71,7 @@ class Core {
 		/**
 		 * Media Query Handler
 		 */
-		mediaQueryHandler();
+		mediaQueryHandler(this.options);
 
 		/**
 		 * Logger functionality

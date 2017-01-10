@@ -1,11 +1,11 @@
-const internalHelpers = {};
+const stringHelpers = {};
 
 /**
  * CamelCase strings by replacing hyphens, white space and points.
  *
  * @param {String} str - String which will be camelcased
  */
-internalHelpers.toCamelCase = function (str) {
+stringHelpers.toCamelCase = function (str) {
 	// Lower cases the string
 	return str.toLowerCase()
 	// Replaces any - or _ characters with a space
@@ -25,7 +25,7 @@ internalHelpers.toCamelCase = function (str) {
  * String which will be hyphenated by replacing white space and lower case the characters.
  * @param {String} str - String
  */
-internalHelpers.hyphenate = function (str) {
+stringHelpers.hyphenate = function (str) {
 	return str.replace(/\s/g, '-').toLowerCase();
 };
 
@@ -33,8 +33,8 @@ internalHelpers.hyphenate = function (str) {
  * String.
  * @param {String} str - String where first char is upper cased
  */
-internalHelpers.capitalizeFirstLetter = function (str) {
+stringHelpers.capitalizeFirstLetter = function (str) {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export default internalHelpers;
+export default stringHelpers;

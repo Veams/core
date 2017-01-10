@@ -5,7 +5,7 @@ var throttleHelper = require('./helpers/throttle');
  */
 import EVENTS from './events';
 
-export default function mediaQueryHandler() {
+export default function mediaQueryHandler(opts) {
 	if (!window.Veams) {
 		window.Veams = {};
 	}
@@ -15,11 +15,11 @@ export default function mediaQueryHandler() {
 	/**
 	 * Add current media query to Veams
 	 */
-	Veams.currentMedia = window.getComputedStyle(head[0], null).getPropertyValue('font-family');
+	Veams.currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(opts.mediaQueryProp);
 
 	// Trigger global resize event
 	window.onresize = throttleHelper(function (e) {
-		let currentMedia = window.getComputedStyle(head[0], null).getPropertyValue('font-family');
+		let currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(opts.mediaQueryProp);
 		let width = window.innerWidth;
 
 		if (currentMedia !== Veams.currentMedia) {

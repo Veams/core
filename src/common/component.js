@@ -14,65 +14,13 @@ if (!window.Veams.$) {
  * Imports
  */
 import stringHelpers from '../utils/internal-helpers/string';
+import getStringValue from '../utils/internal-helpers/get-string-value';
+import tplEngine from '../utils/internal-helpers/template-engine';
 
 /**
  * Variables
  */
 const $ = window.Veams.$;
-
-/**
- * Local functions
- */
-
-/**
- * Get value out of variable string.
- *
- * @param {String} str - String which is a reference to a var.
- *
- * @return String
- */
-const getStringVars = function (str) {
-	if (str.indexOf('.') === -1) return str;
-	let arr = str.split('.');
-	let context = arr[0];
-	let finalStr = context === 'this' ? this : window[context];
-	let strReplacer = (el, prev) => {
-		return prev[el];
-	};
-
-	arr.shift();
-	arr.forEach((item) => {
-		finalStr = strReplacer(item, finalStr);
-		return finalStr;
-	});
-
-	if (typeof finalStr !== 'string') {
-		throw new Error('The resulting variable for your evnts must be a string!');
-	} else {
-		return finalStr;
-	}
-};
-
-/**
- * Simple template engine for event system.
- *
- * @param {String} tplStr - Template string.
- *
- * @return String
- */
-const TemplateEngine = function (tplStr) {
-	let reg = new RegExp('(\{\{\s?)(.+)(\s?\}\})');
-	let match = reg.exec(tplStr);
-	let returnVal = '';
-
-	if (match) {
-		returnVal = match[2];
-	} else {
-		returnVal = tplStr;
-	}
-
-	return returnVal;
-};
 
 class VeamsComponent {
 
@@ -80,17 +28,21 @@ class VeamsComponent {
 	 * Constructor
 	 *
 	 * to save standard elements like el and options and
-	 * execute initialize as default method
+	 * execute initialize as default method.
+	 *
+	 * @param {Object} obj [{}] - Object which contains el, options from the DOM and namespace.
+	 * @param {Object} options [{}] - Object which contains options of the extended class.
 	 */
 	constructor(obj = {}, options = {}) {
 		this.el = obj.el;
 		this.$el = $(obj.el);
-		this.options = options;
+		this.options = obj.options;
 		this.namespace = obj.namespace;
 		this.evtNamespace = '.' + this.metaData.name;
+		this.options = options;
 
-		this.options = obj.options;
-		this.initialize();
+		this.initialize(obj, options);
+		this._create();
 
 		if (window.Veams.modules) {
 			Veams.modules.save(Veams.helpers.defaults(this.info || {}, this.metaData), this.el);
@@ -147,16 +99,23 @@ class VeamsComponent {
 	// STANDARD METHODS
 
 	/**
-	 * Initialize your module class,
-	 * save some references,
-	 * optionally scaffold some templates and
-	 * bind your events
+	 * Private method to create all necessary elements and bindings.
+	 *
+	 * @private
 	 */
-	initialize() {
+	_create() {
 		this.preRender();
 		this.registerEvents(this.events, false);
 		this.registerEvents(this.subscribe, true);
 		this.bindEvents();
+	}
+
+	/**
+	 * Initialize your module class and
+	 * save some references.
+	 */
+	initialize() {
+		return this;
 	}
 
 	/**
@@ -168,6 +127,15 @@ class VeamsComponent {
 		this.$el.remove();
 	}
 
+	/**
+	 * Register multiple events which are saved in an object.
+	 *
+	 * TODO: Clean up global flag
+	 *
+	 * @param {Object} evts - Events object which contains an object with events as key and functions as value.
+	 * @param {Boolean} global - Flag to switch between global and local events.
+	 *
+	 */
 	registerEvents(evts, global) {
 		if (evts) {
 			Object.keys(evts).forEach((key) => {
@@ -176,10 +144,26 @@ class VeamsComponent {
 		}
 	}
 
+	/**
+	 * Register an event by using a simple template engine and
+	 * a key/value pair.
+	 *
+	 * TODO: Clean up global flag
+	 *
+	 * @param {String} evtKey - Event key which contains event and additionally a delegated element.
+	 * @param {String} fn - Function defined as string which will be bound to this.
+	 * @param {Boolean} global - Flag if global or local event .
+	 *
+	 * @example:
+	 *
+	 * this.registerEvent('click .btn', 'render');
+	 * this.registerEvent('click {{this.options.btn}}', 'render');
+	 * this.registerEvent('{{App.EVENTS.custom.event', 'render');
+	 */
 	registerEvent(evtKey, fn, global) {
 		let evtKeyArr = evtKey.split(' ');
 		let arrlen = evtKeyArr.length;
-		let evtType = getStringVars.apply(this, [TemplateEngine(evtKeyArr[0])]);
+		let evtType = getStringValue.apply(this, [tplEngine(evtKeyArr[0])]);
 		let bindFn = this[fn].bind(this);
 
 		if (arrlen > 2) {
@@ -192,7 +176,7 @@ class VeamsComponent {
 		} else if (arrlen === 1 && global) {
 			Veams.Vent.on(evtType, bindFn);
 		} else {
-			let delegate = getStringVars.apply(this, [TemplateEngine(evtKeyArr[1])]);
+			let delegate = getStringValue.apply(this, [tplEngine(evtKeyArr[1])]);
 
 			this.$el.on(evtType + this.evtNamespace, delegate, bindFn);
 		}
@@ -216,19 +200,28 @@ class VeamsComponent {
 	 * which can be used to render content into it
 	 */
 	preRender() {
+		return this;
 	}
 
 	/**
 	 * Render template with data
+	 *
+	 * @param {String} tplName - Template name which gets returned as rendered element.
+	 * @param {Object} data - Data which gets handled by the template.
 	 */
 	renderTemplate(tplName, data) {
-		// window[this.options.namespace].Templates[tplName](window[this.options.namespace].TemplateEngine)
+		if (!window[this.options.namespace].Templates || !window[this.options.namespace].Templates[tplName]) {
+			console.error(`It seems that you haven\'t defined any template ${tplName} yet!`);
+		} else {
+			return window[this.options.namespace].Templates[tplName](data);
+		}
 	}
 
 	/**
 	 * Render your module
 	 */
 	render() {
+		return this;
 	}
 }
 
