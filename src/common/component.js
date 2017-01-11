@@ -36,10 +36,10 @@ class VeamsComponent {
 	constructor(obj = {}, options = {}) {
 		this.el = obj.el;
 		this.$el = $(obj.el);
-		this.options = obj.options;
+		this.options = options;
 		this.namespace = obj.namespace;
 		this.evtNamespace = '.' + this.metaData.name;
-		this.options = options;
+		this._options = obj.options;
 
 		this.initialize(obj, options);
 		this._create();
@@ -54,15 +54,15 @@ class VeamsComponent {
 	/**
 	 * Return options
 	 */
-	get options() {
-		return this._options;
+	get _options() {
+		return this.options;
 	}
 
 	/**
 	 * Save options by merging default options with passed options
 	 */
-	set options(options) {
-		this._options = Veams.helpers.defaults(options || {}, this._options);
+	set _options(options) {
+		this.options = Veams.helpers.defaults(options || {}, this.options);
 	}
 
 	/**

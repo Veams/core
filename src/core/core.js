@@ -57,16 +57,17 @@ class Core {
 			window.Veams.$ = this.options.$;
 		}
 
+
 		/**
 		 * Veams Module Handling
 		 */
-		Veams.modules = new Modules();
+		Veams.modules = Veams.modules || new Modules();
 
 		/**
 		 * Veams Global Pub/Sub System
 		 * @memberof Veams
 		 */
-		Veams.Vent = Veams.$(document);
+		Veams.Vent = Veams.Vent || Veams.$(document);
 
 		/**
 		 * Media Query Handler

@@ -4,16 +4,31 @@ const queryHelper = require('../utils/helpers/query-selector-array');
 const forEachHelper = require('../utils/helpers/for-each');
 const checkElInContextHelper = require('../utils/helpers/check-element-in-context');
 
+const registeredModules = [];
+const moduleCache = [];
+
+function containsObject(list, obj) {
+	for (let i = 0; i < list.length; i++) {
+		if (obj && list[i].domName === obj.domName && obj.module) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 class Modules {
 	constructor() {
 		this.list = {}; // Module list
 		this.modulesInContext = []; // Save modules on current page
+		this.queryString = '[' + Veams.options.attrPrefix + '-module]';
+		this.references = [];
 
 		this.initialize();
 	}
 
 	initialize() {
-		this.modulesInContext = queryHelper('[' + Veams.options.attrPrefix + '-module]');
+		this.modulesInContext = queryHelper(this.queryString);
 	}
 
 	/**
@@ -51,26 +66,38 @@ class Modules {
 		if (!obj.domName) throw new Error('In order to work with register() you need to define the module name as string!');
 		if (!obj.module) throw new Error('In order to work with register() you need to define a module!');
 
-		let context = obj.context || document.querySelector('html');
-		let renderOnInit = obj.render !== false;
+		this.initModules(obj.domName, obj.module, obj.render, obj.options, obj.cb);
+	}
 
+	/**
+	 * Initialize a module and render it and/or provide a callback function
+	 *
+	 * @param {string} domName - Required: dom name of the element
+	 * @param {Object} Module - Required: class which will be used to render your module
+	 * @param {boolean} [render=true] - Optional: render the class, if false the class will only be initialized
+	 * @param {Object} [options] - Optional: You can pass options to the module via JS (Useful for DOMChanged)
+	 * @param {function} [cb] - Optional: provide a function which will be executed after initialisation
+	 *
+	 */
+	initModules(domName, Module, render, options, cb) {
 		forEachHelper(this.modulesInContext, (i, el) => {
-			let dataModules = el.getAttribute('data-js-module').split(' ');
+			let noRender = el.getAttribute(Veams.options.attrPrefix + '-no-render') || render === false || false;
+			let dataModules = el.getAttribute(Veams.options.attrPrefix + '-module').split(' ');
 
-			if (dataModules.indexOf(obj.domName) !== -1 && checkElInContextHelper(el, context)) {
+			if (dataModules.indexOf(domName) !== -1) {
 				let attrs = el.getAttribute('data-js-options');
-				let options = defaultsHelper(obj.options || {}, JSON.parse(attrs));
-				let Module = obj.module;
+				let mergedOptions = defaultsHelper(options || {}, JSON.parse(attrs));
+
 				let module = new Module({
 					el: el,
-					options: options,
-					namespace: obj.domName
+					options: mergedOptions,
+					namespace: domName
 				});
 
 				// Render after initial module loading
-				if (renderOnInit) module.render();
+				if (!noRender) module.render();
 				// Provide callback function in which you can use module and options
-				if (obj.cb && typeof (obj.cb) === 'function') obj.cb(module, options);
+				if (cb && typeof (cb) === 'function') cb(module, mergedOptions);
 			}
 		});
 	}
@@ -82,12 +109,47 @@ class Modules {
 	 */
 	register(arr) {
 		if (!Array.isArray(arr)) {
-			throw new Error('You need to pass an array!');
+			throw new Error('You need to pass an array to register()!');
 		}
 
 		arr.forEach((module) => {
 			this.registerOne(module);
 		});
+
+		// this.observe(document.body);
+	}
+
+	observe(context) {
+		let observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				let entry = {
+					mutation: mutation,
+					el: mutation.target,
+					value: mutation.target.textContent,
+					oldValue: mutation.oldValue
+				};
+				console.log("Recording mutation:", entry);
+
+				if (entry.el instanceof HTMLElement) {
+					this.modulesInContext = queryHelper(this.queryString, entry.el);
+					this.initInNewContext();
+					console.log('modules: ', this.modulesInContext);
+				}
+
+			});
+		});
+
+		observer.observe(context, {
+			attributes: true,
+			childList: true,
+			subtree: true
+		});
+	}
+
+	initInNewContext() {
+		console.log('ref: ', this.references);
+		this.register(this.references);
+		console.log('ref: ', this.references);
 	}
 }
 

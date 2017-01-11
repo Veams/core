@@ -5,7 +5,7 @@ var throttleHelper = require('./helpers/throttle');
  */
 import EVENTS from './events';
 
-export default function mediaQueryHandler(opts) {
+export default function (opts) {
 	if (!window.Veams) {
 		window.Veams = {};
 	}
