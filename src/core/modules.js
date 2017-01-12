@@ -147,9 +147,7 @@ class Modules {
 	}
 
 	initInNewContext() {
-		console.log('ref: ', this.references);
 		this.register(this.references);
-		console.log('ref: ', this.references);
 	}
 }
 
