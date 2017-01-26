@@ -18,6 +18,8 @@ const helpers = window.Veams.helpers;
  * @param {Array} methods - Array of method names which will be extended.
  */
 helpers.mixin = function mixin(from, methods = ['initialize', 'render']) {
+	if (from === undefined) return;
+
 	let to = this.prototype;
 
 	/** Add those methods which exists on `from` but not on `to` to the latter */

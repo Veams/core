@@ -19,6 +19,8 @@ helpers.methodExtend = function methodExtend(to, from, methodName) {
 		return typeof value === 'undefined';
 	}
 
+	if (from === undefined) return;
+
 	// if the method is defined on from ...
 	if (!isUndefined(from[methodName])) {
 		let old = to[methodName];

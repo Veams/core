@@ -37,14 +37,21 @@ class VeamsComponent {
 		this.el = obj.el;
 		this.$el = $(obj.el);
 		this.options = options;
-		this.namespace = obj.namespace;
+		this.namespace = null;
 		this.evtNamespace = '.' + this.metaData.name;
+		this.subscribers = {};
 		this._options = obj.options;
+
+		if (!obj.namespace) {
+			console.log('You should pass an object with a namespace for your component!');
+		} else {
+			this.namespace = obj.namespace;
+		}
 
 		this.initialize(obj, options);
 		this._create();
 
-		if (window.Veams.modules) {
+		if (window.Veams.modules && this.namespace !== null) {
 			Veams.modules.save(Veams.helpers.defaults(this.info || {}, this.metaData), this.el);
 		}
 	}
@@ -70,7 +77,7 @@ class VeamsComponent {
 	 */
 	get metaData() {
 		return {
-			name: stringHelpers.capitalizeFirstLetter(stringHelpers.toCamelCase(this.namespace))
+			name: typeof this.namespace === 'string' ? stringHelpers.capitalizeFirstLetter(stringHelpers.toCamelCase(this.namespace)) : ''
 		};
 	}
 
@@ -94,6 +101,21 @@ class VeamsComponent {
 
 	get subscribe() {
 		return this._subscribe;
+	}
+
+	set subscribers(obj) {
+		if (!this._subscribers) {
+			this._subscribers = {};
+		}
+
+		this._subscribers[obj.id] = {
+			event: obj.event,
+			handler: obj.handler
+		};
+	}
+
+	get subscribers() {
+		return this._subscribers;
 	}
 
 	// STANDARD METHODS
@@ -174,6 +196,9 @@ class VeamsComponent {
 		if (arrlen === 1 && !global) {
 			this.$el.on(evtType + this.evtNamespace, bindFn);
 		} else if (arrlen === 1 && global) {
+			this.subscribers = {
+
+			};
 			Veams.Vent.on(evtType, bindFn);
 		} else {
 			let delegate = getStringValue.apply(this, [tplEngine(evtKeyArr[1])]);

@@ -57,7 +57,6 @@ class Core {
 			window.Veams.$ = this.options.$;
 		}
 
-
 		/**
 		 * Veams Module Handling
 		 */
