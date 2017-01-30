@@ -39,7 +39,6 @@ class VeamsComponent {
 		this.options = options;
 		this.namespace = null;
 		this.evtNamespace = '.' + this.metaData.name;
-		this.subscribers = {};
 		this._options = obj.options;
 
 		if (!obj.namespace) {
@@ -158,7 +157,7 @@ class VeamsComponent {
 	 * @param {Boolean} global - Flag to switch between global and local events.
 	 *
 	 */
-	registerEvents(evts, global) {
+	registerEvents(evts, global = false) {
 		if (evts) {
 			Object.keys(evts).forEach((key) => {
 				this.registerEvent(key, evts[key], global);
@@ -182,11 +181,12 @@ class VeamsComponent {
 	 * this.registerEvent('click {{this.options.btn}}', 'render');
 	 * this.registerEvent('{{App.EVENTS.custom.event', 'render');
 	 */
-	registerEvent(evtKey, fn, global) {
+	registerEvent(evtKey, fn, global = false) {
 		let evtKeyArr = evtKey.split(' ');
 		let arrlen = evtKeyArr.length;
 		let evtType = getStringValue.apply(this, [tplEngine(evtKeyArr[0])]);
 		let bindFn = this[fn].bind(this);
+		let id = evtType + fn;
 
 		if (arrlen > 2) {
 			throw new Error('It seems like you have more than two strings in your events object!');
@@ -197,8 +197,11 @@ class VeamsComponent {
 			this.$el.on(evtType + this.evtNamespace, bindFn);
 		} else if (arrlen === 1 && global) {
 			this.subscribers = {
-
+				id: id,
+				event: evtType,
+				handler: bindFn
 			};
+
 			Veams.Vent.on(evtType, bindFn);
 		} else {
 			let delegate = getStringValue.apply(this, [tplEngine(evtKeyArr[1])]);
@@ -215,9 +218,21 @@ class VeamsComponent {
 
 	/**
 	 * Unbind events
+	 *
+	 * TODO: Update local event handling to support the same as global event handling
 	 */
 	unbindEvents() {
+		// Local events which are bounded by this.events
 		this.$el.off(this.evtNamespace);
+
+		// Global events which are bounded to Veams.Vent
+		for (let key in this.subscribers) {
+			if (this.subscribers.hasOwnProperty(key)) {
+				let obj = this.subscribers[key];
+
+				Veams.Vent.off(obj.event, obj.handler);
+			}
+		}
 	}
 
 	/**

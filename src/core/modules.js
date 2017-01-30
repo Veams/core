@@ -2,23 +2,9 @@
 const defaultsHelper = require('../utils/helpers/defaults');
 const queryHelper = require('../utils/helpers/query-selector-array');
 const forEachHelper = require('../utils/helpers/for-each');
-const checkElInContextHelper = require('../utils/helpers/check-element-in-context');
-
-const registeredModules = [];
-const moduleCache = [];
-
-function containsObject(list, obj) {
-	for (let i = 0; i < list.length; i++) {
-		if (obj && list[i].domName === obj.domName && obj.module) {
-			return true;
-		}
-	}
-
-	return false;
-}
 
 class Modules {
-	constructor() {
+	constructor(Veams = window.Veams) {
 		this.list = {}; // Module list
 		this.modulesInContext = []; // Save modules on current page
 		this.queryString = '[' + Veams.options.attrPrefix + '-module]';
@@ -29,6 +15,12 @@ class Modules {
 
 	initialize() {
 		this.modulesInContext = queryHelper(this.queryString);
+		this.observe(document.body);
+
+		this.bindEvents();
+	}
+
+	bindEvents() {
 	}
 
 	/**
@@ -47,6 +39,25 @@ class Modules {
 		Veams.Vent.trigger(Veams.EVENTS.moduleRegistered, {
 			module: module,
 			el: element
+		});
+	}
+
+	/**
+	 * Register multiple modules.
+	 *
+	 * @param {Array} arr - Array which contains the modules as object.
+	 */
+	register(arr) {
+		if (!Array.isArray(arr)) {
+			throw new Error('You need to pass an array to register()!');
+		}
+
+		this.modulesList = arr;
+	}
+
+	registerAll() {
+		this.modulesList.forEach((module) => {
+			this.registerOne(module);
 		});
 	}
 
@@ -103,21 +114,10 @@ class Modules {
 	}
 
 	/**
-	 * Register multiple modules.
+	 * Add mutation observer to observe new modules.
 	 *
-	 * @param {Array} arr - Array which contains the modules as object.
+	 * @param {Object} context - Context for the mutation observer
 	 */
-	register(arr) {
-		if (!Array.isArray(arr)) {
-			throw new Error('You need to pass an array to register()!');
-		}
-
-		arr.forEach((module) => {
-			this.registerOne(module);
-		});
-
-		// this.observe(document.body);
-	}
 
 	observe(context) {
 		let observer = new MutationObserver((mutations) => {
@@ -128,12 +128,12 @@ class Modules {
 					value: mutation.target.textContent,
 					oldValue: mutation.oldValue
 				};
-				console.log("Recording mutation:", entry);
 
 				if (entry.el instanceof HTMLElement) {
-					this.modulesInContext = queryHelper(this.queryString, entry.el);
-					this.initInNewContext();
-					console.log('modules: ', this.modulesInContext);
+					console.log('Recording mutation in ', entry.el);
+
+					this.modulesInContext = this.getModulesInContext(entry.el);
+					this.registerAll();
 				}
 
 			});
@@ -146,8 +146,13 @@ class Modules {
 		});
 	}
 
-	initInNewContext() {
-		this.register(this.references);
+	/**
+	 * Get Modules in a specific context.
+	 *
+	 * @param {Object} context - Context for query specific string
+	 */
+	getModulesInContext(context) {
+		return queryHelper(this.queryString, context);
 	}
 }
 
