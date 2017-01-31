@@ -1,24 +1,14 @@
 const defaultsHelper = require('../utils/helpers/defaults');
 const isTouchHelper = require('../utils/helpers/is-touch');
-const mediaQueryHandler = require('../utils/media-query-handler');
-const logger = require('../utils/logger');
-
-/**
- * Imports
- *
- * TODO: Clean up bindings
- */
-import Modules from './modules';
 
 class Core {
 	constructor() {
 		// General options
 		this.options = {
-			$: false,
 			namespace: 'App',
-			attrPrefix: 'data-js',
-			mediaQueryProp: 'font-family'
+			attrPrefix: 'data-js'
 		};
+		this.pluginName = 'Core';
 	}
 
 	set options(options) {
@@ -33,11 +23,13 @@ class Core {
 		/**
 		 * Set global options on initialize
 		 */
-		this.options = Veams.options = opts;
+		this.options = opts;
 
-		if (!window.Veams) {
-			window.Veams = {};
+		if (!Veams) {
+			Veams = window.Veams = {};
 		}
+
+		Veams.options = this.options;
 
 		/**
 		 * Namespace of application
@@ -48,40 +40,11 @@ class Core {
 		}
 
 		/**
-		 * Reference to Veams-query.js or jQuery instance
-		 * @memberof Veams
-		 */
-		if (!this.options.$) {
-			throw new Error('You need to pass a dom handler like jQuery or Veams-Query to VeamsCore by providing the option "$"!');
-		} else {
-			window.Veams.$ = this.options.$;
-		}
-
-		/**
-		 * Veams Module Handling
-		 */
-		Veams.modules = Veams.modules || new Modules();
-
-		/**
-		 * Veams Global Pub/Sub System
-		 * @memberof Veams
-		 */
-		Veams.Vent = Veams.Vent || Veams.$(document);
-
-		/**
-		 * Media Query Handler
-		 */
-		mediaQueryHandler(this.options);
-
-		/**
-		 * Logger functionality
-		 */
-		logger();
-
-		/**
 		 * Support
 		 */
-		Veams.support.touch = isTouchHelper();
+		Veams.support = {
+			touch: isTouchHelper()
+		};
 	}
 }
 

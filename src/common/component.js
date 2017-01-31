@@ -7,7 +7,7 @@ if (!window.Veams.helpers.mixin || !window.Veams.helpers.defaults) {
 }
 
 if (!window.Veams.$) {
-	throw new Error('Please add a Dom handler like jQuery to the window object!');
+	console.info('Please add a Dom handler like jQuery to the window object!');
 }
 
 /**
@@ -35,11 +35,14 @@ class VeamsComponent {
 	 */
 	constructor(obj = {}, options = {}) {
 		this.el = obj.el;
-		this.$el = $(obj.el);
 		this.options = options;
 		this.namespace = null;
 		this.evtNamespace = '.' + this.metaData.name;
 		this._options = obj.options;
+
+		if (window.Veams.$) {
+			this.$el = $(obj.el);
+		}
 
 		if (!obj.namespace) {
 			console.log('You should pass an object with a namespace for your component!');

@@ -2,6 +2,7 @@
  * Polyfills
  */
 import '../utils/polyfills/custom-event';
+import use from './use';
 
 /**
  * Imports
@@ -17,9 +18,7 @@ let Veams = window.Veams = window.Veams || {};
 (function (window, document, undefined) {
 	'use strict';
 	// Version
-	Veams.version = '5.0.0-alpha.2';
-	// Dom handler
-	Veams.$ = Veams.$ || window.VeamsQuery || window.jQuery;
+	Veams.version = '5.0.0-alpha.5';
 	// Global events
 	Veams.EVENTS = EVENTS;
 	/**
@@ -34,10 +33,14 @@ let Veams = window.Veams = window.Veams || {};
 	};
 	// Feature detection
 	Veams.support = Veams.support || {};
-	// Current Media Query
-	Veams.currentMedia = Veams.currentMedia || '';
-	// Core
+	// Plugins
+	Veams.Plugins = {};
+	// Plugin support
+	Veams.use = use;
+
+	// Add Core as default
 	Veams.core = Veams.core || core;
+
 })(window, document);
 
 export default Veams;
