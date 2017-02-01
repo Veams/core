@@ -18,10 +18,10 @@ Veams exposes a framework which you can use as a simple starter kit. This starte
 
 You have some optional key benefits:
 
-1. ES Harmony Syntax (you can use CommonJS if you like)
+1. ES Harmony syntax (you can use CommonJS if you like)
 2. Ajax Module Handling (MutationObserver)
 3. Helper functions which can be imported separately
-4. Media query handling
+4. Simple plugin support
 5. Common modules like `VeamsComponent`, `BaseComponent` or `HttpService`
 6. Local event system with custom template string support
 7. Global publish and subscribe system (`Veams.Vent`)
@@ -66,6 +66,65 @@ Veams.core.initialize();
 
 That's it. The framework is integrated. 
 
+### Plugins
+
+In general the plugin system is a really simple one. 
+
+#### Usage of a plugin
+
+When you want to use a plugin you first need to import the plugin and then just execute the `use` method of Veams: 
+
+```js
+import VeamsLogger from 'veams/lib/plugins/logger';
+
+// Add plugins to the Veams system
+Veams.use(VeamsLogger);
+```
+
+You can pass in options to the plugin just by adding another parameter(s): 
+
+```js
+import VeamsMediaQueryHandler from 'veams/lib/plugins/media-query-handler';
+
+// Add plugins to the Veams system
+Veams.use(VeamsMediaQueryHandler, {
+    delay: 200
+});
+```
+
+#### Creation of a plugin
+
+When you want to create a plugin you only need to export an object with an `initialize` method in it. It is really easy. 
+
+Let's say you want to add jQuery as DOM handler in Veams: 
+
+1. First you need to import the jQuery library
+2. Then you create a simple object 
+    - The `pluginName` is optional
+    - Into the `initialize` method there will be passed the Veams object
+3. Execute `use` of Veams.
+
+```js
+import $ from 'jquery';
+
+let DomPlugin = {
+	pluginName: '$',
+	initialize: function(Veams) {
+        Veams.$ = $;
+	}
+};
+
+Veams.use(DomPlugin);
+```
+
+That's it. 
+
+#### Available plugins
+
+And there are multiple plugins available.
+
+__VeamsMediaQueryHandler__
+
 If you want to use the media query support then just add the following lines to a custom scss file and modify it like you want: 
 
 ``` scss
@@ -92,6 +151,15 @@ head {
 		font-family: mobile-s;
 	}
 }
+```
+
+Then you only need to import and use the plugin from the Veams package: 
+
+```js
+import VeamsMediaQueryHandler from 'veams/lib/plugins/media-query-handler';
+
+// Add plugins to the Veams system
+Veams.use(VeamsMediaQueryHandler);
 ```
 
 - Documentation: http://www.veams.org/sass/docs/_output/
