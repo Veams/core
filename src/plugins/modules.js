@@ -16,7 +16,7 @@ class Modules {
 
 	initialize() {
 		this.modulesInContext = queryHelper(this.queryString);
-		this.observe(document.body);
+		// this.observe(document.body);
 
 		this.bindEvents();
 	}
@@ -56,6 +56,7 @@ class Modules {
 		}
 
 		this.modulesList = arr;
+		this.registerAll();
 	}
 
 	registerAll() {
@@ -127,6 +128,8 @@ class Modules {
 	observe(context) {
 		let observer = new MutationObserver((mutations) => {
 			mutations.forEach((mutation) => {
+				console.log('mutation: ', mutation);
+
 				let entry = {
 					mutation: mutation,
 					el: mutation.target,
