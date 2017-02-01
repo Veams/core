@@ -117,7 +117,7 @@ let DomPlugin = {
 Veams.use(DomPlugin);
 ```
 
-That's it. 
+That's it. You extended the general Veams object. 
 
 #### Available plugins
 

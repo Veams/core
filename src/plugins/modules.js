@@ -135,7 +135,8 @@ class Modules {
 				};
 
 				if (entry.el instanceof HTMLElement) {
-					console.log('Recording mutation in ', entry.el);
+					console.info('Recording mutation in ', entry.el);
+					console.info('This new context will be used to initialize new modules when available!');
 
 					this.modulesInContext = this.getModulesInContext(entry.el);
 					this.registerAll();
@@ -145,7 +146,6 @@ class Modules {
 		});
 
 		observer.observe(context, {
-			attributes: true,
 			childList: true,
 			subtree: true
 		});
