@@ -2,13 +2,14 @@
 const defaultsHelper = require('../utils/helpers/defaults');
 const queryHelper = require('../utils/helpers/query-selector-array');
 const forEachHelper = require('../utils/helpers/for-each');
+let _Veams = {};
 
 class Modules {
-	constructor(Veams = window.Veams) {
+	constructor(VEAMS = window.Veams) {
+		_Veams = VEAMS;
 		this.list = {}; // Module list
 		this.modulesInContext = []; // Save modules on current page
-		this.queryString = '[' + Veams.options.attrPrefix + '-module]';
-		this.references = [];
+		this.queryString = '[' + _Veams.options.attrPrefix + '-module]';
 
 		this.initialize();
 	}
@@ -36,10 +37,12 @@ class Modules {
 			this.list[module.name].nodes.push(element);
 		}
 
-		Veams.Vent.trigger(Veams.EVENTS.moduleRegistered, {
-			module: module,
-			el: element
-		});
+		if (_Veams.Vent) {
+			_Veams.Vent.trigger(_Veams.EVENTS.moduleRegistered, {
+				module: module,
+				el: element
+			});
+		}
 	}
 
 	/**
@@ -56,6 +59,8 @@ class Modules {
 	}
 
 	registerAll() {
+		if (!this.modulesList) return;
+
 		this.modulesList.forEach((module) => {
 			this.registerOne(module);
 		});
@@ -92,8 +97,8 @@ class Modules {
 	 */
 	initModules(domName, Module, render, options, cb) {
 		forEachHelper(this.modulesInContext, (i, el) => {
-			let noRender = el.getAttribute(Veams.options.attrPrefix + '-no-render') || render === false || false;
-			let dataModules = el.getAttribute(Veams.options.attrPrefix + '-module').split(' ');
+			let noRender = el.getAttribute(_Veams.options.attrPrefix + '-no-render') || render === false || false;
+			let dataModules = el.getAttribute(_Veams.options.attrPrefix + '-module').split(' ');
 
 			if (dataModules.indexOf(domName) !== -1) {
 				let attrs = el.getAttribute('data-js-options');
@@ -156,4 +161,14 @@ class Modules {
 	}
 }
 
-export default Modules;
+/**
+ * Plugin object
+ */
+const VeamsModules = {
+	pluginName: 'ModulesHandler',
+	initialize: function (Veams) {
+		Veams.modules = Veams.modules || new Modules(Veams);
+	}
+};
+
+export default VeamsModules;

@@ -27,8 +27,13 @@ if (env === 'build') {
 // }
 var config = {
 	entry: {
-		veams: __dirname + '/src/index.js',
-		'common/component': __dirname + '/src/common/component.js'
+		'veams': __dirname + '/src/index.js',
+		'common/component': __dirname + '/src/common/component.js',
+		'plugins/dom': __dirname + '/src/plugins/dom.js',
+		'plugins/logger': __dirname + '/src/plugins/logger.js',
+		'plugins/media-query-handler': __dirname + '/src/plugins/media-query-handler.js',
+		'plugins/modules': __dirname + '/src/plugins/modules.js',
+		'plugins/vent': __dirname + '/src/plugins/vent.js'
 	},
 	devtool: 'source-map',
 	output: {
