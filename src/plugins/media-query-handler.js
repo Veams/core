@@ -20,6 +20,10 @@ const VeamsMediaQueryHandler = {
 		 */
 		Veams.currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(mediaQueryProp);
 
+		if (!Veams.Vent) {
+			console.info('In order to work properly with the VeamsMediaQueryHandler plugin you should add the VeamsVent plugin!');
+		}
+
 		// Trigger global resize event
 		window.onresize = throttleHelper(function (e) {
 			let currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(mediaQueryProp);

@@ -121,7 +121,32 @@ That's it. You extended the general Veams object.
 
 #### Available plugins
 
-And there are multiple plugins available.
+There are multiple plugins available.
+
+1. VeamsDOM
+    - `import VeamsDOM from 'veams/lib/plugins/dom'`
+2. VeamsLogger
+    - `import VeamsLogger from 'veams/lib/plugins/logger'`
+3. VeamsMediaQueryHandler
+    - `import VeamsMediaQueryHandler from 'veams/lib/plugins/dom'`
+4. VeamsModules
+    - `import VeamsModules from 'veams/lib/plugins/modules'`
+5. VeamsVent
+    - `import VeamsVent from 'veams/lib/plugins/vent'`
+
+Please keep in mind that the order of the initialisation of your used plugins sometimes important. In general it makes sense to use the following order: 
+
+```js
+// Intialize core of Veams
+Veams.core.initialize();
+
+// Add plugins to the Veams system
+Veams.use(VeamsDOM);
+Veams.use(VeamsVent);
+Veams.use(VeamsLogger);
+Veams.use(VeamsModules);
+Veams.use(VeamsMediaQueryHandler);
+```
 
 __VeamsMediaQueryHandler__
 

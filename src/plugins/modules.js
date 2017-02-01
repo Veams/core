@@ -5,18 +5,24 @@ const forEachHelper = require('../utils/helpers/for-each');
 let _Veams = {};
 
 class Modules {
-	constructor(VEAMS = window.Veams) {
+	constructor(VEAMS = window.Veams, opts) {
 		_Veams = VEAMS;
+		let options = {
+			DEBUG: false,
+			attrPrefix: 'data-js'
+		};
+
+		this.options = _Veams.helpers.defaults(opts || {}, options);
 		this.list = {}; // Module list
 		this.modulesInContext = []; // Save modules on current page
-		this.queryString = '[' + _Veams.options.attrPrefix + '-module]';
 
 		this.initialize();
 	}
 
 	initialize() {
+		this.queryString = '[' + this.options.attrPrefix + '-module]';
 		this.modulesInContext = queryHelper(this.queryString);
-		// this.observe(document.body);
+		this.observe(document.body);
 
 		this.bindEvents();
 	}
@@ -98,25 +104,29 @@ class Modules {
 	 */
 	initModules(domName, Module, render, options, cb) {
 		forEachHelper(this.modulesInContext, (i, el) => {
-			let noRender = el.getAttribute(_Veams.options.attrPrefix + '-no-render') || render === false || false;
-			let dataModules = el.getAttribute(_Veams.options.attrPrefix + '-module').split(' ');
-
-			if (dataModules.indexOf(domName) !== -1) {
-				let attrs = el.getAttribute('data-js-options');
-				let mergedOptions = defaultsHelper(options || {}, JSON.parse(attrs));
-
-				let module = new Module({
-					el: el,
-					options: mergedOptions,
-					namespace: domName
-				});
-
-				// Render after initial module loading
-				if (!noRender) module.render();
-				// Provide callback function in which you can use module and options
-				if (cb && typeof (cb) === 'function') cb(module, mergedOptions);
-			}
+			this.initModule(el, domName, Module, render, options, cb);
 		});
+	}
+
+	initModule(el, domName, Module, render, options, cb) {
+		let noRender = el.getAttribute(this.options.attrPrefix + '-no-render') || render === false || false;
+		let dataModules = el.getAttribute(this.options.attrPrefix + '-module').split(' ');
+
+		if (dataModules.indexOf(domName) !== -1) {
+			let attrs = el.getAttribute('data-js-options');
+			let mergedOptions = defaultsHelper(options || {}, JSON.parse(attrs));
+
+			let module = new Module({
+				el: el,
+				options: mergedOptions,
+				namespace: domName
+			});
+
+			// Render after initial module loading
+			if (!noRender) module.render();
+			// Provide callback function in which you can use module and options
+			if (cb && typeof (cb) === 'function') cb(module, mergedOptions);
+		}
 	}
 
 	/**
@@ -124,28 +134,44 @@ class Modules {
 	 *
 	 * @param {Object} context - Context for the mutation observer
 	 */
-
 	observe(context) {
 		let observer = new MutationObserver((mutations) => {
-			mutations.forEach((mutation) => {
-				console.log('mutation: ', mutation);
+			// look through all mutations that just occured
+			for (let i = 0; i < mutations.length; ++i) {
+				// look through all added nodes of this mutation
+				for (let j = 0; j < mutations[i].addedNodes.length; ++j) {
+					let addedNode = mutations[i].addedNodes[j];
 
-				let entry = {
-					mutation: mutation,
-					el: mutation.target,
-					value: mutation.target.textContent,
-					oldValue: mutation.oldValue
-				};
+					if (addedNode instanceof HTMLElement) {
+						if (addedNode.getAttribute(this.options.attrPrefix + '-module')) {
+							let domName = addedNode.getAttribute(this.options.attrPrefix + '-module');
 
-				if (entry.el instanceof HTMLElement) {
-					console.info('Recording mutation in ', entry.el);
-					console.info('This new context will be used to initialize new modules when available!');
+							if (this.options.DEBUG) {
+								console.info('Recording new module: ', addedNode, domName);
+							}
 
-					this.modulesInContext = this.getModulesInContext(entry.el);
-					this.registerAll();
+							for (let module of this.modulesList) {
+								if (module.domName === domName) {
+
+									this.initModule(addedNode, module.domName, module.module, module.render, module.options, module.cb);
+
+									break;
+								}
+							}
+						}
+
+						if (this.getModulesInContext(addedNode)) {
+							this.modulesInContext = this.getModulesInContext(addedNode);
+
+							if (this.options.DEBUG) {
+								console.info('Recording new context. When available new modules will be initialised in: ', addedNode);
+							}
+
+							this.registerAll();
+						}
+					}
 				}
-
-			});
+			}
 		});
 
 		observer.observe(context, {
@@ -169,8 +195,8 @@ class Modules {
  */
 const VeamsModules = {
 	pluginName: 'ModulesHandler',
-	initialize: function (Veams) {
-		Veams.modules = Veams.modules || new Modules(Veams);
+	initialize: function (Veams, opts) {
+		Veams.modules = Veams.modules || new Modules(Veams, opts);
 	}
 };
 

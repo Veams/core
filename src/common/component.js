@@ -159,6 +159,7 @@ class VeamsComponent {
 	 * @param {Object} evts - Events object which contains an object with events as key and functions as value.
 	 * @param {Boolean} global - Flag to switch between global and local events.
 	 *
+	 * @private
 	 */
 	registerEvents(evts, global = false) {
 		if (evts) {
@@ -177,6 +178,8 @@ class VeamsComponent {
 	 * @param {String} evtKey - Event key which contains event and additionally a delegated element.
 	 * @param {String} fn - Function defined as string which will be bound to this.
 	 * @param {Boolean} global - Flag if global or local event .
+	 *
+	 * @public
 	 *
 	 * @example:
 	 *
@@ -221,6 +224,8 @@ class VeamsComponent {
 
 	/**
 	 * Unbind events
+	 *
+	 * @public
 	 *
 	 * TODO: Update local event handling to support the same as global event handling
 	 */
