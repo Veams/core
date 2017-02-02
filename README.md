@@ -11,38 +11,31 @@ __Veams is one of the most flexible and efficient system to build scalable Web A
 Veams contains various (pluggable) instruments which are controlled by our custom command line interface.
 
 
-
 ## Veams as Framework
 
 Veams exposes a framework which you can use as a simple starter kit. This starter kit can be enhanced and extended by you.
 
-You have some optional key benefits:
+### Table of Content
 
-1. ES Harmony syntax (you can use CommonJS if you like)
-2. Ajax Module Handling (MutationObserver)
-3. Helper functions which can be imported separately
-4. Simple plugin support
-5. Common modules like `VeamsComponent`, `BaseComponent` or `HttpService`
-6. Local event system with custom template string support
-7. Global publish and subscribe system (`Veams.Vent`)
-
-__ES Harmony__
-
-For our current development stack we use ES Harmony which gets compiled to ES5. 
-
-The benefit of classes, arrow function and block scoping outweigh the additional code.
+1. [Usage](#usage)
+  - [Installation](#installation)
+  - [Import](#import)
+2. [Plugins](#plugins)
+  - [Usage of Plugins](#usage-of-plugins)
+  - [Creation of Plugins](#creation-of-plugins)
+  - [Available Plugins](#available-plugins)
 
 ### Usage 
 
 To use Veams as framework just install and import the library: 
 
-__Installation__
+#### Installation
 
 ``` bash
 npm install veams --save
 ```
 
-__Import__ 
+#### Import
 
 _JavaScript_
 
@@ -92,7 +85,7 @@ Veams.use(VeamsMediaQueryHandler, {
 });
 ```
 
-#### Creation of a plugin
+#### Creation of plugins
 
 When you want to create a plugin you only need to export an object with an `initialize` method in it. It is really easy. 
 
