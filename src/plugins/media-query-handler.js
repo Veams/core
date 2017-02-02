@@ -1,7 +1,6 @@
 /**
  * Imports
  */
-import EVENTS from '../utils/events';
 const throttleHelper = require('./../utils/helpers/throttle');
 
 const VeamsMediaQueryHandler = {
@@ -38,7 +37,7 @@ const VeamsMediaQueryHandler = {
 
 				if (Veams.Vent) {
 					Veams.Vent.trigger(EVENTS.mediachange, {
-						type: EVENTS.mediachange,
+						type: Veams.EVENTS.mediachange,
 						currentMedia: currentMedia,
 						oldMedia: oldMedia
 					});
@@ -47,7 +46,7 @@ const VeamsMediaQueryHandler = {
 
 			if (width !== Veams.screenSize.width) {
 				Veams.screenSize.width = width;
-				Veams.Vent.trigger(EVENTS.resize, e);
+				Veams.Vent.trigger(Veams.EVENTS.resize, e);
 			}
 		}, delay);
 	}

@@ -7,7 +7,7 @@ if (!window.Veams.helpers.mixin || !window.Veams.helpers.defaults) {
 }
 
 if (!window.Veams.$) {
-	console.info('Please add a Dom handler like jQuery to the window object!');
+	console.info('Please add a DOM handler like jQuery to the window object!');
 }
 
 /**
