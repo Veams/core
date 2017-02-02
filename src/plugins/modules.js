@@ -9,7 +9,8 @@ class Modules {
 		_Veams = VEAMS;
 		let options = {
 			DEBUG: false,
-			attrPrefix: 'data-js'
+			attrPrefix: 'data-js',
+			useMutationObserver: false
 		};
 
 		this.options = _Veams.helpers.defaults(opts || {}, options);
@@ -22,12 +23,33 @@ class Modules {
 	initialize() {
 		this.queryString = '[' + this.options.attrPrefix + '-module]';
 		this.modulesInContext = queryHelper(this.queryString);
-		this.observe(document.body);
+
+		if (this.options.useMutationObserver) {
+			this.observe(document.body);
+		}
 
 		this.bindEvents();
 	}
 
 	bindEvents() {
+		if (!_Veams.Vent && this.options.useMutationObserver === false) {
+			console.info('In order to work with the the ajax handling in VeamsModulesHandler ' +
+				'you need to define "useMutationObserver" or use the VeamsVent plugin!');
+
+			return;
+		}
+
+		if (_Veams.Vent) {
+			_Veams.Vent.on(_Veams.EVENTS.DOMchanged, (e, context) => {
+				this.modulesInContext = this.getModulesInContext(context);
+
+				if (this.options.DEBUG) {
+					console.info('Recording new context. When available new modules will be initialised in: ', context);
+				}
+
+				this.registerAll();
+			});
+		}
 	}
 
 	/**
