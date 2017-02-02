@@ -187,6 +187,33 @@ import VeamsMediaQueryHandler from 'veams/lib/plugins/media-query-handler';
 Veams.use(VeamsMediaQueryHandler);
 ```
 
+_Options:_
+
+You can pass a second parameter with an options object. Available options are: 
+
+- `mediaQueryProp` {String} ['font-family'] - Define a media query property which you have added to the head element.
+- `delay` {Number} [300] - Define the delay value for the throttle handling which is responsible to trigger an event and set the `currentMedia` value.
+
+__VeamsModules__
+
+The VeamsModules plugin supports registering and ajax handling for custom components. 
+In order to work with that plugin just import it und add it to Veams: 
+
+```js
+import VeamsModules from 'veams/lib/plugins/modules';
+
+Veams.use(VeamsModules);
+```
+
+_Options:_
+
+You can pass a second parameter with an options object. Available options are: 
+
+- `attrPrefix` {String} ['data-js'] - Define a prefix for your modules which will be used to search in the document.
+- `logs` {Boolean} [false] - Hide or print the logs to the console.
+- `useMutationObserver` {Boolean} [false]  - You can set this option to true to use mutation observer for ajax handling. You can also use `Veams.EVENTS.DOMchanged` as before. 
+
+
 - Documentation: http://www.veams.org/sass/docs/_output/
 - Documentation: http://www.veams.org/js/index.html
 

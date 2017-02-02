@@ -8,8 +8,8 @@ class Modules {
 	constructor(VEAMS = window.Veams, opts) {
 		_Veams = VEAMS;
 		let options = {
-			DEBUG: false,
 			attrPrefix: 'data-js',
+			logs: false,
 			useMutationObserver: false
 		};
 
@@ -43,7 +43,7 @@ class Modules {
 			_Veams.Vent.on(_Veams.EVENTS.DOMchanged, (e, context) => {
 				this.modulesInContext = this.getModulesInContext(context);
 
-				if (this.options.DEBUG) {
+				if (this.options.logs) {
 					console.info('Recording new context. When available new modules will be initialised in: ', context);
 				}
 
@@ -168,7 +168,7 @@ class Modules {
 						if (addedNode.getAttribute(this.options.attrPrefix + '-module')) {
 							let domName = addedNode.getAttribute(this.options.attrPrefix + '-module');
 
-							if (this.options.DEBUG) {
+							if (this.options.logs) {
 								console.info('Recording new module: ', addedNode, domName);
 							}
 
@@ -185,7 +185,7 @@ class Modules {
 						if (this.getModulesInContext(addedNode)) {
 							this.modulesInContext = this.getModulesInContext(addedNode);
 
-							if (this.options.DEBUG) {
+							if (this.options.logs) {
 								console.info('Recording new context. When available new modules will be initialised in: ', addedNode);
 							}
 
