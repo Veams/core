@@ -134,7 +134,7 @@ There are multiple plugins available.
 5. VeamsVent
     - `import VeamsVent from 'veams/lib/plugins/vent'`
 
-Please keep in mind that the order of the initialisation of your used plugins sometimes important. In general it makes sense to use the following order: 
+Please keep in mind that the order of the initialisation of your used plugins can be important. In general it makes sense to use the following order: 
 
 ```js
 // Intialize core of Veams
@@ -213,9 +213,6 @@ You can pass a second parameter with an options object. Available options are:
 - `logs` {Boolean} [false] - Hide or print the logs to the console.
 - `useMutationObserver` {Boolean} [false]  - You can set this option to true to use mutation observer for ajax handling. You can also use `Veams.EVENTS.DOMchanged` as before. 
 
-
-- Documentation: http://www.veams.org/sass/docs/_output/
-- Documentation: http://www.veams.org/js/index.html
 
 ------------------
 
