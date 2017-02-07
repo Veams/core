@@ -18,7 +18,7 @@ let Veams = window.Veams = window.Veams || {};
 (function (window, document, undefined) {
 	'use strict';
 	// Version
-	Veams.version = '5.0.0-alpha.9';
+	Veams.version = '5.0.0-alpha.10';
 	// Global events
 	Veams.EVENTS = EVENTS;
 	/**

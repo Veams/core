@@ -36,7 +36,7 @@ const VeamsMediaQueryHandler = {
 				console.log('Veams.currentMedia: ', Veams.currentMedia);
 
 				if (Veams.Vent) {
-					Veams.Vent.trigger(EVENTS.mediachange, {
+					Veams.Vent.trigger(Veams.EVENTS.mediachange, {
 						type: Veams.EVENTS.mediachange,
 						currentMedia: currentMedia,
 						oldMedia: oldMedia
