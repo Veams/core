@@ -13,18 +13,7 @@ if (env === 'build') {
 } else {
 	outputFile = libraryName + '.js';
 }
-// module.exports = {
-// 	entry: {
-// 		alpha: "./alpha",
-// 		beta: "./beta"
-// 	},
-// 	output: {
-// 		path: path.join(__dirname, "js"),
-// 		filename: "MyLibrary.[name].js",
-// 		library: ["MyLibrary", "[name]"],
-// 		libraryTarget: "umd"
-// 	}
-// }
+
 var config = {
 	entry: {
 		'veams': __dirname + '/src/index.js',
@@ -32,7 +21,9 @@ var config = {
 		'plugins/dom': __dirname + '/src/plugins/dom.js',
 		'plugins/logger': __dirname + '/src/plugins/logger.js',
 		'plugins/media-query-handler': __dirname + '/src/plugins/media-query-handler.js',
+		'plugins/mixins': __dirname + '/src/plugins/mixins.js',
 		'plugins/modules': __dirname + '/src/plugins/modules.js',
+		'plugins/templater': __dirname + '/src/plugins/templater.js',
 		'plugins/vent': __dirname + '/src/plugins/vent.js'
 	},
 	devtool: 'source-map',

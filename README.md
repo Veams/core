@@ -134,8 +134,8 @@ Please keep in mind that the order of the initialisation of your used plugins ca
 Veams.core.initialize();
 
 // Add plugins to the Veams system
-Veams.use(VeamsDOM);
-Veams.use(VeamsVent);
+Veams.use(VeamsDOM); // VeamsDOM is important for VeamsVent
+Veams.use(VeamsVent); // VeamsVent enhances VeamsModules and VeamsMediaQueryHandler
 Veams.use(VeamsLogger);
 Veams.use(VeamsModules);
 Veams.use(VeamsMediaQueryHandler);

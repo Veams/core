@@ -105,19 +105,20 @@ class VeamsComponent {
 		return this._subscribe;
 	}
 
-	set subscribers(obj) {
-		if (!this._subscribers) {
-			this._subscribers = {};
+	set _subscribers(obj) {
+		if (!this.__subscribers) {
+			this.__subscribers = {};
 		}
 
-		this._subscribers[obj.id] = {
+		this.__subscribers[obj.id] = {
+			type: obj.type,
 			event: obj.event,
 			handler: obj.handler
 		};
 	}
 
-	get subscribers() {
-		return this._subscribers;
+	get _subscribers() {
+		return this.__subscribers;
 	}
 
 	// STANDARD METHODS
@@ -192,7 +193,7 @@ class VeamsComponent {
 		let arrlen = evtKeyArr.length;
 		let evtType = getStringValue.apply(this, [tplEngine(evtKeyArr[0])]);
 		let bindFn = this[fn].bind(this);
-		let id = evtType + fn;
+		let id = evtKeyArr.join('_') + '_' + fn;
 
 		if (arrlen > 2) {
 			throw new Error('It seems like you have more than two strings in your events object!');
@@ -201,18 +202,34 @@ class VeamsComponent {
 		// Bind on this.$el
 		if (arrlen === 1 && !global) {
 			this.$el.on(evtType + this.evtNamespace, bindFn);
-		} else if (arrlen === 1 && global) {
-			this.subscribers = {
+
+			this._subscribers = {
+				type: 'event',
 				id: id,
 				event: evtType,
 				handler: bindFn
 			};
 
+		} else if (arrlen === 1 && global) {
 			Veams.Vent.on(evtType, bindFn);
+
+			this._subscribers = {
+				type: 'globalEvent',
+				id: id,
+				event: evtType,
+				handler: bindFn
+			};
 		} else {
 			let delegate = getStringValue.apply(this, [tplEngine(evtKeyArr[1])]);
 
 			this.$el.on(evtType + this.evtNamespace, delegate, bindFn);
+
+			this._subscribers = {
+				type: 'delegatedEvent',
+				id: id,
+				event: evtType,
+				handler: bindFn
+			};
 		}
 	}
 
@@ -230,15 +247,16 @@ class VeamsComponent {
 	 * TODO: Update local event handling to support the same as global event handling
 	 */
 	unbindEvents() {
-		// Local events which are bounded by this.events
-		this.$el.off(this.evtNamespace);
-
 		// Global events which are bounded to Veams.Vent
-		for (let key in this.subscribers) {
-			if (this.subscribers.hasOwnProperty(key)) {
-				let obj = this.subscribers[key];
+		for (let key in this._subscribers) {
+			if (this._subscribers.hasOwnProperty(key)) {
+				let obj = this._subscribers[key];
 
-				Veams.Vent.off(obj.event, obj.handler);
+				if (obj.type === 'globalEvent') {
+					Veams.Vent.off(obj.event, obj.handler);
+				} else {
+					this.$el.off(obj.event, obj.handler)
+				}
 			}
 		}
 	}

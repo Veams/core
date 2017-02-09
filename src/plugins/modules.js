@@ -33,7 +33,7 @@ class Modules {
 
 	bindEvents() {
 		if (!_Veams.Vent && this.options.useMutationObserver === false) {
-			console.info('In order to work with the the ajax handling in VeamsModulesHandler ' +
+			console.info('VeamsModules :: In order to work with the the ajax handling in VeamsModulesHandler ' +
 				'you need to define "useMutationObserver" or use the VeamsVent plugin!');
 
 			return;
@@ -44,7 +44,7 @@ class Modules {
 				this.modulesInContext = this.getModulesInContext(context);
 
 				if (this.options.logs) {
-					console.info('Recording new context. When available new modules will be initialised in: ', context);
+					console.info('VeamsModules :: Recording new context. When available new modules will be initialised in: ', context);
 				}
 
 				this.registerAll();
@@ -80,7 +80,7 @@ class Modules {
 	 */
 	register(arr) {
 		if (!Array.isArray(arr)) {
-			throw new Error('You need to pass an array to register()!');
+			throw new Error('VeamsModules :: You need to pass an array to register()!');
 		}
 
 		this.modulesList = arr;
@@ -108,8 +108,8 @@ class Modules {
 	 *
 	 */
 	registerOne(obj) {
-		if (!obj.domName) throw new Error('In order to work with register() you need to define the module name as string!');
-		if (!obj.module) throw new Error('In order to work with register() you need to define a module!');
+		if (!obj.domName) throw new Error('VeamsModules :: In order to work with register() you need to define the module name as string!');
+		if (!obj.module) throw new Error('VeamsModules :: In order to work with register() you need to define a module!');
 
 		this.initModules(obj.domName, obj.module, obj.render, obj.options, obj.cb);
 	}
@@ -169,7 +169,7 @@ class Modules {
 							let domName = addedNode.getAttribute(this.options.attrPrefix + '-module');
 
 							if (this.options.logs) {
-								console.info('Recording new module: ', addedNode, domName);
+								console.info('VeamsModules :: Recording new module: ', addedNode, domName);
 							}
 
 							for (let module of this.modulesList) {
@@ -182,11 +182,11 @@ class Modules {
 							}
 						}
 
-						if (this.getModulesInContext(addedNode)) {
+						if (this.getModulesInContext(addedNode).length) {
 							this.modulesInContext = this.getModulesInContext(addedNode);
 
 							if (this.options.logs) {
-								console.info('Recording new context. When available new modules will be initialised in: ', addedNode);
+								console.info('VeamsModules :: Recording new context. When available new modules will be initialised in: ', addedNode);
 							}
 
 							this.registerAll();

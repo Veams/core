@@ -20,7 +20,7 @@ const VeamsMediaQueryHandler = {
 		Veams.currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(mediaQueryProp);
 
 		if (!Veams.Vent) {
-			console.info('In order to work properly with the VeamsMediaQueryHandler plugin you should add the VeamsVent plugin!');
+			console.info('VeamsMediaQueryHandler :: In order to work properly with the VeamsMediaQueryHandler plugin you should add the VeamsVent plugin!');
 		}
 
 		// Trigger global resize event
@@ -33,10 +33,10 @@ const VeamsMediaQueryHandler = {
 
 				Veams.currentMedia = currentMedia;
 
-				console.log('Veams.currentMedia: ', Veams.currentMedia);
+				console.log('VeamsMediaQueryHandler :: Current media ', Veams.currentMedia);
 
 				if (Veams.Vent) {
-					Veams.Vent.trigger(EVENTS.mediachange, {
+					Veams.Vent.trigger(Veams.EVENTS.mediachange, {
 						type: Veams.EVENTS.mediachange,
 						currentMedia: currentMedia,
 						oldMedia: oldMedia
