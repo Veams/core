@@ -175,6 +175,8 @@ class Modules {
 	 * Add mutation observer to observe new modules.
 	 *
 	 * @param {Object} context - Context for the mutation observer
+	 *
+	 * TODO: Improve for loops
 	 */
 	observe(context) {
 		let observer = new MutationObserver((mutations) => {

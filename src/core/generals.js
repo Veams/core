@@ -22,7 +22,7 @@ let Veams = Veams || {
 			width: window.innerWidth,
 			height: window.innerHeight
 		},
-		version: '5.0.0-alpha.10'
+		version: '5.0.0-beta.1'
 	};
 
 (function (window, document, undefined) {
