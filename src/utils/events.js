@@ -22,7 +22,7 @@ const EVENTS = {
 	keypress: 'keypress',
 	keyup: 'keyup',
 	mediachange: 'mediachange',
-	moduleRegistered: 'module:registered',
+	moduleCached: 'module:cached',
 	mousedown: 'mousedown',
 	mouseenter: 'mouseenter',
 	mouseleave: 'mouseleave',

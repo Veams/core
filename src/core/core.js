@@ -40,11 +40,11 @@ class Core {
 		}
 
 		/**
-		 * Support
+		 * Support Detection
 		 */
-		Veams.support = {
+		Veams.detections = defaultsHelper(Veams.detections || {}, {
 			touch: isTouchHelper()
-		};
+		});
 	}
 }
 

@@ -3,6 +3,7 @@ const defaultsHelper = require('../utils/helpers/defaults');
 const queryHelper = require('../utils/helpers/query-selector-array');
 const forEachHelper = require('../utils/helpers/for-each');
 let _Veams = {};
+// let __cache = {};
 
 class Modules {
 	constructor(VEAMS = window.Veams, opts) {
@@ -14,8 +15,9 @@ class Modules {
 		};
 
 		this.options = _Veams.helpers.defaults(opts || {}, options);
-		this.list = {}; // Module list
+		this._cache = []; // Module list
 		this.modulesInContext = []; // Save modules on current page
+		this.modulesRegister = [];
 
 		this.initialize();
 	}
@@ -39,7 +41,7 @@ class Modules {
 			return;
 		}
 
-		if (_Veams.Vent) {
+		if (_Veams.Vent && this.options.useMutationObserver === false) {
 			_Veams.Vent.on(_Veams.EVENTS.DOMchanged, (e, context) => {
 				this.modulesInContext = this.getModulesInContext(context);
 
@@ -53,24 +55,36 @@ class Modules {
 	}
 
 	/**
-	 * Save the module in Veams.modules.list.
-	 * @param {Object} module - module metadata object (@see VeamsComponent.metaData())
-	 * @param {Object} element - module element (this.el)
+	 * Save the module in Veams.modules._cache.
+	 *
+	 * @param {Object} obj.module - module metadata object (@see VeamsComponent.metaData())
+	 * @param {Object} obj.element - module element (this.el)
 	 */
-	save(module, element) {
-		if (!this.list[module.name]) {
-			this.list[module.name] = module;
-			this.list[module.name].nodes = [element];
-		} else {
-			this.list[module.name].nodes.push(element);
-		}
+	addToCache(obj) {
+		this._cache.push(obj);
 
 		if (_Veams.Vent) {
-			_Veams.Vent.trigger(_Veams.EVENTS.moduleRegistered, {
-				module: module,
-				el: element
+			_Veams.Vent.trigger(_Veams.EVENTS.moduleCached, {
+				module: obj.module,
+				el: obj.element
 			});
 		}
+	}
+
+	removeFromCache(node) {
+		let deleteIndex;
+
+		for (let i = 0; i < this._cache.length; i++) {
+			let cacheItem = this._cache[i];
+
+			if (cacheItem.element === node) {
+				if (cacheItem.module.unbindEvents) cacheItem.module.unbindEvents();
+
+				deleteIndex = i;
+			}
+		}
+
+		this._cache.splice(deleteIndex, 1);
 	}
 
 	/**
@@ -83,14 +97,14 @@ class Modules {
 			throw new Error('VeamsModules :: You need to pass an array to register()!');
 		}
 
-		this.modulesList = arr;
+		this.modulesRegister = arr;
 		this.registerAll();
 	}
 
 	registerAll() {
-		if (!this.modulesList) return;
+		if (!this.modulesRegister) return;
 
-		this.modulesList.forEach((module) => {
+		this.modulesRegister.forEach((module) => {
 			this.registerOne(module);
 		});
 	}
@@ -144,6 +158,12 @@ class Modules {
 				namespace: domName
 			});
 
+			this.addToCache({
+				name: domName,
+				module: module,
+				element: el
+			});
+
 			// Render after initial module loading
 			if (!noRender) module.render();
 			// Provide callback function in which you can use module and options
@@ -161,6 +181,7 @@ class Modules {
 			// look through all mutations that just occured
 			for (let i = 0; i < mutations.length; ++i) {
 				// look through all added nodes of this mutation
+
 				for (let j = 0; j < mutations[i].addedNodes.length; ++j) {
 					let addedNode = mutations[i].addedNodes[j];
 
@@ -172,7 +193,7 @@ class Modules {
 								console.info('VeamsModules :: Recording new module: ', addedNode, domName);
 							}
 
-							for (let module of this.modulesList) {
+							for (let module of this.modulesRegister) {
 								if (module.domName === domName) {
 
 									this.initModule(addedNode, module.domName, module.module, module.render, module.options, module.cb);
@@ -190,6 +211,35 @@ class Modules {
 							}
 
 							this.registerAll();
+						}
+					}
+				}
+
+				for (let j = 0; j < mutations[i].removedNodes.length; ++j) {
+					let removedNode = mutations[i].removedNodes[j];
+
+					if (removedNode instanceof HTMLElement) {
+						if (removedNode.getAttribute(this.options.attrPrefix + '-module')) {
+							let domName = removedNode.getAttribute(this.options.attrPrefix + '-module');
+
+							if (this.options.logs) {
+								console.info('VeamsModules :: Recording deletion of module: ', removedNode, domName);
+							}
+
+							this.removeFromCache(removedNode);
+
+						}
+
+						if (this.getModulesInContext(removedNode).length) {
+							this.modulesInContext = this.getModulesInContext(removedNode);
+
+							if (this.options.logs) {
+								console.info('VeamsModules :: Recording deletion of DOM element. When available modules will be unbound in ', removedNode);
+							}
+
+							this.modulesInContext.forEach((node) => {
+								this.removeFromCache(node);
+							});
 						}
 					}
 				}

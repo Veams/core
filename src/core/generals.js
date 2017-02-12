@@ -13,34 +13,23 @@ import core from './core';
 /**
  * @namespace Veams
  */
-let Veams = window.Veams = window.Veams || {};
+let Veams = Veams || {
+		EVENTS: EVENTS,
+		core: core,
+		helpers: {},
+		plugins: {},
+		detections: {
+			width: window.innerWidth,
+			height: window.innerHeight
+		},
+		version: '5.0.0-alpha.10'
+	};
 
 (function (window, document, undefined) {
 	'use strict';
-	// Version
-	Veams.version = '5.0.0-alpha.10';
-	// Global events
-	Veams.EVENTS = EVENTS;
-	/**
-	 * Helper functions object
-	 * @memberof Veams
-	 */
-	Veams.helpers = Veams.helpers || {};
-	// Screen Size
-	Veams.screenSize = Veams.screenSize || {
-		width: window.innerWidth,
-		height: window.innerHeight
-	};
-	// Feature detection
-	Veams.support = Veams.support || {};
-	// Plugins
-	Veams.Plugins = {};
-	// Plugin support
-	Veams.use = use;
 
-	// Add Core as default
-	Veams.core = Veams.core || core;
-
+	window.Veams = Veams;
+	Veams.use = use.bind(Veams);
 })(window, document);
 
 export default Veams;

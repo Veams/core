@@ -52,10 +52,6 @@ class VeamsComponent {
 
 		this.initialize(obj, options);
 		this._create();
-
-		if (window.Veams.modules && this.namespace !== null) {
-			Veams.modules.save(Veams.helpers.defaults(this.info || {}, this.metaData), this.el);
-		}
 	}
 
 	// GETTER AND SETTER
@@ -244,10 +240,8 @@ class VeamsComponent {
 	 *
 	 * @public
 	 *
-	 * TODO: Update local event handling to support the same as global event handling
 	 */
 	unbindEvents() {
-		// Global events which are bounded to Veams.Vent
 		for (let key in this._subscribers) {
 			if (this._subscribers.hasOwnProperty(key)) {
 				let obj = this._subscribers[key];
@@ -255,7 +249,7 @@ class VeamsComponent {
 				if (obj.type === 'globalEvent') {
 					Veams.Vent.off(obj.event, obj.handler);
 				} else {
-					this.$el.off(obj.event, obj.handler)
+					this.$el.off(obj.event, obj.handler);
 				}
 			}
 		}

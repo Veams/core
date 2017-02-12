@@ -44,8 +44,8 @@ const VeamsMediaQueryHandler = {
 				}
 			}
 
-			if (width !== Veams.screenSize.width) {
-				Veams.screenSize.width = width;
+			if (width !== Veams.detections.width) {
+				Veams.detections.width = width;
 				Veams.Vent.trigger(Veams.EVENTS.resize, e);
 			}
 		}, delay);

@@ -2,7 +2,7 @@
  * Represents a Vent plugin which creates an empty object .
  * The object will be used as publish/subscribe plugin.
  *
- * @module Vent
+ * @module VeamsVent
  *
  * @author Sebastian Fitzner
  */
