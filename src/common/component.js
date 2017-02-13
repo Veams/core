@@ -270,10 +270,10 @@ class VeamsComponent {
 	 * @param {Object} data - Data which gets handled by the template.
 	 */
 	renderTemplate(tplName, data) {
-		if (!window[this.options.namespace].Templates || !window[this.options.namespace].Templates[tplName]) {
-			console.error(`It seems that you haven\'t defined any template ${tplName} yet!`);
+		if (!Veams.templater) {
+			console.error(`It seems that you haven\'t added the VeamsTemplater plugin. In order to work with 'renderTemplate()' you need to add it!`);
 		} else {
-			return window[this.options.namespace].Templates[tplName](data);
+			Veams.templater.render(tplName, data);
 		}
 	}
 
