@@ -14,21 +14,22 @@ import VeamsHelpers from '../plugins/helpers';
 /**
  * @namespace Veams
  */
-let Veams = Veams || {
-		EVENTS: EVENTS,
-		helpers: {},
-		options: {
-			global: false,
-			namespace: 'App',
-			attrPrefix: 'data-js'
-		},
-		plugins: {},
-		detections: {
-			width: window.innerWidth,
-			height: window.innerHeight
-		},
-		version: '5.0.0-rc1'
-	};
+let defaults = {
+	EVENTS: EVENTS,
+	helpers: {},
+	options: {
+		global: false,
+		namespace: 'App',
+		attrPrefix: 'data-js'
+	},
+	plugins: {},
+	detections: {
+		width: window.innerWidth,
+		height: window.innerHeight
+	},
+	version: '5.0.0-rc1'
+};
+let Veams = Veams || defaults;
 
 Veams.use = use.bind(Veams);
 

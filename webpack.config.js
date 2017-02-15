@@ -16,6 +16,7 @@ var config = {
 	entry: {
 		'veams': __dirname + '/src/js/index.js',
 		'common/component': __dirname + '/src/js/common/component.js',
+		'services/http': __dirname + '/src/js/services/http.js',
 		'plugins/dom': __dirname + '/src/js/plugins/dom.js',
 		'plugins/logger': __dirname + '/src/js/plugins/logger.js',
 		'plugins/media-query-handler': __dirname + '/src/js/plugins/media-query-handler.js',
