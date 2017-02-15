@@ -1,0 +1,66 @@
+/* ---------------------------------------------------
+Multiple Border
+--------------------------------------------------- */
+@mixin fb-ani-borderMultiple($shadow: 0 0 0 2px rgba(0, 0, 0, 0.5), $transition-duration: $transition-duration, $transition-ease-method: forwards, $fbClass: false) {
+
+	&::after,
+	&::before {
+		box-shadow: $shadow;
+	}
+
+	@if $fbClass {
+		&.#{$fbClass} {
+			&::before {
+				@include prefix(animation, fb-ani-borderMultiple1 $transition-duration $transition-ease-method);
+			}
+			&::after {
+				@include prefix(animation, fb-ani-borderMultiple2 $transition-duration $transition-ease-method);
+			}
+		}
+	} @else {
+		&:hover {
+			&::before {
+				@include prefix(animation, fb-ani-borderMultiple1 $transition-duration $transition-ease-method);
+			}
+			&::after {
+				@include prefix(animation, fb-ani-borderMultiple2 $transition-duration $transition-ease-method);
+			}
+		}
+	}
+}
+
+/*
+Extend
+----------------------- */
+%fb-ani-borderMultiple {
+	@include fb-ani-borderMultiple();
+
+	&::before {
+		@include fb-ani-setupPseudo();
+	}
+}
+
+/*
+Multiple Border Animation
+----------------------------- */
+@include keyframes(fb-ani-borderMultiple1) {
+	0% {
+		opacity: 1;
+		@include prefix(transform, scale3d(0.5, 0.5, 1));
+	}
+	100% {
+		opacity: 0;
+		@include prefix(transform, scale3d(1.1, 1.1, 1));
+	}
+}
+
+@include keyframes(fb-ani-borderMultiple2) {
+	0% {
+		opacity: 1;
+		@include prefix(transform, scale3d(0.5, 0.5, 1));
+	}
+	50%, 100% {
+		opacity: 0;
+		@include prefix(transform, scale3d(1.2, 1.2, 1));
+	}
+}

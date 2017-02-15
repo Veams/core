@@ -1,0 +1,135 @@
+
+/* ---------------------------------------------------
+Rotate First and Scale
+--------------------------------------------------- */
+
+/// `Side: Rotate Right First Animation`
+///
+/// @group Animations: Side
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include side-rotate-right-first(300ms, ease-in);
+///   }
+///
+@mixin side-rotate-right-first($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 0% 50%);
+	@include prefix(animation, rotateRightSideFirst $transition-duration $transition-ease-method both);
+}
+
+/// `Side: Rotate Left First Animation`
+///
+/// @group Animations: Side
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include side-rotate-left-first(300ms, ease-in);
+///   }
+///
+@mixin side-rotate-left-first($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 100% 50%);
+	@include prefix(animation, rotateLeftSideFirst $transition-duration $transition-ease-method both);
+}
+
+/// `Side: Rotate Top First Animation`
+///
+/// @group Animations: Side
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include side-rotate-top-first(300ms, ease-in);
+///   }
+///
+@mixin side-rotate-top-first($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 100%);
+	@include prefix(animation, rotateTopSideFirst $transition-duration $transition-ease-method both);
+}
+
+/// `Side: Rotate Bottom First Animation`
+///
+/// @group Animations: Side
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include side-rotate-bottom-first(300ms, ease-in);
+///   }
+///
+@mixin side-rotate-bottom-first($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 0%);
+	@include prefix(animation, rotateBottomSideFirst $transition-duration $transition-ease-method both);
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: ROTATE SIDES AND SCALE
+--------------------------------------------------- */
+@include keyframes(rotateRightSideFirst) {
+	0% {
+	}
+	40% {
+		opacity: .8;
+		@include prefix(transform, rotateY(15deg));
+		@include prefix(animation-timing-function, ease-out);
+	}
+	100% {
+		opacity: 0;
+		@include prefix(transform, scale(0.8) translateZ(-200px));
+	}
+}
+
+@include keyframes(rotateLeftSideFirst) {
+	0% {
+	}
+	40% {
+		opacity: .8;
+		@include prefix(transform, rotateY(-15deg));
+		@include prefix(animation-timing-function, ease-out);
+	}
+	100% {
+		opacity: 0;
+		@include prefix(transform, scale(0.8) translateZ(-200px));
+	}
+}
+
+@include keyframes(rotateTopSideFirst) {
+	0% {
+	}
+	40% {
+		opacity: .8;
+		@include prefix(transform, rotateX(-15deg));
+		@include prefix(animation-timing-function, ease-out);
+	}
+	100% {
+		opacity: 0;
+		@include prefix(transform, scale(0.8) translateZ(-200px));
+	}
+}
+
+@include keyframes(rotateBottomSideFirst) {
+	0% {
+	}
+	40% {
+		opacity: .8;
+		@include prefix(transform, rotateX(-15deg));
+		@include prefix(animation-timing-function, ease-out);
+	}
+	100% {
+		opacity: 0;
+		@include prefix(transform, scale(0.8) translateZ(-200px));
+	}
+}

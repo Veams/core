@@ -1,0 +1,50 @@
+/// `Keyframes Mixin`
+/// is a simple mixin to add prefixed keyframes.
+///
+/// @author Sebastian Fitzner
+///
+/// @group Helpers: Prefix
+///
+/// @param {String} name - Name of the keyframe.
+///
+///
+/// @example
+///   @include keyframes(bestAnimationEver){
+///     0 {
+///       opacity: 0;
+///     }
+///     100 {
+///       opacity: 1;
+///     }
+///   };
+///
+
+@mixin keyframes($name) {
+	@if $veams-webkit == true {
+		@-webkit-keyframes #{$name} {
+			@content;
+		}
+	}
+
+	@if $veams-moz == true {
+		@-moz-keyframes #{$name} {
+			@content;
+		}
+	}
+
+	@if $veams-ms == true {
+		@-ms-keyframes #{$name} {
+			@content;
+		}
+	}
+
+	@if $veams-o == true {
+		@-o-keyframes #{$name} {
+			@content;
+		}
+	}
+
+	@keyframes #{$name} {
+		@content;
+	}
+}

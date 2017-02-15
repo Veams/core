@@ -1,0 +1,37 @@
+/* ===================================================
+FLOAT MIXIN
+=================================================== */
+
+/// `Layouts: Clearfix`
+/// floats element with default width of 100%.
+///
+/// @group Layouts
+///
+/// @param {Boolean} $width [true] - If `true` the width will be set to 100%.
+/// @param {String} $position [false] - Define the position property.
+/// @param {String} $display [false] - Define the display property.
+///
+/// @example
+///   .element {
+///     @include float($position: relative);
+///   }
+///
+@mixin float($width: true, $position: false, $display: false) {
+	float: left;
+	@if $width {
+		width: 100%;
+	}
+	@if $position {
+		position: $position;
+	}
+	@if $display {
+		display: $display;
+	}
+}
+
+/*
+Extend
+----------------------- */
+%float {
+	@include float();
+}

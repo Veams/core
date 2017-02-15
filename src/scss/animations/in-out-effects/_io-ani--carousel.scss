@@ -1,0 +1,225 @@
+/* ---------------------------------------------------
+Carousel
+--------------------------------------------------- */
+
+/// `Carousel: Rotate Left Out Animation`
+/// animates from center to the left with a rotation.
+///
+/// @group Animations: Carousel
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include carousel-rotate-left-out(300ms, ease-in);
+///   }
+///
+@mixin carousel-rotate-left-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 100% 50%);
+	@include prefix(animation, rotateCarouselLeftOut $transition-duration $transition-ease-method both);
+}
+
+/// `Carousel: Rotate Left In Animation`
+/// animates from left to the center with a rotation.
+///
+/// @group Animations: Carousel
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include carousel-rotate-left-in(300ms, ease-in);
+///   }
+///
+@mixin carousel-rotate-left-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 0% 50%);
+	@include prefix(animation, rotateCarouselLeftIn $transition-duration $transition-ease-method both);
+}
+
+/// `Carousel: Rotate Right Out Animation`
+/// animates from center to the right with a rotation.
+///
+/// @group Animations: Carousel
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include carousel-rotate-right-out(300ms, ease-in);
+///   }
+///
+@mixin carousel-rotate-right-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 0% 50%);
+	@include prefix(animation, rotateCarouselRightOut $transition-duration $transition-ease-method both);
+}
+
+/// `Carousel: Rotate Right In Animation`
+/// animates from right to the center with a rotation.
+///
+/// @group Animations: Carousel
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include carousel-rotate-right-in(300ms, ease-in);
+///   }
+///
+@mixin carousel-rotate-right-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 100% 50%);
+	@include prefix(animation, rotateCarouselRightIn $transition-duration $transition-ease-method both);
+}
+
+/// `Carousel: Rotate Top Out Animation`
+/// animates from center to the top with a rotation.
+///
+/// @group Animations: Carousel
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include carousel-rotate-top-out(300ms, ease-in);
+///   }
+///
+@mixin carousel-rotate-top-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 100%);
+	@include prefix(animation, rotateCarouselTopOut $transition-duration $transition-ease-method both);
+}
+
+/// `Carousel: Rotate Top In Animation`
+/// animates from top to the center with a rotation.
+///
+/// @group Animations: Carousel
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include carousel-rotate-top-in(300ms, ease-in);
+///   }
+///
+@mixin carousel-rotate-top-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 0%);
+	@include prefix(animation, rotateCarouselTopIn $transition-duration $transition-ease-method both);
+}
+
+/// `Carousel: Rotate Bottom Out Animation`
+/// animates from center to the bottom with a rotation.
+///
+/// @group Animations: Carousel
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include carousel-rotate-bottom-out(300ms, ease-in);
+///   }
+///
+@mixin carousel-rotate-bottom-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 0%);
+	@include prefix(animation, rotateCarouselBottomOut $transition-duration $transition-ease-method both);
+}
+
+/// `Carousel: Rotate Bottom In Animation`
+/// animates from bottom to the center with a rotation.
+///
+/// @group Animations: Carousel
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include carousel-rotate-bottom-in(300ms, ease-in);
+///   }
+///
+@mixin carousel-rotate-bottom-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 100%);
+	@include prefix(animation, rotateCarouselBottomIn $transition-duration $transition-ease-method both);
+}
+
+
+/* ---------------------------------------------------
+KEYFRAMES: CAROUSEL
+--------------------------------------------------- */
+
+@include keyframes(rotateCarouselLeftOut) {
+	0% {
+	}
+	100% {
+		@include prefix(transform, translateX(-200%) scale(.4) rotateY(-65deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateCarouselLeftIn) {
+	0% {
+		@include prefix(transform, translateX(200%) scale(.4) rotateY(65deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateCarouselRightOut) {
+	0% {
+	}
+	100% {
+		@include prefix(transform, translateX(200%) scale(.4) rotateY(65deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateCarouselRightIn) {
+	0% {
+		@include prefix(transform, translateX(-200%) scale(.4) rotateY(-65deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateCarouselTopOut) {
+	0% {
+	}
+	100% {
+		@include prefix(transform, translateY(-200%) scale(.4) rotateY(65deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateCarouselTopIn) {
+	0% {
+		@include prefix(transform, translateY(200%) scale(.4) rotateY(-65deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateCarouselBottomOut) {
+	0% {
+	}
+	100% {
+		@include prefix(transform, translateY(200%) scale(.4) rotateY(-65deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateCarouselBottomIn) {
+	0% {
+		opacity: .3;
+		-webkit-transform: translateY(-200%) scale(.4) rotateX(65deg);
+		transform: translateY(-200%) scale(.4) rotateX(65deg);
+	}
+}

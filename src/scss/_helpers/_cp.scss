@@ -1,0 +1,77 @@
+/// `Clear Units`
+/// turns numbers with units into unitless numbers. (https://github.com/nex3/sass/issues/533)
+///
+/// @group Helpers: Calculation
+///
+/// @param {Number} $value -  a custom value
+///
+@function clear-units($value) {
+	@if type-of($value) == "number" {
+		@if unitless($value) {
+			@return $value;
+		} @else if unit($value) == "em" {
+			@return $value / 1em;
+		} @else if unit($value) == "px" {
+			@return $value / 1px;
+		} @else if unit($value) == "pt" {
+			@return $value / 1pt;
+		}
+	} @else {
+		@warn "Not a number value: #{$value}";
+		@return $value;
+	}
+}
+/// `Calculate Percents Mixin`
+/// converts pixel into percentage based on a context width (or var).
+///
+/// @group Helpers: Calculation
+///
+/// @param {string} $property - a property which can be defined
+/// @param {Object} $px_values - pixel values (up to 4 items)
+/// @param {string} $context - context for the pixels which is a width
+///
+///
+/// @example
+/// Sample input:
+///   .element {
+///     @include cp('padding',10px 0 2px 5px, 980px);
+///   }
+///
+/// Sample output:
+///   .element {
+///     padding: 1.02041% 0 0.204082% 0.510204%; // 10px 0 2px 5px
+///    }
+///
+///
+@mixin cp($property, $px_values, $context) {
+	// clear up all units to prevent sass errors
+	// cycle trough box model values
+	$unitless_values: ();
+	@each $value in $px_values {
+		// If the value is zero, return 0
+		@if $value == 0 {
+			$unitless_values: append($unitless_values, $value);
+		} @else {
+			$unitless_values: append($unitless_values, clear-units($value));
+		}
+	}
+	// just one value possible here
+	$unitless_context: clear-units($context);
+	// If there is only one (numeric) value, return the property/value line for it.
+	@if type-of($unitless_values) == "number" {
+		#{$property}: $unitless_values / $unitless_context * 100%;
+	} @else {
+		// Create an empty list that we can dump values into
+		$percent_values: ();
+		@each $value in $unitless_values {
+			// If the value is zero, return 0
+			@if $value == 0 {
+				$percent_values: append($percent_values, $value);
+			} @else {
+				$percent_values: append($percent_values, $value / $unitless_context * 100%);
+			}
+		}
+		// Return the property and its list of converted values
+		#{$property}: $percent_values;
+	}
+}

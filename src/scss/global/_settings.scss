@@ -1,0 +1,56 @@
+/* ===================================================
+GLOBAL SETTINGS
+=================================================== */
+
+/// Prefix Webkit Variable
+/// can be overridden in your project.
+///
+/// @group Helpers: Prefix
+/// @type Bool
+$veams-webkit: true;
+
+/// Prefix Mozilla Variable
+/// can be overridden in your project.
+///
+/// @group Helpers: Prefix
+/// @type Bool
+$veams-moz: true;
+
+/// Prefix Microsoft Variable
+/// can be overridden in your project.
+///
+/// @group Helpers: Prefix
+/// @type Bool
+$veams-ms: true;
+
+/// Prefix Opera Variable
+/// can be overridden in your project.
+///
+/// @group Helpers: Prefix
+/// @type Bool
+$veams-o: true;
+
+/* ---------------------------------------------------
+Animations
+--------------------------------------------------- */
+
+/// Transition Duration Variable
+/// can be overridden in your project.
+///
+/// @group Animations
+/// @type String
+$transition-duration: 600ms;
+
+/// Transition Method Variable
+/// can be overridden in your project.
+///
+/// @group Animations
+/// @type String
+$transition-ease-method: ease;
+
+/// Transition Property Variable
+/// can be overridden in your project.
+///
+/// @group Animations
+/// @type String
+$transition-property: all;

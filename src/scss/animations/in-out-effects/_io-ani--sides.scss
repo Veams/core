@@ -1,0 +1,63 @@
+
+/* ---------------------------------------------------
+Sides
+--------------------------------------------------- */
+/// `Sides: Out`
+/// animates element by changing translateZ and adding rotation animation.
+///
+/// @group Animations: Sides
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include sides-rotate-out(300ms, ease-in);
+///   }
+///
+@mixin sides-rotate-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, -50% 50%);
+	@include prefix(animation, rotateSidesOut $transition-duration $transition-ease-method both);
+}
+
+/// `Sides: In`
+/// animates element by changing translateZ and adding rotation animation.
+///
+/// @group Animations: Sides
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include sides-rotate-in(300ms, ease-in);
+///   }
+///
+@mixin sides-rotate-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 150% 50%);
+	@include prefix(animation, rotateSidesIn $transition-duration $transition-ease-method both);
+
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: SIDES
+--------------------------------------------------- */
+
+
+@include keyframes(rotateSidesOut) {
+	0% {
+	}
+	100% {
+		@include prefix(transform, translateZ(-500px) rotateY(90deg));
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotateSidesIn) {
+	0% {
+		@include prefix(transform, translateZ(-500px) rotateY(-90deg));
+		opacity: 0;
+	}
+}

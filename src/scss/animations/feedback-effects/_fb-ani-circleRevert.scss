@@ -1,0 +1,42 @@
+/* ---------------------------------------------------
+Circle Revert
+--------------------------------------------------- */
+@mixin fb-ani-circleRevert($bgColor: rgba(0, 0, 0, 0.3), $transition-duration: $transition-duration, $transition-ease-method: ease-out forwards, $fbClass: false) {
+
+	&::after {
+		background: $bgColor;
+	}
+
+	@if $fbClass {
+		&.#{$fbClass} {
+			&::after {
+				@include prefix(animation, fb-ani-circleRevert $transition-duration $transition-ease-method);
+			}
+		}
+	} @else {
+		&:hover {
+			&::after {
+				@include prefix(animation, fb-ani-circleRevert $transition-duration $transition-ease-method);
+			}
+		}
+	}
+}
+
+/*
+Extend
+----------------------- */
+%fb-ani-circleRevert {
+	@include fb-ani-circleRevert();
+}
+
+/*
+Circle Revert Animation
+----------------------------- */
+@include keyframes(fb-ani-circleRevert) {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}

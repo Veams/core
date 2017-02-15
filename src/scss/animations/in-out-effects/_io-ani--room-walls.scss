@@ -1,0 +1,222 @@
+/* ---------------------------------------------------
+Room Walls
+--------------------------------------------------- */
+
+/// `Room: Rotate Left Out Animation`
+/// animates from center to the left with a rotation.
+///
+/// @group Animations: Room
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include room-rotate-left-out(300ms, ease-in);
+///   }
+///
+@mixin room-rotate-left-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 100% 50%);
+	@include prefix(animation, rotateRoomLeftOut $transition-duration $transition-ease-method both);
+}
+
+/// `Room: Rotate Left In Animation`
+/// animates from left to the center with a rotation.
+///
+/// @group Animations: Room
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include room-rotate-left-in(300ms, ease-in);
+///   }
+///
+@mixin room-rotate-left-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 0% 50%);
+	@include prefix(animation, rotateRoomLeftIn $transition-duration $transition-ease-method both);
+}
+
+/// `Room: Rotate Right Out Animation`
+/// animates from center to the right with a rotation.
+///
+/// @group Animations: Room
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include room-rotate-right-out(300ms, ease-in);
+///   }
+///
+@mixin room-rotate-right-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 0% 50%);
+	@include prefix(animation, rotateRoomRigthtOut $transition-duration $transition-ease-method both);
+}
+
+/// `Room: Rotate Right In Animation`
+/// animates from center to the right with a rotation.
+///
+/// @group Animations: Room
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include room-rotate-right-in(300ms, ease-in);
+///   }
+///
+@mixin room-rotate-right-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 100% 50%);
+	@include prefix(animation, rotateRoomRightIn $transition-duration $transition-ease-method both);
+}
+
+/// `Room: Rotate Top Out Animation`
+/// animates from center to the top with a rotation.
+///
+/// @group Animations: Room
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include room-rotate-top-out(300ms, ease-in);
+///   }
+///
+@mixin room-rotate-top-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 100%);
+	@include prefix(animation, rotateRoomTopOut $transition-duration $transition-ease-method both);
+}
+
+/// `Room: Rotate Top In Animation`
+/// animates from top to the center with a rotation.
+///
+/// @group Animations: Room
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include room-rotate-top-in(300ms, ease-in);
+///   }
+///
+@mixin room-rotate-top-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 0%);
+	@include prefix(animation, rotateRoomTopIn $transition-duration $transition-ease-method both);
+}
+
+/// `Room: Rotate Bottom Out Animation`
+/// animates from center to the bottom with a rotation.
+///
+/// @group Animations: Room
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include room-rotate-bottom-out(300ms, ease-in);
+///   }
+///
+@mixin room-rotate-bottom-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 0%);
+	@include prefix(animation, rotateRoomBottomOut $transition-duration $transition-ease-method both);
+}
+
+/// `Room: Rotate Bottom In Animation`
+/// animates from bottom to the center with a rotation.
+///
+/// @group Animations: Room
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include room-rotate-bottom-in(300ms, ease-in);
+///   }
+///
+@mixin room-rotate-bottom-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	@include prefix(transform-origin, 50% 100%);
+	@include prefix(animation, rotateRoomBottomIn $transition-duration $transition-ease-method both);
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: ROOM WALLS
+--------------------------------------------------- */
+@include keyframes(rotateRoomLeftOut) {
+	from {
+	}
+	to {
+		@include prefix(transform, translateX(-100%) rotateY(90deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateRoomLeftIn) {
+	from {
+		@include prefix(transform, translateX(100%) rotateY(-90deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateRoomRightOut) {
+	from {
+	}
+	to {
+		@include prefix(transform, translateX(100%) rotateY(-90deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateRoomRightIn) {
+	from {
+		@include prefix(transform, translateX(-100%) rotateY(90deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateRoomTopOut) {
+	from {
+	}
+	to {
+		@include prefix(transform, translateY(-100%) rotateX(-90deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateRoomTopIn) {
+	from {
+		@include prefix(transform, translateY(100%) rotateX(90deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateRoomBottomOut) {
+	from {
+	}
+	to {
+		@include prefix(transform, translateY(100%) rotateX(90deg));
+		opacity: .3;
+	}
+}
+
+@include keyframes(rotateRoomBottomIn) {
+	from {
+		@include prefix(transform, translateY(-100%) rotateX(-90deg));
+		opacity: .3;
+	}
+}

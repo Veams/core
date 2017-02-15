@@ -1,0 +1,85 @@
+/* ===================================================
+ARROW EFFECT
+=================================================== */
+/// `Effects: Arrow`
+/// adds an arrow to your element with pseudo elements.
+///
+/// @group Effects
+///
+/// @param {Object} $colors [#fff] - You can pass two colors for normal and hover state.
+/// @param {String} $height [60px] - Define a height for your arrow.
+/// @param {String} $direction [right] - Define a direction for your arrow.
+/// @param {Boolean} $showArrow [true] - Define the visibility of the arrow.
+/// @param {String} $transition [all 300ms ease] - Define a transition.
+///
+///
+/// @example
+///   .element {
+///     @include fx-arrow($colors: #fff #333, $height: 30px, $direction: right);
+///   }
+///
+@mixin fx-arrow(
+	$colors: #fff,
+	$height: 60px,
+	$direction: right,
+	$showArrow: true,
+	$transition: all 300ms ease
+) {
+	$color: nth($colors, 1);
+	$color-hover: if(length($colors) == 2, nth($colors, 2), $color);
+	$border-direction: false;
+
+	position: relative;
+
+	&:after {
+		@if $showArrow == true {
+			@include pseudo();
+
+			@if $transition != null {
+				@include prefix(transition, $transition);
+			}
+
+			@if $direction == right {
+				$border-direction: left;
+				top: 50%;
+				margin-top: -$height/2;
+				right: -$height/2;
+				border-top: $height/2 solid transparent;
+				border-bottom: $height/2 solid transparent;
+				border-left: $height/2 solid $color;
+			} @else if $direction == left {
+				$border-direction: right;
+				top: 50%;
+				margin-top: -$height/2;
+				left: -$height/2;
+				border-top: $height/2 solid transparent;
+				border-right: $height/2 solid $color;
+				border-bottom: $height/2 solid transparent;
+			} @else if $direction == top {
+				$border-direction: bottom;
+				left: 50%;
+				margin-left: -$height/2;
+				top: -$height/2;
+				border-right: $height/2 solid transparent;
+				border-bottom: $height/2 solid $color;
+				border-left: $height/2 solid transparent;
+			} @else if $direction == bottom {
+				$border-direction: top;
+				left: 50%;
+				margin-left: -$height/2;
+				bottom: -$height/2;
+				border-top: $height/2 solid $color;
+				border-right: $height/2 solid transparent;
+				border-left: $height/2 solid transparent;
+			}
+
+		} @else {
+			display: none;
+		}
+	}
+	&:hover {
+		&:after {
+			border-#{$border-direction}-color: $color-hover;
+		}
+	}
+}

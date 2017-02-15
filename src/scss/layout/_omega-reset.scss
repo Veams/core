@@ -1,0 +1,21 @@
+/* ===================================================
+OMEGA RESET
+
+	- used for Bourbon Neat
+=================================================== */
+/// `Layouts: Reset Omega`
+/// adds a way to reset `nth-child` in Bourbon Neat by using `flex-gutter()`.
+///
+/// @group Layouts
+///
+/// @param {Number} $nth - Number of nth-child.
+///
+/// @example
+///   .element {
+///     @include omega-reset(2);
+///   }
+///
+@mixin omega-reset($nth) {
+  &:nth-child(#{$nth}) { margin-right: flex-gutter(); }
+  &:nth-child(#{$nth}+1) { clear: none }
+}

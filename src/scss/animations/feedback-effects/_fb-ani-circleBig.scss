@@ -1,0 +1,47 @@
+/* ---------------------------------------------------
+Simple Circle
+--------------------------------------------------- */
+@mixin fb-ani-circleBig($bgColor: rgba(0, 0, 0, 0.3), $transition-duration: $transition-duration, $transition-ease-method: forwards, $fbClass: false) {
+
+	&::after {
+		background: $bgColor;
+	}
+
+	@if $fbClass {
+		&.#{$fbClass} {
+			&::after {
+				@include prefix(animation, fb-ani-circleBig $transition-duration $transition-ease-method);
+			}
+		}
+	} @else {
+		&:hover {
+			&::after {
+				@include prefix(animation, fb-ani-circleBig $transition-duration $transition-ease-method);
+			}
+		}
+	}
+}
+
+/*
+Extend
+----------------------- */
+%fb-ani-circleBig {
+	@include fb-ani-circleBig();
+}
+
+/*
+Simple Circle Animation
+----------------------------- */
+@include keyframes(fb-ani-circleBig) {
+	0% {
+		@include prefix(transform, scale3d(0.1, 0.1, 1));
+
+	}
+	25%, 50% {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		@include prefix(transform, scale3d(8, 8, 1));
+	}
+}
