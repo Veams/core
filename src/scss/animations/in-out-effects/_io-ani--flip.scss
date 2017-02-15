@@ -17,8 +17,8 @@ Flip
 ///   }
 ///
 @mixin flip-left-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, flipOutLeft $transition-duration ease-in both);
+	transform-origin: 50% 50%;
+	animation: flipOutLeft $transition-duration ease-in both;
 }
 
 /// `FLip: Flip Left In`
@@ -36,8 +36,8 @@ Flip
 ///   }
 ///
 @mixin flip-left-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, flipInLeft $transition-duration ease-out both);
+	transform-origin: 50% 50%;
+	animation: flipInLeft $transition-duration ease-out both;
 }
 
 /// `FLip: Flip Right Out`
@@ -55,8 +55,8 @@ Flip
 ///   }
 ///
 @mixin flip-right-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, flipOutRight $transition-duration ease-in both);
+	transform-origin: 50% 50%;
+	animation: flipOutRight $transition-duration ease-in both;
 }
 
 /// `FLip: Flip Right In`
@@ -74,8 +74,8 @@ Flip
 ///   }
 ///
 @mixin flip-right-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, flipInRight $transition-duration ease-out both);
+	transform-origin: 50% 50%;
+	animation: flipInRight $transition-duration ease-out both;
 }
 
 /// `FLip: Flip Top Out`
@@ -93,8 +93,8 @@ Flip
 ///   }
 ///
 @mixin flip-top-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, flipOutTop $transition-duration ease-in both);
+	transform-origin: 50% 50%;
+	animation: flipOutTop $transition-duration ease-in both;
 }
 
 /// `FLip: Flip Top In`
@@ -112,8 +112,8 @@ Flip
 ///   }
 ///
 @mixin flip-top-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, flipInTop $transition-duration ease-out both);
+	transform-origin: 50% 50%;
+	animation: flipInTop $transition-duration ease-out both;
 }
 
 /// `FLip: Flip Bottom Out`
@@ -131,8 +131,8 @@ Flip
 ///   }
 ///
 @mixin flip-bottom-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, flipOutBottom $transition-duration ease-in both);
+	transform-origin: 50% 50%;
+	animation: flipOutBottom $transition-duration ease-in both;
 }
 
 /// `FLip: Flip Bottom In`
@@ -150,8 +150,8 @@ Flip
 ///   }
 ///
 @mixin flip-bottom-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, flipInBottom $transition-duration ease-out both);
+	transform-origin: 50% 50%;
+	animation: flipInBottom $transition-duration ease-out both;
 
 }
 
@@ -163,14 +163,14 @@ KEYFRAMES: FLIP
 	from {
 	}
 	to {
-		@include prefix(transform, translateZ(-1000px) rotateY(90deg));
+		transform: translateZ(-1000px) rotateY(90deg);
 		opacity: 0.2;
 	}
 }
 
 @include keyframes(flipInLeft) {
 	from {
-		@include prefix(transform, translateZ(-1000px) rotateY(-90deg));
+		transform: translateZ(-1000px) rotateY(-90deg);
 		opacity: 0.2;
 	}
 }
@@ -179,14 +179,14 @@ KEYFRAMES: FLIP
 	from {
 	}
 	to {
-		@include prefix(transform, translateZ(-1000px) rotateY(-90deg));
+		transform: translateZ(-1000px) rotateY(-90deg);
 		opacity: 0.2;
 	}
 }
 
 @include keyframes(flipInRight) {
 	from {
-		@include prefix(transform, translateZ(-1000px) rotateY(90deg));
+		transform: translateZ(-1000px) rotateY(90deg);
 		opacity: 0.2;
 	}
 }
@@ -195,16 +195,14 @@ KEYFRAMES: FLIP
 	from {
 	}
 	to {
-		@include prefix(transform, translateZ(-1000px) rotateX(90deg));
-
+		transform: translateZ(-1000px) rotateX(90deg);
 		opacity: 0.2;
 	}
 }
 
 @include keyframes(flipInBottom) {
 	from {
-		@include prefix(transform, translateZ(-1000px) rotateX(-90deg));
-
+		transform: translateZ(-1000px) rotateX(-90deg);
 		opacity: 0.2;
 	}
 }
@@ -213,16 +211,14 @@ KEYFRAMES: FLIP
 	from {
 	}
 	to {
-		@include prefix(transform, translateZ(-1000px) rotateX(-90deg));
-
+		transform: translateZ(-1000px) rotateX(-90deg);
 		opacity: 0.2;
 	}
 }
 
 @include keyframes(flipInTop) {
 	from {
-		@include prefix(transform, translateZ(-1000px) rotateX(90deg));
-
+		transform: translateZ(-1000px) rotateX(90deg);
 		opacity: 0.2;
 	}
 }

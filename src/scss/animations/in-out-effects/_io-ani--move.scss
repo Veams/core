@@ -21,7 +21,7 @@ Move From To
 ///   }
 ///
 @mixin move-to-left($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveToLeft $transition-duration $transition-ease-method both);
+	animation: moveToLeft $transition-duration $transition-ease-method both;
 }
 
 /// `Move: From Left`
@@ -39,7 +39,7 @@ Move From To
 ///   }
 ///
 @mixin move-from-left($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveFromLeft $transition-duration $transition-ease-method both);
+	animation: moveFromLeft $transition-duration $transition-ease-method both;
 }
 
 /// `Move: To Right`
@@ -57,7 +57,7 @@ Move From To
 ///   }
 ///
 @mixin move-to-right($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveToRight $transition-duration $transition-ease-method both);
+	animation: moveToRight $transition-duration $transition-ease-method both;
 }
 
 /// `Move: From Right`
@@ -75,7 +75,7 @@ Move From To
 ///   }
 ///
 @mixin move-from-right($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveFromRight $transition-duration $transition-ease-method both);
+	animation: moveFromRight $transition-duration $transition-ease-method both;
 }
 
 /// `Move: To Top`
@@ -93,7 +93,7 @@ Move From To
 ///   }
 ///
 @mixin move-to-top($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveToTop $transition-duration $transition-ease-method both);
+	animation: moveToTop $transition-duration $transition-ease-method both;
 }
 
 /// `Move: From Top`
@@ -111,7 +111,7 @@ Move From To
 ///   }
 ///
 @mixin move-from-top($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveFromTop $transition-duration $transition-ease-method both);
+	animation: moveFromTop $transition-duration $transition-ease-method both;
 }
 
 /// `Move: To Bottom`
@@ -129,7 +129,7 @@ Move From To
 ///   }
 ///
 @mixin move-to-bottom($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveToBottom $transition-duration $transition-ease-method both);
+	animation: moveToBottom $transition-duration $transition-ease-method both;
 }
 
 /// `Move: From Bottom`
@@ -147,7 +147,7 @@ Move From To
 ///   }
 ///
 @mixin move-from-bottom($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveFromBottom $transition-duration $transition-ease-method both);
+	animation: moveFromBottom $transition-duration $transition-ease-method both;
 }
 
 /*
@@ -168,7 +168,7 @@ Fade
 ///   }
 ///
 @mixin fade-it($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, fade $transition-duration $transition-ease-method both);
+	animation: fade $transition-duration $transition-ease-method both;
 }
 
 /*
@@ -190,7 +190,7 @@ Move From To and Fade
 ///   }
 ///
 @mixin move-to-left-fade($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveToLeftFade $transition-duration $transition-ease-method both);
+	animation: moveToLeftFade $transition-duration $transition-ease-method both;
 }
 
 /// `Move: From Left With Fade`
@@ -208,7 +208,7 @@ Move From To and Fade
 ///   }
 ///
 @mixin move-from-left-fade($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveFromLeftFade $transition-duration $transition-ease-method both);
+	animation: moveFromLeftFade $transition-duration $transition-ease-method both;
 }
 
 /// `Move: To Right With Fade`
@@ -226,7 +226,7 @@ Move From To and Fade
 ///   }
 ///
 @mixin move-to-right-fade($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveToRightFade $transition-duration $transition-ease-method both);
+	animation: moveToRightFade $transition-duration $transition-ease-method both;
 }
 
 /// `Move: From Right With Fade`
@@ -244,7 +244,7 @@ Move From To and Fade
 ///   }
 ///
 @mixin move-from-right-fade($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveFromRightFade $transition-duration $transition-ease-method both);
+	animation: moveFromRightFade $transition-duration $transition-ease-method both;
 }
 
 /// `Move: To Top With Fade`
@@ -262,7 +262,7 @@ Move From To and Fade
 ///   }
 ///
 @mixin move-to-top-fade($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveToTopFade $transition-duration $transition-ease-method both);
+	animation: moveToTopFade $transition-duration $transition-ease-method both;
 }
 
 /// `Move: From Top With Fade`
@@ -280,7 +280,7 @@ Move From To and Fade
 ///   }
 ///
 @mixin move-from-top-fade($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveFromTopFade $transition-duration $transition-ease-method both);
+	animation: moveFromTopFade $transition-duration $transition-ease-method both;
 }
 
 /// `Move: To Bottom With Fade`
@@ -298,7 +298,7 @@ Move From To and Fade
 ///   }
 ///
 @mixin move-to-bottom-fade($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveToBottomFade $transition-duration $transition-ease-method both);
+	animation: moveToBottomFade $transition-duration $transition-ease-method both;
 }
 
 /// `Move: From Bottom With Fade`
@@ -316,7 +316,7 @@ Move From To and Fade
 ///   }
 ///
 @mixin move-from-bottom-fade($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, moveFromBottomFade $transition-duration $transition-ease-method both);
+	animation: moveFromBottomFade $transition-duration $transition-ease-method both;
 }
 
 /* ---------------------------------------------------
@@ -327,15 +327,15 @@ Keyframes: MOVE FROM TO AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, translateX(-100%));
-		@include prefix(transform, translate3d(-100%, 0, 0));
+		transform: translateX(-100%);
+		transform: translate3d(-100%, 0, 0);
 	}
 }
 
 @include keyframes(moveFromLeft) {
 	from {
-		@include prefix(transform, translateX(-100%));
-		@include prefix(transform, translate3d(-100%, 0, 0));
+		transform: translateX(-100%);
+		transform: translate3d(-100%, 0, 0);
 	}
 }
 
@@ -343,15 +343,15 @@ Keyframes: MOVE FROM TO AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, translateX(100%));
-		@include prefix(transform, translate3d(100%, 0, 0));
+		transform: translateX(100%);
+		transform: translate3d(100%, 0, 0);
 	}
 }
 
 @include keyframes(moveFromRight) {
 	from {
-		@include prefix(transform, translateX(100%));
-		@include prefix(transform, translate3d(100%, 0, 0));
+		transform: translateX(100%);
+		transform: translate3d(100%, 0, 0);
 	}
 }
 
@@ -359,15 +359,15 @@ Keyframes: MOVE FROM TO AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, translateY(-100%));
-		@include prefix(transform, translate3d(0, -100%, 0));
+		transform: translateY(-100%);
+		transform: translate3d(0, -100%, 0);
 	}
 }
 
 @include keyframes(moveFromTop) {
 	from {
-		@include prefix(transform, translateY(-100%));
-		@include prefix(transform, translate3d(0, -100%, 0));
+		transform: translateY(-100%);
+		transform: translate3d(0, -100%, 0);
 	}
 }
 
@@ -375,15 +375,15 @@ Keyframes: MOVE FROM TO AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, translateY(100%));
-		@include prefix(transform, translate3d(0, 100%, 0));
+		transform: translateY(100%);
+		transform: translate3d(0, 100%, 0);
 	}
 }
 
 @include keyframes(moveFromBottom) {
 	from {
-		@include prefix(transform, translateY(100%));
-		@include prefix(transform, translate3d(0, 100%, 0));
+		transform: translateY(100%);
+		transform: translate3d(0, 100%, 0);
 	}
 }
 
@@ -401,16 +401,16 @@ Keyframes: MOVE FROM TO AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, translateX(-100%));
-		@include prefix(transform, translate3d(-100%, 0, 0));
+		transform: translateX(-100%);
+		transform: translate3d(-100%, 0, 0);
 		opacity: 0;
 	}
 }
 
 @include keyframes(moveFromLeftFade) {
 	from {
-		@include prefix(transform, translateX(-100%));
-		@include prefix(transform, translate3d(-100%, 0, 0));
+		transform: translateX(-100%);
+		transform: translate3d(-100%, 0, 0);
 		opacity: 0;
 	}
 }
@@ -419,16 +419,16 @@ Keyframes: MOVE FROM TO AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, translateX(100%));
-		@include prefix(transform, translate3d(100%, 0, 0));
+		transform: translateX(100%);
+		transform: translate3d(100%, 0, 0);
 		opacity: 0;
 	}
 }
 
 @include keyframes(moveFromRightFade) {
 	from {
-		@include prefix(transform, translateX(100%));
-		@include prefix(transform, translate3d(100%, 0, 0));
+		transform: translateX(100%);
+		transform: translate3d(100%, 0, 0);
 		opacity: 0;
 	}
 }
@@ -437,16 +437,16 @@ Keyframes: MOVE FROM TO AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, translateY(-100%));
-		@include prefix(transform, translate3d(0, -100%, 0));
+		transform: translateY(-100%);
+		transform: translate3d(0, -100%, 0);
 		opacity: 0;
 	}
 }
 
 @include keyframes(moveFromTopFade) {
 	from {
-		@include prefix(transform, translateY(-100%));
-		@include prefix(transform, translate3d(0, -100%, 0));
+		transform: translateY(-100%);
+		transform: translate3d(0, -100%, 0);
 		opacity: 0;
 	}
 }
@@ -455,16 +455,16 @@ Keyframes: MOVE FROM TO AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, translateY(100%));
-		@include prefix(transform, translate3d(0, 100%, 0));
+		transform: translateY(100%);
+		transform: translate3d(0, 100%, 0);
 		opacity: 0;
 	}
 }
 
 @include keyframes(moveFromBottomFade) {
 	from {
-		@include prefix(transform, translateY(100%));
-		@include prefix(transform, translate3d(0, 100%, 0));
+		transform: translateY(100%);
+		transform: translate3d(0, 100%, 0);
 		opacity: 0;
 	}
 }

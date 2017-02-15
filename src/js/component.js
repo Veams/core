@@ -13,9 +13,9 @@ if (!Veams.$) {
 /**
  * Imports
  */
-import stringHelpers from '../utils/internal-helpers/string';
-import getStringValue from '../utils/internal-helpers/get-string-value';
-import tplEngine from '../utils/internal-helpers/template-engine';
+import stringHelpers from './utils/internal-helpers/string';
+import getStringValue from './utils/internal-helpers/get-string-value';
+import tplEngine from './utils/internal-helpers/template-engine';
 
 /**
  * Variables

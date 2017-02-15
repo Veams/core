@@ -11,19 +11,19 @@ Multiple Border
 	@if $fbClass {
 		&.#{$fbClass} {
 			&::before {
-				@include prefix(animation, fb-ani-borderMultiple1 $transition-duration $transition-ease-method);
+				animation: fb-ani-borderMultiple1 $transition-duration $transition-ease-method
 			}
 			&::after {
-				@include prefix(animation, fb-ani-borderMultiple2 $transition-duration $transition-ease-method);
+				animation: fb-ani-borderMultiple2 $transition-duration $transition-ease-method
 			}
 		}
 	} @else {
 		&:hover {
 			&::before {
-				@include prefix(animation, fb-ani-borderMultiple1 $transition-duration $transition-ease-method);
+				animation: fb-ani-borderMultiple1 $transition-duration $transition-ease-method
 			}
 			&::after {
-				@include prefix(animation, fb-ani-borderMultiple2 $transition-duration $transition-ease-method);
+				animation: fb-ani-borderMultiple2 $transition-duration $transition-ease-method
 			}
 		}
 	}
@@ -44,23 +44,23 @@ Extend
 Multiple Border Animation
 ----------------------------- */
 @include keyframes(fb-ani-borderMultiple1) {
-	0% {
-		opacity: 1;
-		@include prefix(transform, scale3d(0.5, 0.5, 1));
-	}
+^ 0 % {
+	opacity: 1;
+	transform: scale3d(0.5, 0.5, 1)
+}
 	100% {
 		opacity: 0;
-		@include prefix(transform, scale3d(1.1, 1.1, 1));
+		transform: scale3d(1.1, 1.1, 1)
 	}
 }
 
 @include keyframes(fb-ani-borderMultiple2) {
 	0% {
 		opacity: 1;
-		@include prefix(transform, scale3d(0.5, 0.5, 1));
+		transform: scale3d(0.5, 0.5, 1)
 	}
 	50%, 100% {
 		opacity: 0;
-		@include prefix(transform, scale3d(1.2, 1.2, 1));
+		transform: scale3d(1.2, 1.2, 1)
 	}
 }

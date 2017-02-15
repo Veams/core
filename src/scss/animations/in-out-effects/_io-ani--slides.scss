@@ -17,7 +17,7 @@ Slides
 ///   }
 ///
 @mixin slide-rotate-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, rotateSlideOut $transition-duration $transition-ease-method both);
+	animation: rotateSlideOut $transition-duration $transition-ease-method both;
 }
 
 /// `Slide: In`
@@ -35,7 +35,7 @@ Slides
 ///   }
 ///
 @mixin slide-rotate-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, rotateSlideIn $transition-duration $transition-ease-method both);
+	animation: rotateSlideIn $transition-duration $transition-ease-method both;
 }
 
 /* ---------------------------------------------------
@@ -46,30 +46,30 @@ KEYFRAMES: SLIDES
 	0% {
 	}
 	25% {
-		@include prefix(transform, translateZ(-500px));
+		transform: translateZ(-500px);
 		opacity: .5;
 	}
 	75% {
-		@include prefix(transform, translateZ(-500px) translateX(-200%));
+		transform: translateZ(-500px) translateX(-200%);
 		opacity: .5;
 	}
 	100% {
-		@include prefix(transform, translateZ(-500px) translateX(-200%));
+		transform: translateZ(-500px) translateX(-200%);
 		opacity: .5;
 	}
 }
 
 @include keyframes(rotateSlideIn) {
 	0%, 25% {
-		@include prefix(transform, translateZ(-500px) translateX(200%));
+		transform: translateZ(-500px) translateX(200%);
 		opacity: .5;
 	}
 	75% {
-		@include prefix(transform, translateZ(-500px));
+		transform: translateZ(-500px);
 		opacity: .5;
 	}
 	100% {
-		@include prefix(transform, translateZ(0) translateX(0));
+		transform: translateZ(0) translateX(0);
 		opacity: 1;
 	}
 }

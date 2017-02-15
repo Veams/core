@@ -9,7 +9,7 @@ Reset Button
 ///
 /// @example
 ///   .element {
-///     @include reset-btn(300ms, ease-in);
+///     @include reset-btn();
 ///   }
 ///
 @mixin reset-btn() {

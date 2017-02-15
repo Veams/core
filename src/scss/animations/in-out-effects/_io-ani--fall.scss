@@ -14,8 +14,8 @@
 ///   }
 ///
 @mixin rotate-fall($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 0% 0%);
-	@include prefix(animation, rotateFall $transition-duration ease-in both);
+	transform-origin: 0 0;
+	animation: rotateFall $transition-duration ease-in both;
 }
 
 /* ---------------------------------------------------
@@ -23,19 +23,19 @@ KEYFRAMES: FALL
 --------------------------------------------------- */
 @include keyframes(rotateFall) {
 	0% {
-		@include prefix(transform, rotateZ(0deg));
+		transform: rotateZ(0deg);
 	}
 	20% {
-		@include prefix(transform, rotateZ(10deg));
-		@include prefix(animation-timing-function, $transition-ease-method);
+		transform: rotateZ(10deg);
+		animation-timing-function: $transition-ease-method;
 	}
 	40% {
-		@include prefix(transform, rotateZ(17deg));
+		transform: rotateZ(17deg);
 	}
 	60% {
-		@include prefix(transform, rotateZ(16deg));
+		transform: rotateZ(16deg);
 	}
 	100% {
-		@include prefix(transform, translateY(100%) rotateZ(17deg));
+		transform: translateY(100%) rotateZ(17deg);
 	}
 }

@@ -22,8 +22,8 @@ Push
 ///   }
 ///
 @mixin push-left-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 0% 50%);
-	@include prefix(animation, rotatePushLeft $transition-duration $transition-ease-method both);
+	transform-origin: 0% 50%;
+	animation: rotatePushLeft $transition-duration $transition-ease-method both;
 }
 
 /// `Push: To Right With Rotation`
@@ -41,8 +41,8 @@ Push
 ///   }
 ///
 @mixin  push-right-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 100% 50%);
-	@include prefix(animation, rotatePushRight $transition-duration $transition-ease-method both);
+	transform-origin: 100% 50%;
+	animation: rotatePushRight $transition-duration $transition-ease-method both;
 }
 
 /// `Push: To Top With Rotation`
@@ -60,8 +60,8 @@ Push
 ///   }
 ///
 @mixin push-top-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 0%);
-	@include prefix(animation, rotatePushTop $transition-duration $transition-ease-method both);
+	transform-origin: 50% 0%;
+	animation: rotatePushTop $transition-duration $transition-ease-method both;
 }
 
 /// `Push: To Bottom With Rotation`
@@ -79,8 +79,8 @@ Push
 ///   }
 ///
 @mixin push-bottom-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 100%);
-	@include prefix(animation, rotatePushBottom $transition-duration $transition-ease-method both);
+	transform-origin: 50% 100%;
+	animation: rotatePushBottom $transition-duration $transition-ease-method both;
 }
 
 /*
@@ -102,8 +102,8 @@ Pull
 ///   }
 ///
 @mixin pull-left-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 0% 50%);
-	@include prefix(animation, rotatePullLeft $transition-duration $transition-ease-method both);
+	transform-origin: 0% 50%;
+	animation: rotatePullLeft $transition-duration $transition-ease-method both;
 }
 
 /// `Pull: From Right With Rotation`
@@ -121,8 +121,8 @@ Pull
 ///   }
 ///
 @mixin pull-right-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 100% 50%);
-	@include prefix(animation, rotatePullRight $transition-duration $transition-ease-method both);
+	transform-origin: 100% 50%;
+	animation: rotatePullRight $transition-duration $transition-ease-method both;
 }
 
 /// `Pull: From Top With Rotation`
@@ -140,8 +140,8 @@ Pull
 ///   }
 ///
 @mixin pull-top-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 0%);
-	@include prefix(animation, rotatePullTop $transition-duration $transition-ease-method both);
+	transform-origin: 50% 0%;
+	animation: rotatePullTop $transition-duration $transition-ease-method both;
 }
 
 /// `Pull: From Bottom With Rotation`
@@ -159,8 +159,8 @@ Pull
 ///   }
 ///
 @mixin pull-bottom-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 100%);
-	@include prefix(animation, rotatePullBottom $transition-duration $transition-ease-method both);
+	transform-origin: 50% 100%;
+	animation: rotatePullBottom $transition-duration $transition-ease-method both;
 }
 
 /* ---------------------------------------------------
@@ -175,7 +175,7 @@ Push
 	from {
 	}
 	to {
-		@include prefix(transform, rotateY(90deg));
+		transform: rotateY(90deg);
 		opacity: 0;
 	}
 }
@@ -184,7 +184,7 @@ Push
 	from {
 	}
 	to {
-		@include prefix(transform, rotateY(-90deg));
+		transform: rotateY(-90deg);
 		opacity: 0;
 	}
 }
@@ -193,7 +193,7 @@ Push
 	from {
 	}
 	to {
-		@include prefix(transform, rotateX(-90deg));
+		transform: rotateX(-90deg);
 		opacity: 0;
 	}
 }
@@ -202,7 +202,7 @@ Push
 	from {
 	}
 	to {
-		@include prefix(transform, rotateX(90deg));
+		transform: rotateX(90deg);
 		opacity: 0;
 	}
 }
@@ -213,28 +213,28 @@ Pull
 
 @include keyframes(rotatePullRight) {
 	from {
-		@include prefix(transform, rotateY(-90deg));
+		transform: rotateY(-90deg);
 		opacity: 0;
 	}
 }
 
 @include keyframes(rotatePullLeft) {
 	from {
-		@include prefix(transform, rotateY(90deg));
+		transform: rotateY(90deg);
 		opacity: 0;
 	}
 }
 
 @include keyframes(rotatePullTop) {
 	from {
-		@include prefix(transform, rotateX(-90deg));
+		transform: rotateX(-90deg);
 		opacity: 0;
 	}
 }
 
 @include keyframes(rotatePullBottom) {
 	from {
-		@include prefix(transform, rotateX(90deg));
+		transform: rotateX(90deg);
 		opacity: 0;
 	}
 }

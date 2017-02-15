@@ -17,8 +17,8 @@ Carousel
 ///   }
 ///
 @mixin carousel-rotate-left-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 100% 50%);
-	@include prefix(animation, rotateCarouselLeftOut $transition-duration $transition-ease-method both);
+	transform-origin: 100% 50%;
+	animation: rotateCarouselLeftOut $transition-duration $transition-ease-method both;
 }
 
 /// `Carousel: Rotate Left In Animation`
@@ -36,8 +36,8 @@ Carousel
 ///   }
 ///
 @mixin carousel-rotate-left-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 0% 50%);
-	@include prefix(animation, rotateCarouselLeftIn $transition-duration $transition-ease-method both);
+	transform-origin: 0 50%;
+	animation: rotateCarouselLeftIn $transition-duration $transition-ease-method both;
 }
 
 /// `Carousel: Rotate Right Out Animation`
@@ -55,8 +55,8 @@ Carousel
 ///   }
 ///
 @mixin carousel-rotate-right-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 0% 50%);
-	@include prefix(animation, rotateCarouselRightOut $transition-duration $transition-ease-method both);
+	transform-origin: 0 50%;
+	animation: rotateCarouselRightOut $transition-duration $transition-ease-method both;
 }
 
 /// `Carousel: Rotate Right In Animation`
@@ -74,8 +74,8 @@ Carousel
 ///   }
 ///
 @mixin carousel-rotate-right-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 100% 50%);
-	@include prefix(animation, rotateCarouselRightIn $transition-duration $transition-ease-method both);
+	transform-origin: 100% 50%;
+	animation: rotateCarouselRightIn $transition-duration $transition-ease-method both;
 }
 
 /// `Carousel: Rotate Top Out Animation`
@@ -93,8 +93,8 @@ Carousel
 ///   }
 ///
 @mixin carousel-rotate-top-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 100%);
-	@include prefix(animation, rotateCarouselTopOut $transition-duration $transition-ease-method both);
+	transform-origin: 50% 100%;
+	animation: rotateCarouselTopOut $transition-duration $transition-ease-method both;
 }
 
 /// `Carousel: Rotate Top In Animation`
@@ -112,8 +112,8 @@ Carousel
 ///   }
 ///
 @mixin carousel-rotate-top-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 0%);
-	@include prefix(animation, rotateCarouselTopIn $transition-duration $transition-ease-method both);
+	transform-origin: 50% 0%;
+	animation: rotateCarouselTopIn $transition-duration $transition-ease-method both;
 }
 
 /// `Carousel: Rotate Bottom Out Animation`
@@ -131,8 +131,8 @@ Carousel
 ///   }
 ///
 @mixin carousel-rotate-bottom-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 0%);
-	@include prefix(animation, rotateCarouselBottomOut $transition-duration $transition-ease-method both);
+	transform-origin: 50% 0;
+	animation: rotateCarouselBottomOut $transition-duration $transition-ease-method both
 }
 
 /// `Carousel: Rotate Bottom In Animation`
@@ -150,8 +150,8 @@ Carousel
 ///   }
 ///
 @mixin carousel-rotate-bottom-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 100%);
-	@include prefix(animation, rotateCarouselBottomIn $transition-duration $transition-ease-method both);
+	transform-origin: 50% 100%;
+	animation: rotateCarouselBottomIn $transition-duration $transition-ease-method both;
 }
 
 
@@ -163,14 +163,14 @@ KEYFRAMES: CAROUSEL
 	0% {
 	}
 	100% {
-		@include prefix(transform, translateX(-200%) scale(.4) rotateY(-65deg));
+		transform: translateX(-200%) scale(.4) rotateY(-65deg);
 		opacity: .3;
 	}
 }
 
 @include keyframes(rotateCarouselLeftIn) {
 	0% {
-		@include prefix(transform, translateX(200%) scale(.4) rotateY(65deg));
+		transform: translateX(200%) scale(.4) rotateY(65deg);
 		opacity: .3;
 	}
 }
@@ -179,14 +179,14 @@ KEYFRAMES: CAROUSEL
 	0% {
 	}
 	100% {
-		@include prefix(transform, translateX(200%) scale(.4) rotateY(65deg));
+		transform: translateX(200%) scale(.4) rotateY(65deg);
 		opacity: .3;
 	}
 }
 
 @include keyframes(rotateCarouselRightIn) {
 	0% {
-		@include prefix(transform, translateX(-200%) scale(.4) rotateY(-65deg));
+		transform: translateX(-200%) scale(.4) rotateY(-65deg);
 		opacity: .3;
 	}
 }
@@ -195,14 +195,14 @@ KEYFRAMES: CAROUSEL
 	0% {
 	}
 	100% {
-		@include prefix(transform, translateY(-200%) scale(.4) rotateY(65deg));
+		transform: translateY(-200%) scale(.4) rotateY(65deg);
 		opacity: .3;
 	}
 }
 
 @include keyframes(rotateCarouselTopIn) {
 	0% {
-		@include prefix(transform, translateY(200%) scale(.4) rotateY(-65deg));
+		transform: translateY(200%) scale(.4) rotateY(-65deg);
 		opacity: .3;
 	}
 }
@@ -211,7 +211,7 @@ KEYFRAMES: CAROUSEL
 	0% {
 	}
 	100% {
-		@include prefix(transform, translateY(200%) scale(.4) rotateY(-65deg));
+		transform: translateY(200%) scale(.4) rotateY(-65deg);
 		opacity: .3;
 	}
 }
@@ -219,7 +219,6 @@ KEYFRAMES: CAROUSEL
 @include keyframes(rotateCarouselBottomIn) {
 	0% {
 		opacity: .3;
-		-webkit-transform: translateY(-200%) scale(.4) rotateX(65deg);
 		transform: translateY(-200%) scale(.4) rotateX(65deg);
 	}
 }

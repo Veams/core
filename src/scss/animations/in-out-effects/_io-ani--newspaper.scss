@@ -17,8 +17,8 @@ Rotate Newspaper
 ///   }
 ///
 @mixin newspaper-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, rotateOutNewspaper $transition-duration ease-in both);
+	transform-origin: 50% 50%;
+	animation: rotateOutNewspaper $transition-duration ease-in both;
 }
 
 /// `Newspaper: Rotate In`
@@ -36,8 +36,8 @@ Rotate Newspaper
 ///   }
 ///
 @mixin newspaper-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(transform-origin, 50% 50%);
-	@include prefix(animation, rotateInNewspaper $transition-duration ease-out both);
+	transform-origin: 50% 50%;
+	animation: rotateInNewspaper $transition-duration ease-out both;
 }
 
 /* ---------------------------------------------------
@@ -48,13 +48,13 @@ KEYFRAMES: NEWSPAPER
 	}
 	to {
 		opacity: 0;
-		@include prefix(transform, translateZ(-3000px) rotateZ(360deg));
+		transform: translateZ(-3000px) rotateZ(360deg);
 	}
 }
 
 @include keyframes(rotateInNewspaper) {
 	from {
 		opacity: 0;
-		@include prefix(transform, translateZ(-3000px) rotateZ(-360deg));
+		transform: translateZ(-3000px) rotateZ(-360deg);
 	}
 }

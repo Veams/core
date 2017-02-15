@@ -17,7 +17,7 @@ Scale and Fade
 ///   }
 ///
 @mixin scale-down($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, scaleDown $transition-duration $transition-ease-method both);
+	animation: scaleDown $transition-duration $transition-ease-method both;
 }
 
 /// `Scale: Up`
@@ -35,7 +35,7 @@ Scale and Fade
 ///   }
 ///
 @mixin scale-up($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, scaleUp $transition-duration $transition-ease-method both);
+	animation: scaleUp $transition-duration $transition-ease-method both;
 }
 /// `Scale: Down Center`
 /// animates element scaling factor.
@@ -52,7 +52,7 @@ Scale and Fade
 ///   }
 ///
 @mixin scale-down-center($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, scaleDownCenter $transition-duration $transition-ease-method both);
+	animation: scaleDownCenter $transition-duration $transition-ease-method both;
 }
 
 /// `Scale: Up Center`
@@ -70,7 +70,7 @@ Scale and Fade
 ///   }
 ///
 @mixin scale-up-center($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
-	@include prefix(animation, scaleUpCenter $transition-duration $transition-ease-method both);
+	animation: scaleUpCenter $transition-duration $transition-ease-method both;
 }
 
 /* ---------------------------------------------------
@@ -82,14 +82,14 @@ KEYFRAMES: SCALE AND FADE
 	}
 	to {
 		opacity: 0;
-		@include prefix(transform, scale(.8));
+		transform: scale(.8);
 	}
 }
 
 @include keyframes(scaleUp) {
 	from {
 		opacity: 0;
-		@include prefix(transform, scale(.8));
+		transform: scale(.8);
 	}
 }
 
@@ -97,13 +97,13 @@ KEYFRAMES: SCALE AND FADE
 	from {
 	}
 	to {
-		@include prefix(transform, scale(.7));
+		transform: scale(.7);
 	}
 }
 
 @include keyframes(scaleUpCenter) {
 	from {
 		opacity: 0;
-		@include prefix(transform, scale(.7));
+		transform: scale(.7);
 	}
 }

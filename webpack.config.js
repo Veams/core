@@ -2,9 +2,7 @@ var webpack = require('webpack');
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var path = require('path');
 var env = require('yargs').argv.mode;
-
 var libraryName = '[name]';
-
 var plugins = [], outputFile;
 
 if (env === 'build') {
@@ -16,15 +14,15 @@ if (env === 'build') {
 
 var config = {
 	entry: {
-		'veams': __dirname + '/src/index.js',
-		'common/component': __dirname + '/src/common/component.js',
-		'plugins/dom': __dirname + '/src/plugins/dom.js',
-		'plugins/logger': __dirname + '/src/plugins/logger.js',
-		'plugins/media-query-handler': __dirname + '/src/plugins/media-query-handler.js',
-		'plugins/mixins': __dirname + '/src/plugins/mixins.js',
-		'plugins/modules': __dirname + '/src/plugins/modules.js',
-		'plugins/templater': __dirname + '/src/plugins/templater.js',
-		'plugins/vent': __dirname + '/src/plugins/vent.js'
+		'veams': __dirname + '/src/js/index.js',
+		'common/component': __dirname + '/src/js/common/component.js',
+		'plugins/dom': __dirname + '/src/js/plugins/dom.js',
+		'plugins/logger': __dirname + '/src/js/plugins/logger.js',
+		'plugins/media-query-handler': __dirname + '/src/js/plugins/media-query-handler.js',
+		'plugins/mixins': __dirname + '/src/js/plugins/mixins.js',
+		'plugins/modules': __dirname + '/src/js/plugins/modules.js',
+		'plugins/templater': __dirname + '/src/js/plugins/templater.js',
+		'plugins/vent': __dirname + '/src/js/plugins/vent.js'
 	},
 	devtool: 'source-map',
 	output: {

@@ -21,18 +21,18 @@ CENTERING MIXIN
 
 	@if $scope == "v" {
 		top: 50%;
-		@include prefix('transform', translateY(-50%));
+		transform: translateY(-50%);
 	}
 
 	@if $scope == "h" {
 		left: 50%;
-		@include prefix('transform', translateX(-50%));
+		transform: translateX(-50%);
 
 	}
 
 	@if $scope == "hv" {
 		top: 50%;
 		left: 50%;
-		@include prefix('transform', translate(-50%, -50%));
+		transform: translate(-50%, -50%);
 	}
 }

@@ -19,7 +19,7 @@ $min-width: false !default;
 ///
 ///
 /// @example scss - `min-width`
-///   $mobile-first: true;
+///   $min-width: true;
 ///   @include bp(400px){
 ///     color: red;
 ///   };
@@ -30,7 +30,7 @@ $min-width: false !default;
 ///     }
 ///
 /// @example scss - `max-width`
-///   $mobile-first: false;
+///   $min-width: false;
 ///   @include bp(400px){
 ///     color: red;
 ///   };

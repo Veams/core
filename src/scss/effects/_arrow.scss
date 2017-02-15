@@ -36,7 +36,7 @@ ARROW EFFECT
 			@include pseudo();
 
 			@if $transition != null {
-				@include prefix(transition, $transition);
+				transition: $transition;
 			}
 
 			@if $direction == right {

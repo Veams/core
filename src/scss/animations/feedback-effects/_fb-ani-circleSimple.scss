@@ -10,13 +10,13 @@ Simple Circle
 	@if $fbClass {
 		&.#{$fbClass} {
 			&::after {
-				@include prefix(animation, fb-ani-circleSimple $transition-duration $transition-ease-method);
+				animation: fb-ani-circleSimple $transition-duration $transition-ease-method;
 			}
 		}
 	} @else {
 		&:hover {
 			&::after {
-				@include prefix(animation, fb-ani-circleSimple $transition-duration $transition-ease-method);
+				animation: fb-ani-circleSimple $transition-duration $transition-ease-method;
 			}
 		}
 	}
@@ -33,7 +33,7 @@ Simple Circle Animation
 ----------------------------- */
 @include keyframes(fb-ani-circleSimple) {
 	0% {
-		@include prefix(transform, scale3d(0.3, 0.3, 1));
+		transform: scale3d(0.3, 0.3, 1);
 
 	}
 	25%, 50% {
@@ -41,6 +41,6 @@ Simple Circle Animation
 	}
 	to {
 		opacity: 0;
-		@include prefix(transform, scale3d(1.2, 1.2, 1));
+		transform: scale3d(1.2, 1.2, 1);
 	}
 }

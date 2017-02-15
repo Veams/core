@@ -20,30 +20,6 @@
 ///
 
 @mixin keyframes($name) {
-	@if $veams-webkit == true {
-		@-webkit-keyframes #{$name} {
-			@content;
-		}
-	}
-
-	@if $veams-moz == true {
-		@-moz-keyframes #{$name} {
-			@content;
-		}
-	}
-
-	@if $veams-ms == true {
-		@-ms-keyframes #{$name} {
-			@content;
-		}
-	}
-
-	@if $veams-o == true {
-		@-o-keyframes #{$name} {
-			@content;
-		}
-	}
-
 	@keyframes #{$name} {
 		@content;
 	}

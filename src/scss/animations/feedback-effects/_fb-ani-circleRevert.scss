@@ -10,13 +10,13 @@ Circle Revert
 	@if $fbClass {
 		&.#{$fbClass} {
 			&::after {
-				@include prefix(animation, fb-ani-circleRevert $transition-duration $transition-ease-method);
+				animation: fb-ani-circleRevert $transition-duration $transition-ease-method;
 			}
 		}
 	} @else {
 		&:hover {
 			&::after {
-				@include prefix(animation, fb-ani-circleRevert $transition-duration $transition-ease-method);
+				animation: fb-ani-circleRevert $transition-duration $transition-ease-method;
 			}
 		}
 	}
