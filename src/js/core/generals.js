@@ -9,7 +9,7 @@ import use from './use';
  */
 import EVENTS from '../utils/events';
 import VeamsCore from './core';
-import VeamsHelpers from '../plugins/helpers'
+import VeamsHelpers from '../plugins/helpers';
 
 /**
  * @namespace Veams
@@ -29,6 +29,7 @@ let Veams = Veams || {
 		},
 		version: '5.0.0-rc1'
 	};
+
 Veams.use = use.bind(Veams);
 
 /**

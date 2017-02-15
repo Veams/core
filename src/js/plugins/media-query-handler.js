@@ -2,28 +2,31 @@
  * Imports
  */
 const VeamsMediaQueryHandler = {
-	pluginName: 'MediaQueryHandler',
-	initialize: function (Veams, opts = {
+	options: {
 		mediaQueryProp: 'font-family',
 		delay: 300
-	}) {
+	},
+	pluginName: 'MediaQueryHandler',
+	initialize: function (Veams, opts) {
 		// Media Query
 		let head = document.querySelectorAll('head');
-		let delay = opts.delay || 300;
-		let mediaQueryProp = opts.mediaQueryProp || 'font-family';
+
+		if (opts) {
+			this.options = Veams.helpers.defaults(opts || {}, this.options);
+		}
 
 		/**
 		 * Add current media query to Veams
 		 */
-		Veams.currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(mediaQueryProp);
+		Veams.currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(this.options.mediaQueryProp);
 
 		if (!Veams.Vent) {
 			console.info('VeamsMediaQueryHandler :: In order to work properly with the VeamsMediaQueryHandler plugin you should add the VeamsVent plugin!');
 		}
 
 		// Trigger global resize event
-		window.onresize = Veams.helpers.throttle(function (e) {
-			let currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(mediaQueryProp);
+		window.onresize = Veams.helpers.throttle((e) => {
+			let currentMedia = window.getComputedStyle(head[0], null).getPropertyValue(this.options.mediaQueryProp);
 			let width = window.innerWidth;
 
 			if (currentMedia !== Veams.currentMedia) {
@@ -46,7 +49,7 @@ const VeamsMediaQueryHandler = {
 				Veams.detections.width = width;
 				Veams.Vent.trigger(Veams.EVENTS.resize, e);
 			}
-		}, delay);
+		}, this.options.delay);
 	}
 };
 

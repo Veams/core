@@ -2,7 +2,7 @@
  * Represents a mixin plugin.
  * This plugin gives you the possibility to extend your methods in components as long as you provide Veams.helpers.mixin();
  *
- * @module mixin
+ * @module VeamsMixins
  *
  * @author Sebastian Fitzner
  */

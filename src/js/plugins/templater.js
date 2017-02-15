@@ -7,28 +7,26 @@
  * @author Sebastian Fitzner
  */
 const VeamsTemplater = {
-	isPlubic: false,
+	options: {
+		engine: () => {},
+		templates: () => {},
+		namespace: 'App'
+	},
 	pluginName: 'Templater',
 	initialize: function (Veams, obj) {
-		this.namespace = Veams.options.namespace;
-		this.engine = () => {
-		};
-		this.templates = () => {
-		};
-
 		if (!obj.templates) {
 			console.error(`VeamsTemplater :: You need to pass an object which contains your templates (obj.templates)!`);
 			return;
 		}
 
-		this.templates = obj.templates;
-
 		if (!obj.engine) {
 			console.error(`VeamsTemplater :: You need to pass a handlebars instance by providing obj.engine!`);
 			return;
 		}
-		this.engine = obj.engine;
 
+		this.options.namespace = Veams.options.namespace || this.options.namespace;
+		this.options.templates = obj.templates;
+		this.options.engine = obj.engine;
 		Veams.templater = {};
 
 		if (obj.helpers) this.registerHelpers(obj.helpers);
@@ -45,7 +43,7 @@ const VeamsTemplater = {
 			let helper = helpers[i];
 
 			if (helper.register) {
-				this.engine.registerHelper(helper.register(this.engine));
+				this.options.engine.registerHelper(helper.register(this.options.engine));
 			} else {
 				console.error(`VeamsTemplater :: Your helper does not have a register function, see: ${helper}`);
 			}
@@ -53,18 +51,20 @@ const VeamsTemplater = {
 	},
 
 	addTemplater: function (Veams) {
-		let Templates = this.templates(this.engine);
+		let Templates = this.options.templates(this.options.engine);
 
 		Veams.templater.render = function (tplName, data) {
 			if (!data) {
 				console.error('VeamsTemplater: You need to provide some data.');
 				return;
 			}
-			if (Templates[tplName]) {
-				return Templates[tplName](data);
+
+			if (!Templates[tplName]) {
+				console.error(`VeamsTemplater :: Template ${tplName} not found.`);
+				return;
 			}
 
-			console.error(`VeamsTemplater :: Template ${tplName} not found.`);
+			return Templates[tplName](data);
 		};
 	}
 };

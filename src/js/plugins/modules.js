@@ -1,19 +1,13 @@
 'use strict';
 const forEachHelper = require('../utils/helpers/for-each');
-let _Veams = {};
+let Veams = {};
 // let __cache = {};
 
 class Modules {
 	constructor(VEAMS = window.Veams, opts) {
-		_Veams = VEAMS;
-		let options = {
-			DEBUG: false,
-			attrPrefix: 'data-js',
-			logs: false,
-			useMutationObserver: false
-		};
+		Veams = VEAMS;
 
-		this.options = _Veams.helpers.defaults(opts || {}, options);
+		this.options = opts;
 		this._cache = []; // Module list
 		this.modulesInContext = []; // Save modules on current page
 		this.modulesRegister = [];
@@ -23,7 +17,7 @@ class Modules {
 
 	initialize() {
 		this.queryString = '[' + this.options.attrPrefix + '-module]';
-		this.modulesInContext = _Veams.helpers.querySelectorArray(this.queryString);
+		this.modulesInContext = Veams.helpers.querySelectorArray(this.queryString);
 
 		if (this.options.useMutationObserver) {
 			this.observe(document.body);
@@ -33,15 +27,15 @@ class Modules {
 	}
 
 	bindEvents() {
-		if (!_Veams.Vent && this.options.useMutationObserver === false) {
+		if (!Veams.Vent && this.options.useMutationObserver === false) {
 			console.info('VeamsModules :: In order to work with the the ajax handling in VeamsModulesHandler ' +
 				'you need to define "useMutationObserver" or use the VeamsVent plugin!');
 
 			return;
 		}
 
-		if (_Veams.Vent && this.options.useMutationObserver === false) {
-			_Veams.Vent.on(_Veams.EVENTS.DOMchanged, (e, context) => {
+		if (Veams.Vent && this.options.useMutationObserver === false) {
+			Veams.Vent.on(Veams.EVENTS.DOMchanged, (e, context) => {
 				this.modulesInContext = this.getModulesInContext(context);
 
 				if (this.options.logs) {
@@ -62,8 +56,8 @@ class Modules {
 	addToCache(obj) {
 		this._cache.push(obj);
 
-		if (_Veams.Vent) {
-			_Veams.Vent.trigger(_Veams.EVENTS.moduleCached, {
+		if (Veams.Vent) {
+			Veams.Vent.trigger(Veams.EVENTS.moduleCached, {
 				module: obj.module,
 				el: obj.element
 			});
@@ -149,7 +143,7 @@ class Modules {
 
 		if (dataModules.indexOf(domName) !== -1) {
 			let attrs = el.getAttribute('data-js-options');
-			let mergedOptions = _Veams.helpers.defaults(options || {}, JSON.parse(attrs));
+			let mergedOptions = Veams.helpers.defaults(options || {}, JSON.parse(attrs));
 
 			let module = new Module({
 				el: el,
@@ -259,7 +253,7 @@ class Modules {
 	 * @param {Object} context - Context for query specific string
 	 */
 	getModulesInContext(context) {
-		return _Veams.helpers.querySelectorArray(this.queryString, context);
+		return Veams.helpers.querySelectorArray(this.queryString, context);
 	}
 }
 
@@ -267,9 +261,16 @@ class Modules {
  * Plugin object
  */
 const VeamsModules = {
+	options: {
+		DEBUG: false,
+		attrPrefix: 'data-js',
+		logs: false,
+		useMutationObserver: false
+	},
 	pluginName: 'ModulesHandler',
 	initialize: function (Veams, opts) {
-		Veams.modules = Veams.modules || new Modules(Veams, opts);
+		this.options = Veams.helpers.defaults(opts || {}, this.options);
+		Veams.modules = Veams.modules || new Modules(Veams, this.options);
 	}
 };
 

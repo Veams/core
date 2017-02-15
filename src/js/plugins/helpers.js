@@ -15,7 +15,9 @@ const VeamsHelpers = {
 				return;
 			}
 
-			Veams.helpers[helper.name] = helper;
+			if (!Veams.helpers[helper.name]) {
+				Veams.helpers[helper.name] = helper;
+			}
 		};
 
 		this.addDefaultHelpers(Veams);
