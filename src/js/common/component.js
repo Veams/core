@@ -273,7 +273,7 @@ class VeamsComponent {
 		if (!Veams.templater) {
 			console.error(`It seems that you haven\'t added the VeamsTemplater plugin. In order to work with 'renderTemplate()' you need to add it!`);
 		} else {
-			Veams.templater.render(tplName, data);
+			return Veams.templater.render(tplName, data);
 		}
 	}
 

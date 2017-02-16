@@ -12,17 +12,43 @@ if (!window.Promise) {
 }
 
 class VeamsHttp {
-	promiseRequest(options) {
+	constructor(opts = {}) {
+		let options = {
+			url: false,
+			type: 'text',
+			method: 'GET',
+			fetchOnInit: false
+		};
+
+		this.options = Veams.helpers.defaults(opts, options);
+		this.data = {};
+
+		this.initialize();
+	};
+
+	initialize() {
+		if (this.options.fetchOnInit) {
+			return this.promiseRequest();
+		}
+	};
+
+	promiseRequest(obj) {
+		if (obj) {
+			this.options.method = obj.method || this.options.method;
+			this.options.url = obj.url || this.options.url;
+			this.options.type = obj.type || this.options.type;
+		}
+
 		return new Promise((resolve, reject) => {
 			let request = new XMLHttpRequest();
 
-			request.open(options.type, options.url, true);
+			request.open(this.options.method, this.options.url, true);
 
 			request.onload = () => {
 				if (request.status >= 200 && request.status < 400) {
 					resolve(this.parser({
 						request: request,
-						dataType: options.dataType
+						type: this.options.type
 					}));
 				} else {
 					reject({
@@ -44,19 +70,23 @@ class VeamsHttp {
 	};
 
 	get(obj) {
-		return this.promiseRequest({
-			type: 'GET',
-			url: obj.url,
-			dataType: obj.dataType || 'text'
-		});
+		if (obj) {
+			this.options.method = 'GET';
+			this.options.url = obj.url || this.options.url;
+			this.options.type = obj.type || this.options.type;
+		}
+
+		return this.promiseRequest();
 	};
 
 	post(obj) {
-		return this.promiseRequest({
-			type: 'POST',
-			url: obj.url,
-			dataType: obj.dataType || 'text'
-		});
+		if (obj) {
+			this.options.method = 'POST';
+			this.options.url = obj.url || this.options.url;
+			this.options.type = obj.type || this.options.type;
+		}
+
+		return this.promiseRequest();
 	}
 
 	/**
@@ -69,13 +99,13 @@ class VeamsHttp {
 	 *
 	 */
 	parser(obj) {
-		let response = obj.request.responseText;
+		this.data = obj.request.responseText;
 
-		if (obj.dataType === 'json') {
-			response = JSON.parse(response);
+		if (obj.type === 'json') {
+			this.data = JSON.parse(this.data);
 		}
 
-		return response;
+		return this.data;
 	}
 }
 

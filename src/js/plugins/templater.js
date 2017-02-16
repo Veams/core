@@ -54,8 +54,8 @@ const VeamsTemplater = {
 		let Templates = this.options.templates(this.options.engine);
 
 		Veams.templater.render = function (tplName, data) {
-			if (!data) {
-				console.error('VeamsTemplater: You need to provide some data.');
+			if (!data && Templates[tplName]) {
+				console.error(`VeamsTemplater :: You need to provide some data for ${tplName}.`);
 				return;
 			}
 
