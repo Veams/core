@@ -20,7 +20,10 @@ class VeamsHttp {
 
 			request.onload = () => {
 				if (request.status >= 200 && request.status < 400) {
-					resolve(this.parser(request, options.dataType));
+					resolve(this.parser({
+						request: request,
+						dataType: options.dataType
+					}));
 				} else {
 					reject({
 						status: request.status,
@@ -57,28 +60,23 @@ class VeamsHttp {
 	}
 
 	/**
-	 * The default parser, which you can override.
-	 * This method can be overridden by you.
+	 * The default parser, which returns the response text.
+	 * This method can be overridden.
 	 *
-	 * @param {Object} req - Request object.
-	 * @param {String} dataType - Define a type for the response text.
+	 * @param {Object} obj - Generic object.
+	 * @param {Object} obj.req - Request object.
+	 * @param {String} obj.dataType - Define a type for the response text.
 	 *
 	 */
-	parser(req, dataType) {
-		if (dataType === 'json') {
-			return JSON.parse(req.responseText);
-		} else {
-			return req.responseText;
+	parser(obj) {
+		let response = obj.request.responseText;
+
+		if (obj.dataType === 'json') {
+			response = JSON.parse(response);
 		}
+
+		return response;
 	}
-
-
 }
 
-/**
- * Add mixin functionality to extend module class
- */
-
-const http = new VeamsHttp();
-
-export {http, VeamsHttp};
+export default VeamsHttp;
