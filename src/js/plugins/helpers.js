@@ -5,6 +5,7 @@ import methodExtendHelper from '../utils/helpers/method-extend';
 import touchHelper from '../utils/helpers/is-touch';
 import throttleHelper from '../utils/helpers/throttle';
 import selectorHelper from '../utils/helpers/query-selector-array';
+import foreachHelper from '../utils/helpers/for-each';
 
 const VeamsHelpers = {
 	pluginName: 'Helpers',
@@ -31,6 +32,7 @@ const VeamsHelpers = {
 		Veams.addHelper(mixinsHelper);
 		Veams.addHelper(methodExtendHelper);
 		Veams.addHelper(throttleHelper);
+		Veams.addHelper(foreachHelper);
 	}
 };
 

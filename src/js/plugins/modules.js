@@ -1,5 +1,4 @@
 'use strict';
-const forEachHelper = require('../utils/helpers/for-each');
 let Veams = {};
 // let __cache = {};
 
@@ -132,7 +131,7 @@ class Modules {
 	 *
 	 */
 	initModules(domName, Module, render, options, cb) {
-		forEachHelper(this.modulesInContext, (i, el) => {
+		Veams.helpers.forEach(this.modulesInContext, (i, el) => {
 			this.initModule(el, domName, Module, render, options, cb);
 		});
 	}
