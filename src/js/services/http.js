@@ -33,22 +33,16 @@ class VeamsHttp {
 	};
 
 	promiseRequest(obj) {
-		if (obj) {
-			this.options.method = obj.method || this.options.method;
-			this.options.url = obj.url || this.options.url;
-			this.options.type = obj.type || this.options.type;
-		}
-
 		return new Promise((resolve, reject) => {
 			let request = new XMLHttpRequest();
 
-			request.open(this.options.method, this.options.url, true);
+			request.open(obj.method, obj.url, true);
 
 			request.onload = () => {
 				if (request.status >= 200 && request.status < 400) {
 					resolve(this.parser({
 						request: request,
-						type: this.options.type
+						type: obj.type
 					}));
 				} else {
 					reject({
@@ -65,28 +59,36 @@ class VeamsHttp {
 				});
 			};
 
-			request.send();
+			request.send(obj.data);
 		});
 	};
 
 	get(obj) {
+		let requestObject = {};
+
+		requestObject.data = obj.data ? obj.data : null;
+
 		if (obj) {
-			this.options.method = 'GET';
-			this.options.url = obj.url || this.options.url;
-			this.options.type = obj.type || this.options.type;
+			this.options.method = requestObject.method = 'GET';
+			this.options.url = requestObject.url = obj.url || this.options.url;
+			this.options.type = requestObject.type = obj.type || this.options.type;
 		}
 
-		return this.promiseRequest();
+		return this.promiseRequest(requestObject);
 	};
 
 	post(obj) {
+		let requestObject = {};
+
+		requestObject.data = obj.data ? obj.data : null;
+
 		if (obj) {
-			this.options.method = 'POST';
-			this.options.url = obj.url || this.options.url;
-			this.options.type = obj.type || this.options.type;
+			this.options.method = requestObject.method = 'POST';
+			this.options.url = requestObject.url = obj.url || this.options.url;
+			this.options.type = requestObject.type = obj.type || this.options.type;
 		}
 
-		return this.promiseRequest();
+		return this.promiseRequest(requestObject);
 	}
 
 	/**
