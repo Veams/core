@@ -27,16 +27,26 @@ let defaults = {
 		width: window.innerWidth,
 		height: window.innerHeight
 	},
-	version: '5.0.0-rc1'
+	version: '5.0.0-rc2'
 };
 let Veams = Veams || defaults;
 
-Veams.use = use.bind(Veams);
+(function (window, document, undefined) {
+	'use strict';
 
-/**
- * Standard plugins
- */
-Veams.use(VeamsCore);
-Veams.use(VeamsHelpers);
+	window.Veams = Veams;
+
+	/**
+	 * Add use functionality
+	 */
+	Veams.use = use;
+
+	/**
+	 * Standard plugins
+	 */
+	Veams.use(VeamsCore);
+	Veams.use(VeamsHelpers);
+
+})(window, document);
 
 export default Veams;

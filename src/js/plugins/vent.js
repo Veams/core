@@ -23,11 +23,11 @@ const VeamsVent = {
 		}
 
 		if (opts) {
-			this.options = Veams.helpers.defaults(opts || {}, this.options);
+			this.options = Veams.helpers.extend(this.options, opts || {});
 		}
 
 		Veams.Vent = Veams.$({});
-		Veams.EVENTS = Veams.helpers.defaults(this.options.furtherEvents, Veams.EVENTS);
+		Veams.EVENTS = Veams.helpers.extend(Veams.EVENTS, this.options.furtherEvents);
 	}
 };
 

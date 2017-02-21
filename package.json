@@ -1,6 +1,6 @@
 {
   "name": "veams",
-  "version": "5.0.0-rc1",
+  "version": "5.0.0-rc2",
   "description": "Veams framework",
   "main": "lib/veams.js",
   "scripts": {

@@ -142,7 +142,7 @@ class Modules {
 
 		if (dataModules.indexOf(domName) !== -1) {
 			let attrs = el.getAttribute('data-js-options');
-			let mergedOptions = Veams.helpers.defaults(options || {}, JSON.parse(attrs));
+			let mergedOptions = Veams.helpers.extend(JSON.parse(attrs), options || {});
 
 			let module = new Module({
 				el: el,
@@ -268,7 +268,7 @@ const VeamsModules = {
 	},
 	pluginName: 'ModulesHandler',
 	initialize: function (Veams, opts) {
-		this.options = Veams.helpers.defaults(opts || {}, this.options);
+		this.options = Veams.helpers.extend(this.options, opts || {});
 		Veams.modules = Veams.modules || new Modules(Veams, this.options);
 	}
 };

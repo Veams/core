@@ -6,7 +6,7 @@
  *
  * @return {Array}
  */
-module.exports = function querySelectorArray(elem, context) {
+export default function querySelectorArray(elem, context) {
 	if (!elem) throw new Error('In order to work with querySelectorArray you need to define an element as string!');
 	let el = elem;
 	let customContext = context || document;

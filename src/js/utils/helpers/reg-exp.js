@@ -5,6 +5,6 @@
  *
  * @return {RegExp}
  */
-module.exports = function regExp(regEx) {
+export default function regExp(regEx) {
 	return new RegExp("(^|\\s+)" + regEx + "(\\s+|$)");
 };

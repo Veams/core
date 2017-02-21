@@ -5,7 +5,7 @@
  * @param {function} callback - callback function
  * @param {string} scope - scope of function
  */
-module.exports = function forEach(array, callback, scope) {
+export default function forEach(array, callback, scope) {
 	for (let i = 0; i < array.length; i++) {
 		callback.call(scope, i, array[i]);
 	}

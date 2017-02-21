@@ -6,7 +6,7 @@
  *
  * @return {String} - resulting url
  */
-module.exports = function updateUrl(url, params) {
+export default function updateUrl(url, params) {
 	let urlParts = url.split('?');
 	let tmpParams = [];
 	let originalParams = [];

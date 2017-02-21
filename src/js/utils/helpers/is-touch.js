@@ -1,6 +1,6 @@
 /**
  * Touch Detection
  */
-module.exports = function isTouch() {
+export default function isTouch() {
 	return 'ontouchstart' in window;
 };

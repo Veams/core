@@ -1,5 +1,5 @@
-const defaultsHelper = require('./defaults');
-const methodExtendHelper = require('./method-extend');
+import defaultsHelper from './defaults';
+import methodExtendHelper from './method-extend';
 
 /**
  * Merge method functions.
@@ -7,7 +7,7 @@ const methodExtendHelper = require('./method-extend');
  * @param {Object} from - Mixin object which will be merged via Helpers.defaults with the methods of our class
  * @param {Array} methods - Array of method names which will be extended.
  */
-module.exports = function mixin(from, methods = ['initialize', 'render']) {
+export default function mixin(from, methods = ['initialize', 'render']) {
 	if (from === undefined) return;
 
 	let to = this.prototype;

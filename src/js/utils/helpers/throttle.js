@@ -5,7 +5,7 @@
  * @param {number} wait - number to wait in milliseconds.
  * @param {boolean} immediate - execute function immediately.
  */
-module.exports = function throttle(func, wait, immediate) {
+export default function throttle(func, wait, immediate) {
 	let timeout;
 
 	return function () {

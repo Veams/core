@@ -5,11 +5,11 @@
  *
  * @return {Object} obj - extended object
  */
-module.exports = function defaults(obj) {
-	[].slice.call(arguments, 1).forEach((item) => {
-		for (let key in item) {
-			if (obj[key] === undefined) obj[key] = item[key];
-		}
-	});
-	return obj;
+export default function defaultsHelper(obj) {
+		[].slice.call(arguments, 1).forEach((item) => {
+			for (let key in item) {
+				if (obj[key] === undefined) obj[key] = item[key];
+			}
+		});
+		return obj;
 };

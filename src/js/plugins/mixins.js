@@ -9,32 +9,42 @@
 
 const VeamsMixins = {
 	pluginName: 'Mixins',
-	initialize: function (Veams, mixins) {
-
-		if (!mixins || !Array.isArray(mixins)) {
-			console.error('VeamsMixins :: You need to pass a mixin array which contains objects with key and value!');
-			return;
-		}
+	initialize: function (Veams) {
 		if (!Veams.mixins) {
 			Veams.mixins = {};
 		}
 
-		for (let i = 0; i < mixins.length; i++) {
-			let arrElem = mixins[i];
-			let name = arrElem.name;
+		Veams.addMixin = function addMixin(...args) {
+			let params = [...args];
 
-			if (typeof arrElem !== 'function' || !name) {
-				console.error('VeamsMixins :: You need to export a mixin as function with a function name which returns an object!');
-				return;
+			if (params.length === 1) {
+				if (typeof params[0] !== 'object') {
+					console.error('VeamsMixins :: You need to pass an object!');
+					return;
+				}
+
+				for (let key in params[0]) {
+					if (params[0].hasOwnProperty(key)) {
+						if (!Veams.mixins[key]) {
+							Veams.mixins[key] = params[0][key](Veams);
+						} else {
+							console.info(`VeamsMixins :: It seems that you have already defined a mixin called ${key}!'`);
+						}
+					}
+				}
+			} else if (params.length === 2) {
+
+				if (!Veams.mixins[params[0]]) {
+					if (typeof params[0] !== 'string' || typeof params[1] !== 'function') {
+						console.error('VeamsMixins :: You need to pass a string as first argument and the helper function as second one.');
+						return;
+					}
+					Veams.mixins[params[0]] = params[1](Veams);
+				} else {
+					console.info(`VeamsMixins :: The mixin ${params[0]} is already defined! Please define a new name for: `, params[1]);
+				}
 			}
-
-			if (Veams.mixins[name]) {
-				console.error(`VeamsMixins :: It seems that you have already defined a mixin called ${name}!'`);
-				return;
-			}
-
-			Veams.mixins[name] = arrElem(Veams);
-		}
+		};
 	}
 };
 

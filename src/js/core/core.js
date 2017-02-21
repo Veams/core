@@ -6,7 +6,7 @@ class Core {
 	}
 
 	set options(options) {
-		this._options = VEAMS.helpers.defaults(options || {}, VEAMS.options);
+		this._options = VEAMS.helpers.extend(VEAMS.options, options || {});
 	}
 
 	get options() {
@@ -21,11 +21,6 @@ class Core {
 		VEAMS.options = this.options;
 
 		/**
-		 * Set Veams to the global object
-		 */
-		window.Veams = VEAMS;
-
-		/**
 		 * Namespace of application
 		 */
 		if (!window[VEAMS.options.namespace]) {
@@ -36,9 +31,9 @@ class Core {
 		/**
 		 * Support Detection
 		 */
-		VEAMS.detections = VEAMS.helpers.defaults(this.detections || {}, {
+		VEAMS.detections = VEAMS.helpers.extend({
 			touch: VEAMS.helpers.isTouch()
-		});
+		}, this.detections || {});
 	}
 }
 

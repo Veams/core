@@ -4,7 +4,7 @@
  * @param {Array} array - array in which we search for
  * @param {Object} item - item which will be searched
  */
-module.exports = function indexOf(array, item) {
+export default function indexOf(array, item) {
 	if (array == null) return -1;
 	let l;
 	let i;

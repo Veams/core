@@ -20,7 +20,7 @@ class VeamsHttp {
 			fetchOnInit: false
 		};
 
-		this.options = Veams.helpers.defaults(opts, options);
+		this.options = Veams.helpers.extend(options, opts);
 		this.data = {};
 
 		this.initialize();

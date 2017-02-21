@@ -1,7 +1,7 @@
 /**
  * Detect transitionend event.
  */
-module.exports = function transitionEndEvent() {
+export default function transitionEndEvent() {
 	let t;
 	let el = document.createElement('fakeelement');
 	let transitions = {

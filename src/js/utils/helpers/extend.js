@@ -5,7 +5,7 @@
  *
  * @return {Object} obj - extended object
  */
-module.exports = function extend(obj) {
+export default function extend(obj) {
 	[].slice.call(arguments, 1).forEach((item) => {
 		for (let key in item) obj[key] = item[key];
 	});

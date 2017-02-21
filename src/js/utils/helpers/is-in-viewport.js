@@ -6,7 +6,7 @@
  *
  * @return {boolean}
  */
-module.exports = function isInViewport(elem, useBounds) {
+export default function isInViewport(elem, useBounds) {
 	let el = elem;
 	let top = el.offsetTop;
 	let left = el.offsetLeft;

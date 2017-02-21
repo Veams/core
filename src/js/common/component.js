@@ -2,8 +2,8 @@ if (!Veams) {
 	throw new Error('Please initialize Veams!');
 }
 
-if (!Veams.helpers.mixin || !Veams.helpers.defaults) {
-	throw new Error('The mixin or defaults helper is missing!');
+if (!Veams.helpers.mixin || !Veams.helpers.extend) {
+	throw new Error('The mixin or extend helper is missing!');
 }
 
 if (!Veams.$) {
@@ -67,7 +67,7 @@ class VeamsComponent {
 	 * Save options by merging default options with passed options
 	 */
 	set _options(options) {
-		this.options = Veams.helpers.defaults(options || {}, this.options);
+		this.options = Veams.helpers.extend(this.options, options || {});
 	}
 
 	/**

@@ -6,10 +6,9 @@
  */
 
 export default function (plugin, ...args) {
-
 	if (plugin.pluginName) {
-		this.plugins[plugin.pluginName] = plugin;
+		window.Veams.plugins[plugin.pluginName] = plugin;
 	}
 
-	plugin.initialize(this, ...args);
+	plugin.initialize(window.Veams, ...args);
 }

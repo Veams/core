@@ -4,7 +4,7 @@
  * @param {Object} el - element to detect swipes on
  * @param {Number} threshold - threshold for swipe (in px)
  */
-module.exports = function detectSwipe(el, threshold) {
+export default function detectSwipe(el, threshold) {
 	let touchstartX = 0;
 	let touchstartY = 0;
 	let touchendX = 0;

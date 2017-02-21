@@ -1,7 +1,7 @@
 /**
  * Detect animationend event.
  */
-module.exports = function animationEndEvent() {
+export default function animationEndEvent() {
 	let t;
 	let el = document.createElement('fakeelement');
 	let animations = {

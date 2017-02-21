@@ -12,7 +12,7 @@ const VeamsMediaQueryHandler = {
 		let head = document.querySelectorAll('head');
 
 		if (opts) {
-			this.options = Veams.helpers.defaults(opts || {}, this.options);
+			this.options = Veams.helpers.extend(this.options, opts || {});
 		}
 
 		/**
