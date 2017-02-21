@@ -1,0 +1,51 @@
+/// Baseline Variable
+/// can be overridden in your project.
+/// The value should be the same as the font-size value for the html element.
+/// If the html element's font-size is set to 62.5% (of the browser's default font-size of 16px),
+/// then the variable below would be 10px.
+///
+/// @group Helpers: Calculation
+///
+/// @type Bool
+$baseline-px: 10px !default;
+
+/// `REM Mixin`
+/// is a Sass mixin that converts pixel values to rem values for whatever property is passed to it.
+/// It returns two lines of code, one of the regular pixel values (for IE), and another with the
+/// and Martin Bavio for the help and code!
+///
+/// @group Helpers: Calculation
+///
+/// @param {String} $property - Property which should be used.
+/// @param {String} $px-values - Value in pixels.
+///
+///
+/// @example
+///   .element {
+///     @include rem('padding', 10px 0 2px 5px);
+///   }
+///
+
+@mixin rem($property, $px-values) {
+	// Convert the baseline into rems
+	$baseline-rem: $baseline-px / 1rem;
+	// Print the first line in pixel values
+	#{$property}: $px-values;
+	// If there is only one (numeric) value, return the property/value line for it.
+	@if type-of($px-values) == "number" {
+		#{$property}: $px-values / $baseline-rem;
+	} @else {
+		// Create an empty list that we can dump values into
+		$rem-values: ();
+		@each $value in $px-values {
+			// If the value is zero, return 0
+			@if $value == 0 {
+				$rem-values: append($rem-values, $value);
+			} @else {
+				$rem-values: append($rem-values, $value / $baseline-rem);
+			}
+		}
+		// Return the property and its list of converted values
+		#{$property}: $rem-values;
+	}
+}

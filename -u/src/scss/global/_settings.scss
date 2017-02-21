@@ -1,0 +1,24 @@
+/* ---------------------------------------------------
+Animations
+--------------------------------------------------- */
+
+/// Transition Duration Variable
+/// can be overridden in your project.
+///
+/// @group Animations
+/// @type String
+$transition-duration: 600ms;
+
+/// Transition Method Variable
+/// can be overridden in your project.
+///
+/// @group Animations
+/// @type String
+$transition-ease-method: ease;
+
+/// Transition Property Variable
+/// can be overridden in your project.
+///
+/// @group Animations
+/// @type String
+$transition-property: all;

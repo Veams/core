@@ -1,0 +1,75 @@
+/* ---------------------------------------------------
+Slides
+--------------------------------------------------- */
+
+/// `Slide: Out`
+/// animates element by changing translateZ, translateX and adding opacity animation.
+///
+/// @group Animations: Slide
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include slide-rotate-out(300ms, ease-in);
+///   }
+///
+@mixin slide-rotate-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	animation: rotateSlideOut $transition-duration $transition-ease-method both;
+}
+
+/// `Slide: In`
+/// animates element by changing translateZ, translateX and adding opacity animation.
+///
+/// @group Animations: Slide
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include slide-rotate-in(300ms, ease-in);
+///   }
+///
+@mixin slide-rotate-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	animation: rotateSlideIn $transition-duration $transition-ease-method both;
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: SLIDES
+--------------------------------------------------- */
+
+@include keyframes(rotateSlideOut) {
+	0% {
+	}
+	25% {
+		transform: translateZ(-500px);
+		opacity: .5;
+	}
+	75% {
+		transform: translateZ(-500px) translateX(-200%);
+		opacity: .5;
+	}
+	100% {
+		transform: translateZ(-500px) translateX(-200%);
+		opacity: .5;
+	}
+}
+
+@include keyframes(rotateSlideIn) {
+	0%, 25% {
+		transform: translateZ(-500px) translateX(200%);
+		opacity: .5;
+	}
+	75% {
+		transform: translateZ(-500px);
+		opacity: .5;
+	}
+	100% {
+		transform: translateZ(0) translateX(0);
+		opacity: 1;
+	}
+}

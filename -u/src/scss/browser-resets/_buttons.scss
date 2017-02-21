@@ -1,0 +1,28 @@
+/* ===================================================
+Reset Button
+=================================================== */
+
+/// `Resets: Button`
+/// deletes all browser styles for `<button>`.
+///
+/// @group Resets
+///
+/// @example
+///   .element {
+///     @include reset-btn();
+///   }
+///
+@mixin reset-btn() {
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	font-style: inherit;
+}
+
+/*
+Extend
+----------------------- */
+%reset-btn {
+	@include reset-btn();
+}

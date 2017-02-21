@@ -1,0 +1,35 @@
+/* ===================================================
+FEEDBACK ANIMATIONS
+=================================================== */
+
+/* ---------------------------------------------------
+Standard Values
+--------------------------------------------------- */
+
+@mixin fb-ani-setupPseudo($width: 70px, $height: 70px, $radius: 50%) {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: (-$height/2) 0 0 (-$width/2);
+	width: $width;
+	height: $height;
+	border-radius: $radius;
+	content: '';
+	opacity: 0;
+	pointer-events: none;
+}
+
+@mixin fb-ani-setup($size: 70px, $radius: 50%) {
+	$width: nth($size, 1);
+	$height: if(length($size) == 2, nth($size, 2), $width);
+
+	position: relative;
+	display: inline-block;
+	overflow: visible;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	&::after {
+		@include fb-ani-setupPseudo($width: $width, $height: $height, $radius: $radius);
+	}
+}
+

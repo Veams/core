@@ -1,0 +1,142 @@
+/* ===================================================
+Hiding Elements
+=================================================== */
+
+/* ---------------------------------------------------
+ir
+--------------------------------------------------- */
+/// `Hiding: IR`
+/// hides element with `text-indent` and pseudo element.
+///
+/// @group Hiding
+///
+///
+/// @example
+///   .element {
+///     @include ir();
+///   }
+///
+@mixin ir() {
+	background-color: transparent;
+	border: 0;
+	overflow: hidden;
+	*text-indent: -9999px;
+	&:before {
+		content: "";
+		display: block;
+		width: 0;
+		height: 150%;
+	}
+}
+
+%ir {
+	@include ir;
+}
+
+/* ---------------------------------------------------
+Hidden
+--------------------------------------------------- */
+/// `Hiding: Hidden`
+/// hides element with `display: none`.
+///
+/// @group Hiding
+///
+///
+/// @example
+///   .element {
+///     @include hidden();
+///   }
+///
+@mixin hidden() {
+	display: none;
+	visibility: hidden;
+}
+
+%hidden {
+	@include hidden;
+}
+
+/* ---------------------------------------------------
+Visually hidden
+--------------------------------------------------- */
+/// `Hiding: Visually Hidden`
+/// hides element with `clip`.
+///
+/// @group Hiding
+///
+///
+/// @example
+///   .element {
+///     @include visuallyhidden();
+///   }
+///
+@mixin visuallyhidden() {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+
+	&.is-focusable:active,
+	&.is-focusable:focus {
+		clip: auto;
+		height: auto;
+		margin: 0;
+		overflow: visible;
+		position: static;
+		width: auto;
+	}
+}
+
+%visuallyhidden {
+	@include visuallyhidden();
+}
+
+/* ---------------------------------------------------
+Visibility hidden
+--------------------------------------------------- */
+/// `Hiding: Invisible`
+/// hides element with `visibility`.
+///
+/// @group Hiding
+///
+///
+/// @example
+///   .element {
+///     @include invisible();
+///   }
+///
+@mixin invisible() {
+	visibility: hidden;
+}
+
+%invisible {
+	@include invisible;
+}
+
+/* ---------------------------------------------------
+Hide text
+--------------------------------------------------- */
+/// `Hiding: Hidden Text`
+/// hides text with `font-size: 0`.
+///
+/// @group Hiding
+///
+///
+/// @example
+///   .element {
+///     @include hidden-text();
+///   }
+///
+@mixin hidden-text() {
+	color: transparent;
+	font: 0/0 a;
+	text-shadow: none;
+}
+
+%hidden-text {
+	@include hidden-text;
+}

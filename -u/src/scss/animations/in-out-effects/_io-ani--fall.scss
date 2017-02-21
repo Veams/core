@@ -1,0 +1,41 @@
+
+/// `Rotation and Falling`
+/// rotates an element and adds a falling animation.
+///
+/// @group Animations: Rotation
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include rotate-fall(300ms, ease-in);
+///   }
+///
+@mixin rotate-fall($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 0 0;
+	animation: rotateFall $transition-duration ease-in both;
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: FALL
+--------------------------------------------------- */
+@include keyframes(rotateFall) {
+	0% {
+		transform: rotateZ(0deg);
+	}
+	20% {
+		transform: rotateZ(10deg);
+		animation-timing-function: $transition-ease-method;
+	}
+	40% {
+		transform: rotateZ(17deg);
+	}
+	60% {
+		transform: rotateZ(16deg);
+	}
+	100% {
+		transform: translateY(100%) rotateZ(17deg);
+	}
+}

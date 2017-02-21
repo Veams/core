@@ -1,0 +1,109 @@
+/* ---------------------------------------------------
+Scale and Fade
+--------------------------------------------------- */
+
+/// `Scale: Down`
+/// animates element scaling factor and opacity.
+///
+/// @group Animations: Scale
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include scale-down(300ms, ease-in);
+///   }
+///
+@mixin scale-down($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	animation: scaleDown $transition-duration $transition-ease-method both;
+}
+
+/// `Scale: Up`
+/// animates element scaling factor and opacity.
+///
+/// @group Animations: Scale
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include scale-up(300ms, ease-in);
+///   }
+///
+@mixin scale-up($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	animation: scaleUp $transition-duration $transition-ease-method both;
+}
+/// `Scale: Down Center`
+/// animates element scaling factor.
+///
+/// @group Animations: Scale
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include scale-down-center(300ms, ease-in);
+///   }
+///
+@mixin scale-down-center($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	animation: scaleDownCenter $transition-duration $transition-ease-method both;
+}
+
+/// `Scale: Up Center`
+/// animates element scaling factor.
+///
+/// @group Animations: Scale
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include scale-up-center(300ms, ease-in);
+///   }
+///
+@mixin scale-up-center($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	animation: scaleUpCenter $transition-duration $transition-ease-method both;
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: SCALE AND FADE
+--------------------------------------------------- */
+
+@include keyframes(scaleDown) {
+	from {
+	}
+	to {
+		opacity: 0;
+		transform: scale(.8);
+	}
+}
+
+@include keyframes(scaleUp) {
+	from {
+		opacity: 0;
+		transform: scale(.8);
+	}
+}
+
+@include keyframes(scaleDownCenter) {
+	from {
+	}
+	to {
+		transform: scale(.7);
+	}
+}
+
+@include keyframes(scaleUpCenter) {
+	from {
+		opacity: 0;
+		transform: scale(.7);
+	}
+}

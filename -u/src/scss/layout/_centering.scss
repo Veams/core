@@ -1,0 +1,38 @@
+/* ===================================================
+CENTERING MIXIN
+=================================================== */
+
+/// `Layouts: Centering`
+/// centers elements with translate.
+///
+/// @group Layouts
+///
+/// @param {String} $scope ["hv"] - You can pass `v` (vertical centering), `h` (horizontal centering) or `hv` (vertical and horizontal centering) as string.
+/// @param {String} $position [absolute] - Define the position property.
+///
+///
+/// @example
+///   .element {
+///     @include centering();
+///   }
+///
+@mixin centering($scope: "hv", $position: absolute) {
+	position: $position;
+
+	@if $scope == "v" {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	@if $scope == "h" {
+		left: 50%;
+		transform: translateX(-50%);
+
+	}
+
+	@if $scope == "hv" {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}

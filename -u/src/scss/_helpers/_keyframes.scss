@@ -1,0 +1,26 @@
+/// `Keyframes Mixin`
+/// is a simple mixin to add prefixed keyframes.
+///
+/// @author Sebastian Fitzner
+///
+/// @group Helpers: Prefix
+///
+/// @param {String} name - Name of the keyframe.
+///
+///
+/// @example
+///   @include keyframes(bestAnimationEver){
+///     0 {
+///       opacity: 0;
+///     }
+///     100 {
+///       opacity: 1;
+///     }
+///   };
+///
+
+@mixin keyframes($name) {
+	@keyframes #{$name} {
+		@content;
+	}
+}

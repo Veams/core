@@ -1,0 +1,53 @@
+/* ===================================================
+Inline Block Layouts
+=================================================== */
+
+/* ---------------------------------------------------
+Mixin
+--------------------------------------------------- */
+/// `Layouts: Inline Block Parent`
+/// provides another way to layout your elements with `display: table`.
+///
+/// @group Layouts
+/// @see ib-child
+///
+/// @example
+///   .element {
+///     @include ib-parent();
+///   }
+///
+@mixin ib-parent() {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	word-spacing: -1em;
+}
+
+/// `Layouts: Inline Block Child`
+/// provides another way to layout your elements with `display: inline-block`.
+///
+/// @group Layouts
+/// @see ib-parent
+///
+/// @example
+///   .element {
+///     @include ib-child();
+///   }
+///
+@mixin ib-child() {
+	display: inline-block;
+	float: none;
+	vertical-align: top;
+	word-spacing: 0;
+}
+
+/* ---------------------------------------------------
+Extend
+--------------------------------------------------- */
+%ib-parent {
+	@include ib-parent();
+}
+
+%ib-child {
+	@include ib-child();
+}

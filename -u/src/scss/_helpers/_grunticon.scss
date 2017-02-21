@@ -1,0 +1,21 @@
+/// `Grunticon Mixin`
+/// can be used for Data-URIs and PNG fallbacks.
+///
+/// @author Sebastian Fitzner
+///
+/// @group Helpers: General
+///
+/// @param {String} name - Name of the icon.
+///
+///
+/// @example
+///   .my-custom-class {
+///     @include grunticon(filename);
+///   }
+///
+@mixin grunticon($name) {
+	@extend %icon-data-svg-#{$name};
+	@at-root .lt-ie9 & {
+		@extend %icon-png-#{$name};
+	}
+}

@@ -1,0 +1,60 @@
+/* ---------------------------------------------------
+Rotate Newspaper
+--------------------------------------------------- */
+
+/// `Newspaper: Rotate Out`
+/// animates element with a rotation and fade out effect.
+///
+/// @group Animations: Newspaper
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include newspaper-out(300ms, ease-in);
+///   }
+///
+@mixin newspaper-out($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 50%;
+	animation: rotateOutNewspaper $transition-duration ease-in both;
+}
+
+/// `Newspaper: Rotate In`
+/// animates element with a rotation and fade in effect.
+///
+/// @group Animations: Newspaper
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include newspaper-in(300ms, ease-in);
+///   }
+///
+@mixin newspaper-in($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 50%;
+	animation: rotateInNewspaper $transition-duration ease-out both;
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: NEWSPAPER
+--------------------------------------------------- */
+@include keyframes(rotateOutNewspaper) {
+	from {
+	}
+	to {
+		opacity: 0;
+		transform: translateZ(-3000px) rotateZ(360deg);
+	}
+}
+
+@include keyframes(rotateInNewspaper) {
+	from {
+		opacity: 0;
+		transform: translateZ(-3000px) rotateZ(-360deg);
+	}
+}

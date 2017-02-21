@@ -1,0 +1,239 @@
+/* ---------------------------------------------------
+Fold and Unfold
+--------------------------------------------------- */
+
+/*
+Fold
+----------------------------- */
+
+/// `Fold: Left`
+/// animates from center to the left with a folding movement.
+///
+/// @group Animations: Fold & Unfold
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include fold-left(300ms, ease-in);
+///   }
+///
+@mixin fold-left($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 100% 50%;
+	animation: rotateFoldLeft $transition-duration $transition-ease-method both;
+}
+
+/// `Fold: Right`
+/// animates from center to the right with a folding movement.
+///
+/// @group Animations: Fold & Unfold
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include fold-right(300ms, ease-in);
+///   }
+///
+@mixin fold-right($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 0% 50%;
+	animation: rotateFoldRight $transition-duration $transition-ease-method both;
+}
+
+/// `Fold: Top`
+/// animates from center to the top with a folding movement.
+///
+/// @group Animations: Fold & Unfold
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include fold-top(300ms, ease-in);
+///   }
+///
+@mixin fold-top($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 100%;
+	animation: rotateFoldTop $transition-duration $transition-ease-method both;
+}
+
+/// `Fold: Bottom`
+/// animates from center to the bottom with a folding movement.
+///
+/// @group Animations: Fold & Unfold
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include fold-bottom(300ms, ease-in);
+///   }
+///
+@mixin fold-bottom($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 0%;
+	animation: rotateFoldBottom $transition-duration $transition-ease-method both;
+}
+
+/*
+Unfold
+----------------------------- */
+
+/// `Unfold: Left`
+/// animates from left to the center with a unfolding movement.
+///
+/// @group Animations: Fold & Unfold
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include unfold-left(300ms, ease-in);
+///   }
+///
+@mixin unfold-left($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 100% 50%;
+	animation: rotateUnfoldLeft $transition-duration $transition-ease-method both;
+}
+
+/// `Unfold: Right`
+/// animates from right to the center with a unfolding movement.
+///
+/// @group Animations: Fold & Unfold
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include unfold-right(300ms, ease-in);
+///   }
+///
+@mixin unfold-right($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 0% 50%;
+	animation: rotateUnfoldRight $transition-duration $transition-ease-method both;
+}
+
+/// `Unfold: Top`
+/// animates from top to the center with a unfolding movement.
+///
+/// @group Animations: Fold & Unfold
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include unfold-top(300ms, ease-in);
+///   }
+///
+@mixin unfold-top($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 100%;
+	animation: rotateUnfoldTop $transition-duration $transition-ease-method both;
+}
+
+/// `Unfold: Bottom`
+/// animates from bottom to the center with a unfolding movement.
+///
+/// @group Animations: Fold & Unfold
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include unfold-bottom(300ms, ease-in);
+///   }
+///
+@mixin unfold-bottom($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 0%;
+	animation: rotateUnfoldBottom $transition-duration $transition-ease-method both;
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: FOLD AND UNFOLD
+--------------------------------------------------- */
+
+/* ---------------------------------------------------
+Fold
+--------------------------------------------------- */
+
+@include keyframes(rotateFoldRight) {
+	from {
+	}
+	to {
+		transform: translateX(100%) rotateY(90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotateFoldLeft) {
+	from {
+	}
+	to {
+		transform: translateX(-100%) rotateY(-90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotateFoldTop) {
+	from {
+	}
+	to {
+		transform: translateY(-100%) rotateX(90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotateFoldBottom) {
+	from {
+	}
+	to {
+		transform: translateY(100%) rotateX(-90deg);
+		opacity: 0;
+	}
+}
+
+/* ---------------------------------------------------
+Unfold
+--------------------------------------------------- */
+
+@include keyframes(rotateUnfoldLeft) {
+	from {
+		transform: translateX(-100%) rotateY(-90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotateUnfoldRight) {
+	from {
+		transform: translateX(100%) rotateY(90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotateUnfoldTop) {
+	from {
+		transform: translateY(-100%) rotateX(90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotateUnfoldBottom) {
+	from {
+		transform: translateY(100%) rotateX(-90deg);
+		opacity: 0;
+	}
+}

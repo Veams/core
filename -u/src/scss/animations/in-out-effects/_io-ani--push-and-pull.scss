@@ -1,0 +1,240 @@
+
+/* ---------------------------------------------------
+Push and Pull
+--------------------------------------------------- */
+
+/*
+Push
+----------------------------- */
+
+/// `Push: To Left With Rotation`
+/// animates from center to the left with a pushing effect and a rotation.
+///
+/// @group Animations: Push & Pull
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include push-left-rotate(300ms, ease-in);
+///   }
+///
+@mixin push-left-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 0% 50%;
+	animation: rotatePushLeft $transition-duration $transition-ease-method both;
+}
+
+/// `Push: To Right With Rotation`
+/// animates from center to the right with a pushing effect and a rotation.
+///
+/// @group Animations: Push & Pull
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include push-right-rotate(300ms, ease-in);
+///   }
+///
+@mixin  push-right-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 100% 50%;
+	animation: rotatePushRight $transition-duration $transition-ease-method both;
+}
+
+/// `Push: To Top With Rotation`
+/// animates from center to the top with a pushing effect and a rotation.
+///
+/// @group Animations: Push & Pull
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include push-top-rotate(300ms, ease-in);
+///   }
+///
+@mixin push-top-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 0%;
+	animation: rotatePushTop $transition-duration $transition-ease-method both;
+}
+
+/// `Push: To Bottom With Rotation`
+/// animates from center to the bottom with a pushing effect and a rotation.
+///
+/// @group Animations: Push & Pull
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include push-bottom-rotate(300ms, ease-in);
+///   }
+///
+@mixin push-bottom-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 100%;
+	animation: rotatePushBottom $transition-duration $transition-ease-method both;
+}
+
+/*
+Pull
+----------------------------- */
+
+/// `Pull: From Left With Rotation`
+/// animates from left to the center with a pulling effect and a rotation.
+///
+/// @group Animations: Push & Pull
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include pull-left-rotate(300ms, ease-in);
+///   }
+///
+@mixin pull-left-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 0% 50%;
+	animation: rotatePullLeft $transition-duration $transition-ease-method both;
+}
+
+/// `Pull: From Right With Rotation`
+/// animates from right to the center with a pulling effect and a rotation.
+///
+/// @group Animations: Push & Pull
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include pull-right-rotate(300ms, ease-in);
+///   }
+///
+@mixin pull-right-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 100% 50%;
+	animation: rotatePullRight $transition-duration $transition-ease-method both;
+}
+
+/// `Pull: From Top With Rotation`
+/// animates from top to the center with a pulling effect and a rotation.
+///
+/// @group Animations: Push & Pull
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include pull-top-rotate(300ms, ease-in);
+///   }
+///
+@mixin pull-top-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 0%;
+	animation: rotatePullTop $transition-duration $transition-ease-method both;
+}
+
+/// `Pull: From Bottom With Rotation`
+/// animates from bottom to the center with a pulling effect and a rotation.
+///
+/// @group Animations: Push & Pull
+///
+/// @param {string} $transition-duration [$transition-duration] - duration time
+/// @param {Object} $transition-ease-method [$transition-ease-method] - ease method
+///
+///
+/// @example
+///   .element {
+///     @include pull-bottom-rotate(300ms, ease-in);
+///   }
+///
+@mixin pull-bottom-rotate($transition-duration: $transition-duration, $transition-ease-method: $transition-ease-method) {
+	transform-origin: 50% 100%;
+	animation: rotatePullBottom $transition-duration $transition-ease-method both;
+}
+
+/* ---------------------------------------------------
+KEYFRAMES: PUSH AND PULL
+--------------------------------------------------- */
+
+/* ---------------------------------------------------
+Push
+--------------------------------------------------- */
+
+@include keyframes(rotatePushLeft) {
+	from {
+	}
+	to {
+		transform: rotateY(90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotatePushRight) {
+	from {
+	}
+	to {
+		transform: rotateY(-90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotatePushTop) {
+	from {
+	}
+	to {
+		transform: rotateX(-90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotatePushBottom) {
+	from {
+	}
+	to {
+		transform: rotateX(90deg);
+		opacity: 0;
+	}
+}
+
+/* ---------------------------------------------------
+Pull
+--------------------------------------------------- */
+
+@include keyframes(rotatePullRight) {
+	from {
+		transform: rotateY(-90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotatePullLeft) {
+	from {
+		transform: rotateY(90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotatePullTop) {
+	from {
+		transform: rotateX(-90deg);
+		opacity: 0;
+	}
+}
+
+@include keyframes(rotatePullBottom) {
+	from {
+		transform: rotateX(90deg);
+		opacity: 0;
+	}
+}
