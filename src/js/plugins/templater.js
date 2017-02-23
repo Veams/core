@@ -8,8 +8,12 @@
  */
 const VeamsTemplater = {
 	options: {
-		engine: () => {},
-		templates: () => {},
+		engine: () => {
+		},
+		templates: () => {
+		},
+		partials: () => {
+		},
 		namespace: 'App'
 	},
 	pluginName: 'Templater',
@@ -28,6 +32,11 @@ const VeamsTemplater = {
 		this.options.templates = obj.templates;
 		this.options.engine = obj.engine;
 		Veams.templater = {};
+
+		if (obj.partials) {
+			this.options.partials = obj.partials;
+			this.registerPartials();
+		}
 
 		if (obj.helpers) this.registerHelpers(obj.helpers);
 		this.addTemplater(Veams);
@@ -48,6 +57,10 @@ const VeamsTemplater = {
 				console.error(`VeamsTemplater :: Your helper does not have a register function, see: ${helper}`);
 			}
 		}
+	},
+
+	registerPartials: function () {
+		this.options.partials(this.options.engine);
 	},
 
 	addTemplater: function (Veams) {
