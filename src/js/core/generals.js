@@ -18,9 +18,7 @@ let defaults = {
 	EVENTS: EVENTS,
 	helpers: {},
 	options: {
-		global: false,
-		namespace: 'App',
-		attrPrefix: 'data-js'
+		namespace: 'App'
 	},
 	plugins: {},
 	detections: {
