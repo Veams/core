@@ -391,7 +391,7 @@ __How to__
 
 ```js
 import Veams from 'veams';
-import VeamsDOM from 'veams/lib/plugins/vent';
+import VeamsVent from 'veams/lib/plugins/vent';
 import EVENTS from './custom-events';
 
 // Intialize core of Veams
@@ -531,12 +531,13 @@ When enabled the Api provides a way to add a mixin to the container `Veams.mixin
 * @param {`String`} name - Mixin name which will be used in the registration process.
 * @param {`Function`} mixinFunction - The mixin function should return an object with methods.
 
-The method allows the registration of provided or custom mixi´´
-n.
+The method allows the registration of provided or custom mixins.
 
 ```js
 import Veams from 'veams';
 import VeamsMixins from 'veams/lib/plugins/mixins';
+
+import imageLoader from './utils/mixins/image-loader';
 
 // Intialize core of Veams
 Veams.core.initialize();
