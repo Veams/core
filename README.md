@@ -83,6 +83,13 @@ The core of Veams is nothing more than a simple object (`Veams`).
 
 Veams comes with some empty and predefined objects and a basic functionality (`use()`).
 
+##### Veams.addHelper('name', helperFunction)
+
+* @param {`String`} name - Helper name which will be used in the registration process.
+* @param {`Function`} helperFunction - The helper function.
+
+The method allows the registration of provided or custom helpers.
+
 ##### Veams.EVENTS {`Object`}
 
 The events object can be used to communicate between modules. It can be extended with further custom events. Just see [VeamsVent](#veamsvent).
@@ -107,7 +114,9 @@ Veams provides some general options. These are:
 
 In this object will be saved all named plugins. In the beginning it is empty.
 
-##### Veams.use {`Function`}
+##### Veams.use(plugin)
+
+* @param {`Object`} plugin - Plugin object which extends the Veams object.
 
 This method provides the possibility to register a plugin, see section [Creation of plugins](creation-of-plugins).
 
@@ -131,6 +140,8 @@ __The following helper are provided as default helpers:__
 
 __Additional helpers can be imported by you:__
 
+These helpers need to be imported into your project and can be added to the Veams.helper object by using the provided `Veams.addHelper()` method.
+
 - [Animation End Helper](#veamshelpersanimationendevent)
 - [Check Element in Context Helper](#veamshelperscheckelementincontextelem-context)
 - [Detect Swipe Helper](#veamshelpersdetectswipeel-threshold)
@@ -141,7 +152,7 @@ __Additional helpers can be imported by you:__
 - [Transition End Helper](#veamshelperstransitionendevent)
 - [Update URL Helper](#veamshelpersupdateurlurl-params)
 
-These helpers need to be imported into your project and can be added to the Veams.helper object by using the provided method:
+_Example:_
 
 ```js
 import makeIdHelper from 'veams/src/utils/helpers/make-id';
@@ -156,8 +167,6 @@ Veams.addHelper('makeId', makeIdHelper);
 // Or pass an object to the method with your helpers in it
 Veams.addHelper(helpers);
 ```
-
-1.
 
 ---------------
 
@@ -340,10 +349,10 @@ Please keep in mind that the order of the initialisation of your used plugins ca
 Veams.core.initialize();
 
 // Add plugins to the Veams system
-Veams.use(VeamsDOM); // VeamsDOM is important for VeamsVent
-Veams.use(VeamsVent, {
+Veams.use(VeamsDOM, {
     DOM: $
-}); // VeamsVent enhances VeamsModules and VeamsMediaQueryHandler
+}); // VeamsDOM is important for VeamsVent
+Veams.use(VeamsVent); // VeamsVent enhances VeamsModules and VeamsMediaQueryHandler
 Veams.use(VeamsLogger);
 Veams.use(VeamsModules);
 Veams.use(VeamsMediaQueryHandler);
@@ -376,7 +385,7 @@ _DOM_ {`Function`} [`() => {}`] (required) - Add a DOM handler by using this opt
 
 The VeamsVent plugin is a global publish and subscribe object. You can use this plugin to communicate between modules independently.
 
-VeamsVent expose a global event object which you can use and extend.
+Veams exposes a global event object (`Veams.EVENTS`) which can used and extended by this plugin.
 
 __How to__
 
@@ -400,7 +409,7 @@ __Options__
 
 ##### VeamsLogger
 
-The VeamsLogger plugin disables `console` logs by default. You can provide parameters (`?devmode` in the URL to show the logs in your console.
+The VeamsLogger plugin disables `console` logs by default. You can provide parameters (`?devmode`) in the URL to show the logs in your console.
 
 Furthermore it gives you the possibility to add a logger (`?logger`) which will be displayed on other devices.
 
@@ -421,7 +430,7 @@ Veams.use(VeamsLogger);
 
 The VeamsModules plugin provides a whole system to initialize, render, save and destroy your modules.
 
-It uses mutation observer to observe added and removed nodes and handles your components.
+It uses mutation observer to observe added and removed nodes and handles your components, as long as the component has the same Api like [VeamsComponent](#veamscomponent).
 
 __How to__
 
@@ -446,7 +455,7 @@ __Options__
 
 ##### VeamsMediaQueryHandler
 
-The VeamsMediaQueryHandler plugin provides to you a posssibility to get the current media query name from your css.
+The VeamsMediaQueryHandler plugin provides to you a possibility to get the current media query name from your css.
 
 If you want to use the media query support then just add the following lines to a custom scss file and modify it like you want:
 
@@ -487,7 +496,7 @@ Veams.core.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsMediaQueryHandler, {
-    useMutationObserver: true
+    delay: 200
 });
 ```
 
@@ -498,7 +507,7 @@ You can pass a second parameter with an options object. Available options are:
 - `mediaQueryProp` {String} ['font-family'] - Define a media query property which you have added to the head element.
 - `delay` {Number} [300] - Define the delay value for the throttle handling which is responsible to trigger an event and set the `currentMedia` value.
 
-__VeamsMixins__
+##### VeamsMixins
 
 The VeamsMixins plugin is something where you can save global mixins. Mixins are object with functions in it which can be used to extend methods in other classes/modules.
 
@@ -516,6 +525,14 @@ Veams.use(VeamsMixins);
 _Api:_
 
 When enabled the Api provides a way to add a mixin to the container `Veams.mixins`.
+
+###### Veams.addMixin('name', mixinFunction)
+
+* @param {`String`} name - Mixin name which will be used in the registration process.
+* @param {`Function`} mixinFunction - The mixin function should return an object with methods.
+
+The method allows the registration of provided or custom mixi´´
+n.
 
 ```js
 import Veams from 'veams';
@@ -559,7 +576,7 @@ The class provides a simple ajax system (`.get()`, `.post()`) which returns a pr
 
 ## Veams-Cli
 
-Veams-Cli provides a command line interface for scaffolds and build processes.
+Veams-Cli is a command line interface for scaffolds and build processes.
 The key benefit is the rapid setup time. You can easily create complex application setups with Veams-Cli in a few minutes.
 
 ### Repository and Options
