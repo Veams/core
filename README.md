@@ -90,20 +90,18 @@ That's it. The framework is integrated.
 
 ### Veams Core
 
-The core of Veams is nothing more than a simple object (`Veams`).
-
-In general Veams comes with some empty and predefined objects and a basic API.
+The core of Veams is nothing more than a simple object (`Veams`). In general Veams comes with some empty and predefined objects and a basic API.
 
 #### Veams Core API
 
-__Veams.addHelper('name', helperFunction)__
+_##### eams.addHelper('name', helperFunction)
 
 * @param {`String`} name - Helper name which will be used in the registration process.
 * @param {`Function`} helperFunction - The helper function.
 
 The method allows the registration of provided or custom helpers.
 
-__Veams.use(plugin)__
+##### Veams.use(plugin)
 
 * @param {`Object`} plugin - Plugin object which extends the Veams object.
 
@@ -111,31 +109,31 @@ This method provides the possibility to register a plugin, see section [Creation
 
 #### Veams Core Object
 
-__Veams.EVENTS {`Object`}__
+##### Veams.EVENTS {`Object`}
 
 The events object can be used to communicate between modules. It can be extended with further custom events. Just see [VeamsVent](#veamsvent).
 
-__Veams.dectections {`Object`}__
+##### Veams.dectections {`Object`}
 
 The detections object contains the current width and height, as well as if you are on a touch device or not.
 
 The detections object will be updated when you use [VeamsMediaQueryHandler](#veamsmediaqueryhandler).
 
-__Veams.helpers {`Object`}__
+##### Veams.helpers {`Object`}
 
 Veams has some helpers which you can use. Some of the helpers are optional, others are requirements, see [Veams Helpers](#helpers).
 
-__Veams.options {`Object`}__
+##### Veams.options {`Object`}
 
 Veams provides some general options. These are:
 
 - _`namespace`_ {String} ['App'] - The custom namespace of your application.
 
-__Veams.plugins {`Object`}__
+##### Veams.plugins {`Object`}
 
 All named plugins will be saved in this object. In the beginning it is empty.
 
-__Veams.version {`String`}__
+##### Veams.version {`String`}
 
 Display the current Veams version.
 
@@ -568,7 +566,7 @@ Later you can use this specific mixin in other modules:
 myClass.mixin(Veams.mixins.imageLoader);
 ```
 
-Here you see you need to extend your class with the helper `mixin` function, which is available in `Veams.helpers`.
+Here you see that you need to extend your custom class with the helper function `mixin`, which is available in `Veams.helpers`.
 
 ### Common
 
