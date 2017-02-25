@@ -3,7 +3,7 @@
  * The object will be used as publish/subscribe plugin.
  *
  * The module extends the default EVENTS object of Veams
- * when you pass the option called 'customEvents'.
+ * when you pass the option called 'furtherEvents'.
  *
  * @module VeamsVent
  *

@@ -22,24 +22,37 @@ Veams contains various (pluggable) instruments which are controlled by our custo
 
 ## Veams as Framework
 
-Veams exposes a framework which you can use as a simple starter kit. This starter kit can be enhanced and extended by a simple plugin system.
+Veams exposes a framework which you can use as a simple starting point. This starting point can be enhanced and extended by an easy plugin system.
+
+The purpose of Veams is to individually build up a __project based framework__ in a simple, fast, scalable and understandable way.
+
+It is not opinionated, means use the stack which fits best to your project, in example Backbone, React, Foundation or something else.
 
 ### Table of Content
-
-1. [Usage](#usage)
+1. [Typical Use Cases for Veams](#typical-use-cases)
+2. [Usage](#usage)
   - [Installation](#installation)
   - [Import](#import)
-2. [Core](#veams-core)
+3. [Core](#veams-core)
   - [General](#the-general-veams-object)
   - [Helpers](#helpers)
-3. [Plugins](#plugins)
+4. [Plugins](#plugins)
   - [Usage of Plugins](#usage-of-plugins)
   - [Creation of Plugins](#creation-of-plugins)
   - [Available Plugins](#available-plugins)
-4. [Common](#common)
+5. [Common](#common)
   - [VeamsComponent](#veamscomponent)
-5. [Services](#services)
+6. [Services](#services)
   - [VeamsHttp](#veamshttp)
+7. [Roadmap of Veams](#roadmap)
+
+### Typical Use Cases
+
+Veams is used in many projects of the agency I work for.
+
+The majority of projects are portal like websites, they are mostly static (CMS) and get enhanced with (a lot of) JavaScript.
+
+That's why all plugins or components are heavily optimised for that project type.
 
 ### Usage 
 
@@ -79,52 +92,54 @@ That's it. The framework is integrated.
 
 The core of Veams is nothing more than a simple object (`Veams`).
 
-#### The General Veams Object
+In general Veams comes with some empty and predefined objects and a basic API.
 
-Veams comes with some empty and predefined objects and a basic functionality (`use()`).
+#### Veams Core Api
 
-##### Veams.addHelper('name', helperFunction)
+__Veams.addHelper('name', helperFunction)__
 
 * @param {`String`} name - Helper name which will be used in the registration process.
 * @param {`Function`} helperFunction - The helper function.
 
 The method allows the registration of provided or custom helpers.
 
-##### Veams.EVENTS {`Object`}
-
-The events object can be used to communicate between modules. It can be extended with further custom events. Just see [VeamsVent](#veamsvent).
-
-##### Veams.dectections {`Object`}
-
-The detections object contains the current width and height, as well as if you are on a touch device or not.
-
-The detections object will be updated when you use [VeamsMediaQueryHandler](#veamsmediaqueryhandler).
-
-##### Veams.helpers {`Object`}
-
-Veams has some helpers which you can use. Some of the helpers are optional, others are requirements, see [Veams Helpers](#helpers).
-
-##### Veams.options {`Object`}
-
-Veams provides some general options. These are:
-
-- _`namespace`_ {String} ['App'] - The custom namespace of your application.
-
-##### Veams.plugins {`Object`}
-
-In this object will be saved all named plugins. In the beginning it is empty.
-
-##### Veams.use(plugin)
+__Veams.use(plugin)__
 
 * @param {`Object`} plugin - Plugin object which extends the Veams object.
 
 This method provides the possibility to register a plugin, see section [Creation of plugins](creation-of-plugins).
 
-##### Veams.version {`String`}
+#### Veams Core Object
+
+__Veams.EVENTS {`Object`}__
+
+The events object can be used to communicate between modules. It can be extended with further custom events. Just see [VeamsVent](#veamsvent).
+
+__Veams.dectections {`Object`}__
+
+The detections object contains the current width and height, as well as if you are on a touch device or not.
+
+The detections object will be updated when you use [VeamsMediaQueryHandler](#veamsmediaqueryhandler).
+
+__Veams.helpers {`Object`}__
+
+Veams has some helpers which you can use. Some of the helpers are optional, others are requirements, see [Veams Helpers](#helpers).
+
+__Veams.options {`Object`}__
+
+Veams provides some general options. These are:
+
+- _`namespace`_ {String} ['App'] - The custom namespace of your application.
+
+__Veams.plugins {`Object`}__
+
+All named plugins will be saved in this object. In the beginning it is empty.
+
+__Veams.version {`String`}__
 
 Display the current Veams version.
 
-### Helpers
+### Veams Helpers
 
 The helpers are saved in `src/js/utils/helpers/`.
 
@@ -572,6 +587,25 @@ The class provides a base system to build components. It merges options, bind an
 * `import VeamsHttp from 'veams/lib/services/http'`
 
 The class provides a simple ajax system (`.get()`, `.post()`) which returns a promise.
+
+### Roadmap
+
+There are many things left. So here you can see a short overview:
+
+1. __Extend/Enhance Plugins Repository__
+  - React Plugin
+  - Vue.js Plugin
+  - Lazyload Modules Handler Plugin
+  - Extend Templater Plugin to support server side templates
+2. __Enhance Commons and Services__
+  - Create a native VeamsComponent
+  - Create a11y service
+3. __Extend Helpers Repository__
+  - Add more useful helpers
+  - Update existing ones
+4. __Write tests__
+
+If you have other ideas, please open an issue on github, I would appreciate that!
 
 ---------
 
