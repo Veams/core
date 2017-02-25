@@ -94,7 +94,7 @@ The core of Veams is nothing more than a simple object (`Veams`).
 
 In general Veams comes with some empty and predefined objects and a basic API.
 
-#### Veams Core Api
+#### Veams Core API
 
 __Veams.addHelper('name', helperFunction)__
 
@@ -445,7 +445,7 @@ Veams.use(VeamsLogger);
 
 The VeamsModules plugin provides a whole system to initialize, render, save and destroy your modules.
 
-It uses mutation observer to observe added and removed nodes and handles your components, as long as the component has the same Api like [VeamsComponent](#veamscomponent).
+It uses mutation observer to observe added and removed nodes and handles your components, as long as the component has the same API like [VeamsComponent](#veamscomponent).
 
 __How to__
 
@@ -537,9 +537,9 @@ Veams.core.initialize();
 Veams.use(VeamsMixins);
 ```
 
-_Api:_
+_API:_
 
-When enabled the Api provides a way to add a mixin to the container `Veams.mixins`.
+When enabled the API provides a way to add a mixin to the container `Veams.mixins`.
 
 ###### Veams.addMixin('name', mixinFunction)
 
