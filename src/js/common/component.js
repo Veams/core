@@ -125,10 +125,12 @@ class VeamsComponent {
 	 * @private
 	 */
 	_create() {
+		this.willMount();
 		this.preRender();
 		this.registerEvents(this.events, false);
 		this.registerEvents(this.subscribe, true);
 		this.bindEvents();
+		this.didMount();
 	}
 
 	/**
@@ -139,11 +141,26 @@ class VeamsComponent {
 		return this;
 	}
 
+	// MOUNT PROCESSES
+	// ------------------------------------------------
+	willMount() {
+	}
+
+	willUnmount() {
+	}
+
+	didMount() {
+	}
+
+	didUnmount() {
+	}
+
 	/**
 	 * Destroy component by unbinding events and
-	 * removing element from dom
+	 * removing element from DOM
 	 */
 	destroy() {
+		this.unregisterEvents();
 		this.unbindEvents();
 		this.$el.remove();
 	}
@@ -229,6 +246,20 @@ class VeamsComponent {
 		}
 	}
 
+	unregisterEvents() {
+		for (let key in this._subscribers) {
+			if (this._subscribers.hasOwnProperty(key)) {
+				let obj = this._subscribers[key];
+
+				if (obj.type === 'globalEvent') {
+					Veams.Vent.off(obj.event, obj.handler);
+				} else {
+					this.$el.off(obj.event, obj.handler);
+				}
+			}
+		}
+	}
+
 	/**
 	 * Bind local and global events
 	 */
@@ -242,17 +273,6 @@ class VeamsComponent {
 	 *
 	 */
 	unbindEvents() {
-		for (let key in this._subscribers) {
-			if (this._subscribers.hasOwnProperty(key)) {
-				let obj = this._subscribers[key];
-
-				if (obj.type === 'globalEvent') {
-					Veams.Vent.off(obj.event, obj.handler);
-				} else {
-					this.$el.off(obj.event, obj.handler);
-				}
-			}
-		}
 	}
 
 	/**

@@ -32,23 +32,39 @@ class VeamsHttp {
 		}
 	};
 
+	// Request lifecycle
+	requestWillOpen(request, obj) {}
+	requestDidOpen(request, obj) {}
+	requestWillLoad(request, obj) {}
+	requestDidLoad(request, obj) {}
+	requestWillSend(request, obj) {}
+	requestDidSend(request, obj) {}
+
+	// Request function
 	promiseRequest(obj) {
 		return new Promise((resolve, reject) => {
 			let request = new XMLHttpRequest();
 
+			this.requestWillOpen(request, obj);
 			request.open(obj.method, obj.url, true);
+			this.requestDidOpen(request, obj);
 
+			this.requestWillLoad(request, obj);
 			request.onload = () => {
 				if (request.status >= 200 && request.status < 400) {
 					resolve(this.parser({
 						request: request,
 						type: obj.type
 					}));
+
+					this.requestDidLoad(request, obj);
 				} else {
 					reject({
 						status: request.status,
 						statusText: request.statusText
 					});
+
+					this.requestDidLoad(request, obj);
 				}
 			};
 
@@ -59,7 +75,9 @@ class VeamsHttp {
 				});
 			};
 
+			this.requestWillSend(request, obj);
 			request.send(obj.data);
+			this.requestDidSend(request, obj);
 		});
 	};
 

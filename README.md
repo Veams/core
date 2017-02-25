@@ -94,7 +94,7 @@ The core of Veams is nothing more than a simple object (`Veams`). In general Vea
 
 #### Veams Core API
 
-_##### eams.addHelper('name', helperFunction)
+##### Veams.addHelper('name', helperFunction)
 
 * @param {`String`} name - Helper name which will be used in the registration process.
 * @param {`Function`} helperFunction - The helper function.
@@ -390,7 +390,7 @@ Veams.use(VeamsDOM, {
     DOM: $
 });
 ```
-__Options__
+_Options_
 
 _DOM_ {`Function`} [`() => {}`] (required) - Add a DOM handler by using this option. It should have the same api like jQuery.
 
@@ -416,7 +416,7 @@ Veams.use(VeamsVent, {
 });
 ```
 
-__Options__
+_Options_
 
 - _furtherEvents_ {`Object`} [`false`] - Add your custom events to the global events object of Veams.
 
@@ -460,7 +460,20 @@ Veams.use(VeamsModules, {
 });
 ```
 
-__Options__
+_API_
+
+When enabled you can register a module like that:
+
+```js
+import CustomModule from './modules/custom';
+
+Veams.modules.register([
+    domName: 'custom',
+    module: CustomModule
+]);
+```
+
+_Options_
 
 - _attrPrefix_ {`String`} [`'data-js'`] - You can override the javascript module indicator in your markup which will be searched in the context.
 - _logs_ {`Boolean`} [`false`] - Hide or print the logs to the console.

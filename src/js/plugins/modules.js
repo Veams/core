@@ -70,7 +70,9 @@ class Modules {
 			let cacheItem = this._cache[i];
 
 			if (cacheItem.element === node) {
-				if (cacheItem.module.unbindEvents) cacheItem.module.unbindEvents();
+				if (cacheItem.module.willUnmount) cacheItem.module.willUnmount();
+				if (cacheItem.module.unregisterEvents) cacheItem.module.unregisterEvents();
+				if (cacheItem.module.didUnmount) cacheItem.module.didUnmount();
 
 				deleteIndex = i;
 			}
