@@ -82,8 +82,8 @@ _SCSS_
 
 ``` scss
 // Reset (veams-reset or veams-normalize)
-@import "../node-modules/veams/src/scss/veams-reset";
-@import "../node-modules/veams/src/scss/veams";
+@import "./node_modules/veams/src/scss/veams-reset";
+@import "./node_modules/veams/src/scss/veams";
 ```
 
 That's it. The framework is integrated.
