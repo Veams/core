@@ -605,9 +605,9 @@ There are many things left. So here you can see a short overview:
 
 1. __Extend/Enhance Plugins Repository__
   - React Plugin
-  - Vue.js Plugin
   - Lazyload Modules Handler Plugin
   - Extend Templater Plugin to support server side templates
+  - Add VDOM plugin for templater
 2. __Enhance Commons and Services__
   - Create a native VeamsComponent
   - Create a11y service
