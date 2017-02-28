@@ -1,13 +1,13 @@
-/**
- * Represents a http service, which returns a promise.
- * @module http
- *
- * Polyfills: npm install promise-polyfill --save-exact
- *
- * @author Sebastian Fitzner
- */
-
 if (!window.Promise) {
+
+	/**
+	 * Represents a http service, which returns a promise.
+	 *
+	 * Polyfills: npm install promise-polyfill --save-exact
+	 *
+	 * @module http
+	 * @author Sebastian Fitzner
+	 */
 	console.error('Veams-Http :: You should add a lightweight promise library like promise-polyfill!');
 }
 

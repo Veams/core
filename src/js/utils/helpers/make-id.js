@@ -6,7 +6,8 @@
  * @return {String} - generated id
  */
 export default function makeId(segments = 1) {
-	let array = window.crypto.getRandomValues(new Uint32Array(segments));
+	let crypto = window.crypto || window.msCrypto;
+	let array = crypto.getRandomValues(new Uint32Array(segments));
 	let id = '';
 	let i = 0;
 
