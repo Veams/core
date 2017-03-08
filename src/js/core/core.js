@@ -33,7 +33,7 @@ class Core {
 		 */
 		VEAMS.detections = VEAMS.helpers.extend({
 			touch: VEAMS.helpers.isTouch()
-		}, this.detections || {});
+		}, Veams.detections || {});
 	}
 }
 

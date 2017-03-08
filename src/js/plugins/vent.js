@@ -18,7 +18,7 @@
  * https://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js
  * adopted https://github.com/phiggins42/bloody-jquery-plugins/blob/55e41df9bf08f42378bb08b93efcb28555b61aeb/pubsub.js
  *
- * changed by Sebastian Fitzner
+ * modified by Sebastian Fitzner
  *
  */
 const EventsHandler = (function () {
@@ -54,36 +54,39 @@ const EventsHandler = (function () {
 		 *    @return Event handler {Array}
 		 */
 		subscribe = function (topic, callback) {
-			let cb = callback.bind(this);
+			let topics = topic.split(' ');
 
-			if (!cache[topic]) {
-				cache[topic] = [];
+			for (let i = 0; i < topics.length; i++) {
+				let topic = topics[i];
+
+				if (!cache[topic]) {
+					cache[topic] = [];
+				}
+
+				cache[topic].push(callback);
 			}
-			cache[topic].push(cb);
-			return [topic, cb];
 		},
 
 		/**
 		 *    Events.unsubscribe
 		 *    e.g.: var handle = Events.subscribe("/Article/added", Articles.validate);
-		 *        Events.unsubscribe(handle);
+		 *        Events.unsubscribe("/Article/added", Articles.validate);
 		 *
 		 *    @class Events
 		 *    @method unsubscribe
-		 *    @param handle {Array}
+		 *    @param topic {String}
+		 *    @param handle {Function}
 		 *    @param completly {Boolean}
-		 *    @return {type description }
 		 */
-		unsubscribe = function (handle, completly) {
-			let t = handle[0],
-				i = cache[t].length - 1;
+		unsubscribe = function (topic, handle, completly) {
+			let i = cache[topic].length - 1;
 
-			if (cache[t]) {
+			if (cache[topic]) {
 				for (i; i >= 0; i -= 1) {
-					if (cache[t][i] === handle[1]) {
-						cache[t].splice(cache[t][i], 1);
+					if (cache[topic][i] === handle) {
+						cache[topic].splice(cache[topic][i], 1);
 						if (completly) {
-							delete cache[t];
+							delete cache[topic];
 						}
 					}
 				}

@@ -8,7 +8,11 @@ import methodExtendHelper from './method-extend';
  * @param {Array} methods - Array of method names which will be extended.
  */
 export default function mixin(from, methods = ['initialize', 'render']) {
-	if (from === undefined) return;
+	if (from === undefined) {
+		console.error(`VeamsHelpers : Mixin :: Mixin not found!`);
+
+		return;
+	}
 
 	let to = this.prototype;
 
