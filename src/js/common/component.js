@@ -34,6 +34,12 @@ class VeamsComponent {
 	 * @param {Object} options [{}] - Object which contains options of the extended class.
 	 */
 	constructor(obj = {}, options = {}) {
+		if (!obj.namespace) {
+			console.log('You should pass an object with a namespace for your component!');
+		} else {
+			this.namespace = obj.namespace;
+		}
+		this._instanceId = this.namespace;
 		this.el = obj.el;
 		this.options = options;
 		this.namespace = null;
@@ -44,12 +50,7 @@ class VeamsComponent {
 			this.$el = $(obj.el);
 		}
 
-		if (!obj.namespace) {
-			console.log('You should pass an object with a namespace for your component!');
-		} else {
-			this.namespace = obj.namespace;
-		}
-
+		console.log('instence: ', this._instanceId);
 		this.initialize(obj, options);
 		this._create();
 	}
@@ -77,6 +78,14 @@ class VeamsComponent {
 		return {
 			name: typeof this.namespace === 'string' ? stringHelpers.capitalizeFirstLetter(stringHelpers.toCamelCase(this.namespace)) : ''
 		};
+	}
+
+	get _instanceId() {
+		return this.__instanceId;
+	}
+
+	set _instanceId(id) {
+		this.__instanceId = `${id}_` + Veams.helpers.makeId() + '_' + Date.now();
 	}
 
 	/**
@@ -200,13 +209,24 @@ class VeamsComponent {
 	 * this.registerEvent('click .btn', 'render');
 	 * this.registerEvent('click {{this.options.btn}}', 'render');
 	 * this.registerEvent('{{App.EVENTS.custom.event', 'render');
+	 * this.registerEvent('{{App.EVENTS.resize', 'render', true);
 	 */
 	registerEvent(evtKey, fn, global = false) {
+		if (typeof evtKey !== 'string') {
+			console.error('VeamsComponent :: Your event is not a string!');
+			return;
+		}
+
+		if (typeof fn !== 'string') {
+			console.error('VeamsComponent :: Your event handler function is not a string!');
+			return;
+		}
+
 		let evtKeyArr = evtKey.split(' ');
 		let arrlen = evtKeyArr.length;
 		let evtType = getStringValue.apply(this, [tplEngine(evtKeyArr[0])]);
 		let bindFn = this[fn].bind(this);
-		let id = evtKeyArr.join('_') + '_' + fn;
+		let id = buildEvtId(evtKeyArr, fn);
 
 		if (arrlen > 2) {
 			throw new Error('It seems like you have more than two strings in your events object!');
@@ -303,6 +323,14 @@ class VeamsComponent {
 	render() {
 		return this;
 	}
+}
+
+/**
+ * Custom Functions
+ */
+
+function buildEvtId(evtKeyArr, fnName) {
+	return evtKeyArr.join('_') + '_' + fnName;
 }
 
 /**
