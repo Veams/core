@@ -78,13 +78,13 @@ const EventsHandler = (function () {
 		 *    @param handle {Function}
 		 *    @param completly {Boolean}
 		 */
-		unsubscribe = function (topic, handle, completly) {
+		unsubscribe = function (topic, handle, completly = false) {
 			let i = cache[topic].length - 1;
 
 			if (cache[topic]) {
-				for (i; i >= 0; i -= 1) {
+				for (i; i >= 0; i--) {
 					if (cache[topic][i] === handle) {
-						cache[topic].splice(cache[topic][i], 1);
+						cache[topic].splice(i, 1);
 						if (completly) {
 							delete cache[topic];
 						}
