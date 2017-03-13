@@ -81,10 +81,9 @@ class Modules {
 			let cacheItem = this._cache[i];
 
 			if (cacheItem[key] === obj) {
-				console.log('cacheItem.module: ', cacheItem.module.willUnmount);
-				if (cacheItem.module.willUnmount) cacheItem.module.willUnmount();
-				if (cacheItem.module.unregisterEvents) cacheItem.module.unregisterEvents();
-				if (cacheItem.module.didUnmount) cacheItem.module.didUnmount();
+				if (cacheItem.instance.willUnmount) cacheItem.instance.willUnmount();
+				if (cacheItem.instance.unregisterEvents) cacheItem.instance.unregisterEvents();
+				if (cacheItem.instance.didUnmount) cacheItem.instance.didUnmount();
 
 				deleteIndex = i;
 			}
@@ -100,9 +99,9 @@ class Modules {
 			let cacheItem = this._cache[i];
 
 			if (cacheItem.element === node) {
-				if (cacheItem.module.willUnmount) cacheItem.module.willUnmount();
-				if (cacheItem.module.unregisterEvents) cacheItem.module.unregisterEvents();
-				if (cacheItem.module.didUnmount) cacheItem.module.didUnmount();
+				if (cacheItem.instance.willUnmount) cacheItem.instance.willUnmount();
+				if (cacheItem.instance.unregisterEvents) cacheItem.instance.unregisterEvents();
+				if (cacheItem.instance.didUnmount) cacheItem.instance.didUnmount();
 
 				deleteIndex = i;
 			}
@@ -283,6 +282,7 @@ class Modules {
 			this.addToCache({
 				element: obj.el,
 				module: obj.module,
+				instance: module,
 				name: obj.domName
 			});
 
