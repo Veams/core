@@ -13,9 +13,17 @@ if (!Veams.$) {
 /**
  * Imports
  */
+import makeIdHelper from '../utils/helpers/make-id';
 import stringHelpers from '../utils/internal-helpers/string';
 import getStringValue from '../utils/internal-helpers/get-string-value';
 import tplEngine from '../utils/internal-helpers/template-engine';
+
+/**
+ * Custom Functions
+ */
+function buildEvtId(evtKeyArr, fnName) {
+	return evtKeyArr.join('_') + '_' + fnName;
+}
 
 /**
  * Variables
@@ -39,7 +47,7 @@ class VeamsComponent {
 		} else {
 			this.namespace = obj.namespace;
 		}
-		this._instanceId = this.namespace;
+		this.instanceId = this.namespace;
 		this.el = obj.el;
 		this.options = options;
 		this.namespace = null;
@@ -50,7 +58,6 @@ class VeamsComponent {
 			this.$el = $(obj.el);
 		}
 
-		console.log('instence: ', this._instanceId);
 		this.initialize(obj, options);
 		this._create();
 	}
@@ -80,12 +87,12 @@ class VeamsComponent {
 		};
 	}
 
-	get _instanceId() {
-		return this.__instanceId;
+	get instanceId() {
+		return this._instanceId;
 	}
 
-	set _instanceId(id) {
-		this.__instanceId = `${id}_` + Veams.helpers.makeId() + '_' + Date.now();
+	set instanceId(id) {
+		this._instanceId = `${id}_` + Date.now() + '_' + makeIdHelper();
 	}
 
 	/**
@@ -134,12 +141,10 @@ class VeamsComponent {
 	 * @private
 	 */
 	_create() {
-		this.willMount();
 		this.preRender();
 		this.registerEvents(this.events, false);
 		this.registerEvents(this.subscribe, true);
 		this.bindEvents();
-		this.didMount();
 	}
 
 	/**
@@ -204,8 +209,7 @@ class VeamsComponent {
 	 *
 	 * @public
 	 *
-	 * @example:
-	 *
+	 * @example
 	 * this.registerEvent('click .btn', 'render');
 	 * this.registerEvent('click {{this.options.btn}}', 'render');
 	 * this.registerEvent('{{App.EVENTS.custom.event', 'render');
@@ -244,7 +248,7 @@ class VeamsComponent {
 			};
 
 		} else if (arrlen === 1 && global) {
-			Veams.Vent.on(evtType, bindFn);
+			Veams.Vent.subscribe(evtType, bindFn);
 
 			this._subscribers = {
 				type: 'globalEvent',
@@ -255,7 +259,7 @@ class VeamsComponent {
 		} else {
 			let delegate = getStringValue.apply(this, [tplEngine(evtKeyArr[1])]);
 
-			this.$el.on(evtType + this.evtNamespace, delegate, bindFn);
+			this.$el.on(evtType, delegate, bindFn);
 
 			this._subscribers = {
 				type: 'delegatedEvent',
@@ -266,13 +270,44 @@ class VeamsComponent {
 		}
 	}
 
+	/**
+	 * Unregister an event by using the saved subscribers and
+	 * a key/value pair.
+	 *
+	 *
+	 * @param {String} evtKey - Event key which contains event and additionally a delegated element.
+	 * @param {String} fn - Function defined as string which will be unbound to this.
+	 *
+	 * @public
+	 *
+	 * @example
+	 * this.unregisterEvent('click .btn', 'render');
+	 * this.unregisterEvent('click {{this.options.btn}}', 'render');
+	 * this.unregisterEvent('{{App.EVENTS.custom.event', 'render');
+	 * this.unregisterEvent('{{App.EVENTS.resize', 'render');
+	 */
+	unregisterEvent(evtKey, fn) {
+		let evtKeyArr = evtKey.split(' ');
+		let id = buildEvtId(evtKeyArr, fn);
+
+		if (this._subscribers[id]) {
+			let obj = this._subscribers[id];
+
+			if (obj.type === 'globalEvent') {
+				Veams.Vent.unsubscribe(obj.event, obj.handler);
+			} else {
+				this.$el.off(obj.event, obj.handler);
+			}
+		}
+	}
+
 	unregisterEvents() {
 		for (let key in this._subscribers) {
 			if (this._subscribers.hasOwnProperty(key)) {
 				let obj = this._subscribers[key];
 
 				if (obj.type === 'globalEvent') {
-					Veams.Vent.off(obj.event, obj.handler);
+					Veams.Vent.unsubscribe(obj.event, obj.handler);
 				} else {
 					this.$el.off(obj.event, obj.handler);
 				}
@@ -323,14 +358,6 @@ class VeamsComponent {
 	render() {
 		return this;
 	}
-}
-
-/**
- * Custom Functions
- */
-
-function buildEvtId(evtKeyArr, fnName) {
-	return evtKeyArr.join('_') + '_' + fnName;
 }
 
 /**

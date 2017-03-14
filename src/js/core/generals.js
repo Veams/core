@@ -25,7 +25,7 @@ let defaults = {
 		width: window.innerWidth,
 		height: window.innerHeight
 	},
-	version: '5.0.0-rc8'
+	version: '5.0.0-rc9'
 };
 let Veams = Veams || defaults;
 

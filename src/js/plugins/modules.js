@@ -3,6 +3,13 @@ let Veams = {};
 // let __cache = {};
 
 /**
+ * TODO: Clean up of class
+ *
+ * Make it more pure!!! It is work in progress but it works, yeah!
+ *
+ */
+
+/**
  * - Get modules in DOM
  * - Get Classes and options from init process
  * - Split up conditional modules from other modules
@@ -90,24 +97,6 @@ class Modules {
 		}
 
 		if (deleteIndex) this._cache.splice(deleteIndex, 1);
-	}
-
-	removeFromCache(node) {
-		let deleteIndex;
-
-		for (let i = 0; i < this._cache.length; i++) {
-			let cacheItem = this._cache[i];
-
-			if (cacheItem.element === node) {
-				if (cacheItem.instance.willUnmount) cacheItem.instance.willUnmount();
-				if (cacheItem.instance.unregisterEvents) cacheItem.instance.unregisterEvents();
-				if (cacheItem.instance.didUnmount) cacheItem.instance.didUnmount();
-
-				deleteIndex = i;
-			}
-		}
-
-		this._cache.splice(deleteIndex, 1);
 	}
 
 	/**
@@ -286,10 +275,17 @@ class Modules {
 				name: obj.domName
 			});
 
+			// Mount process
+			if (module.willMount) module.willMount();
+
 			// Render after initial module loading
 			if (!noRender) module.render();
+
 			// Provide callback function in which you can use module and options
 			if (obj.cb && typeof (obj.cb) === 'function') obj.cb(module, mergedOptions);
+
+			// Mount process
+			if (module.didMount) module.didMount();
 		}
 	}
 
@@ -353,7 +349,7 @@ class Modules {
 								console.info('VeamsModules :: Recording deletion of module: ', removedNode, domName);
 							}
 
-							this.removeFromCache(removedNode);
+							this.removeFromCacheByKey(removedNode);
 
 						}
 
@@ -365,7 +361,7 @@ class Modules {
 							}
 
 							this.modulesInContext.forEach((node) => {
-								this.removeFromCache(node);
+								this.removeFromCacheByKey(node);
 							});
 						}
 					}
