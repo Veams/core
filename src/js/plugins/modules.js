@@ -1,12 +1,16 @@
 'use strict';
 let Veams = {};
-// let __cache = {};
+let __cache = [];
+let __register = {
+	modulesInRegister: [],
+	modulesOnConditions: [],
+	modulesOnInit: [],
+	modulesInContext: []
+};
 
 /**
- * TODO: Clean up of class
- *
- * Make it more pure!!! It is work in progress but it works, yeah!
- *
+ * TODO: Clean up mutation observer
+ * TODO: Add destructuring pattern
  */
 
 /**
@@ -23,18 +27,21 @@ class Modules {
 		Veams = VEAMS;
 
 		this.options = opts;
-		this._cache = []; // Module list
-		this.modulesInContext = []; // Save modules on current page
-		this.modulesRegister = [];
-		this.modulesOnInit = [];
-		this.modulesOnConditions = [];
+
+		if (!this.options.internalCacheOnly) {
+			this._cache = __cache; // Module list
+		}
+
+		if (!this.options.internalRegisterOnly) {
+			this._register = __register;
+		}
 
 		this.initialize();
 	}
 
 	initialize() {
 		this.queryString = '[' + this.options.attrPrefix + '-module]';
-		this.modulesInContext = Veams.helpers.querySelectorArray(this.queryString);
+		__register.modulesInContext = Veams.helpers.querySelectorArray(this.queryString);
 
 		if (this.options.useMutationObserver) {
 			this.observe(document.body);
@@ -53,7 +60,7 @@ class Modules {
 
 		if (Veams.Vent && this.options.useMutationObserver === false) {
 			Veams.Vent.on(Veams.EVENTS.DOMchanged, (e, context) => {
-				this.modulesInContext = this.getModulesInContext(context);
+				__register.modulesInContext = this.getModulesInContext(context);
 
 				if (this.options.logs) {
 					console.info('VeamsModules :: Recording new context. When available new modules will be initialised in: ', context);
@@ -64,14 +71,18 @@ class Modules {
 		}
 	}
 
+	// ------------------------
+	// STATIC CACHE HANDLER
+	// ------------------------
+
 	/**
-	 * Save the module in Veams.modules._cache.
+	 * Save the module in __cache.
 	 *
 	 * @param {Object} obj.module - module metadata object (@see VeamsComponent.metaData())
 	 * @param {Object} obj.element - module element (this.el)
 	 */
-	addToCache(obj) {
-		this._cache.push(obj);
+	static addToCache(obj) {
+		__cache.push(obj);
 
 		if (Veams.Vent) {
 			Veams.Vent.trigger(Veams.EVENTS.moduleCached, {
@@ -81,11 +92,11 @@ class Modules {
 		}
 	}
 
-	removeFromCacheByKey(obj, key = 'element') {
+	static removeFromCacheByKey(obj, key = 'element') {
 		let deleteIndex;
 
-		for (let i = 0; i < this._cache.length; i++) {
-			let cacheItem = this._cache[i];
+		for (let i = 0; i < __cache.length; i++) {
+			let cacheItem = __cache[i];
 
 			if (cacheItem[key] === obj) {
 				if (cacheItem.instance.willUnmount) cacheItem.instance.willUnmount();
@@ -96,104 +107,124 @@ class Modules {
 			}
 		}
 
-		if (deleteIndex) this._cache.splice(deleteIndex, 1);
-	}
-
-	/**
-	 * Register multiple modules.
-	 *
-	 * @param {Array} arr - Array which contains the modules as object.
-	 */
-	register(arr) {
-		if (!Array.isArray(arr)) {
-			throw new Error('VeamsModules :: You need to pass an array to register()!');
-		}
-
-		this.modulesRegister = this.modulesRegister.concat(arr);
-
-		this.splitUpModules();
-		this.bindConditions();
-		this.registerAll();
-	}
-
-	registerAll() {
-		if (!this.modulesRegister) return;
-
-		this.registerInitialModules();
-		this.registerConditionalModules();
-	}
-
-	registerConditionalModules() {
-		this.modulesOnConditions.forEach((module) => {
-			this.registerOne(module);
-		});
-	}
-
-	registerInitialModules() {
-		this.modulesOnInit.forEach((module) => {
-			this.registerOne(module);
-		});
-	}
-
-	splitUpModules() {
-		this.modulesRegister.forEach((module) => {
-			if (this.isCondition(module)) {
-				this.modulesOnConditions.push(module);
-			} else {
-				this.modulesOnInit.push(module);
-			}
-		});
-	}
-
-	isCondition(obj) {
-		return obj.conditions && typeof obj.conditions === 'function';
-	}
-
-	makeConditionCheck(obj) {
-		if (obj.conditions && typeof obj.conditions === 'function') {
-			return obj.conditions();
-		}
+		if (deleteIndex) __cache.splice(deleteIndex, 1);
 	}
 
 	checkModuleInCache(obj, key = 'element') {
 		let state = false;
 
-		this._cache.forEach((module) => {
+		__cache.forEach((module) => {
 			if (module[key] === obj) state = true;
 		});
 
 		return state;
 	}
 
-	checkModule(node) {
-		let state = false;
+	// ------------------------
+	// CONDITIONS HANDLER
+	// ------------------------
 
-		this._cache.forEach((module) => {
-			if (module.element === node) state = true;
-		});
+	static isCondition(obj) {
+		return obj.conditions && typeof obj.conditions === 'function';
+	}
 
-		return state;
+	static makeConditionCheck(obj) {
+		if (obj.conditions && typeof obj.conditions === 'function') {
+			return obj.conditions();
+		}
 	}
 
 	bindConditions() {
-		this.modulesOnConditions.forEach((module) => {
+		__register.modulesOnConditions.forEach((module) => {
 			if (module.conditionsListenOn && module.conditionsListenOn.length) {
-				this.registerCondition(module);
+				this.bindCondition(module);
 			}
 		});
 	}
 
-	registerCondition(module) {
+	bindCondition(module) {
 		let globalEvts = module.conditionsListenOn.join(' ');
 
 		if (Veams.Vent) {
 			Veams.Vent.subscribe(globalEvts, () => {
-				if (this.makeConditionCheck(module)) {
-					this.registerOne(module);
-				} else {
-					this.unregisterOne(module);
-				}
+				this.registerConditionalModule(module);
 			});
+		}
+	}
+
+	// ------------------------
+	// UN/REGISTER HANDLER
+	// ------------------------
+
+	/**
+	 * Split up modules depending on condition check
+	 */
+	splitUpModules() {
+		__register.modulesInRegister.forEach((obj) => {
+			if (this.constructor.isCondition(obj)) {
+				__register.modulesOnConditions.push(obj);
+			} else {
+				__register.modulesOnInit.push(obj);
+			}
+		});
+	}
+
+	/**
+	 * Register multiple modules.
+	 *
+	 * @param {Array} arr - Array which contains the modules as object.
+	 *
+	 * @public
+	 */
+	register(arr) {
+		if (!Array.isArray(arr)) {
+			throw new Error('VeamsModules :: You need to pass an array to register()!');
+		}
+
+		__register.modulesInRegister = __register.modulesInRegister.concat(arr);
+
+		this.splitUpModules();
+		this.bindConditions();
+		this.registerAll();
+	}
+
+	/**
+	 * Register all modules
+	 */
+	registerAll() {
+		if (!__register.modulesInRegister) return;
+
+		this.registerInitialModules();
+		this.registerConditionalModules();
+	}
+
+	/**
+	 * Register all initial modules
+	 */
+	registerInitialModules() {
+		__register.modulesOnInit.forEach((obj) => {
+			this.registerOne(obj);
+		});
+	}
+
+	/**
+	 * Register conditional modules
+	 *
+	 * Therefore we check the condition and
+	 * when true register the specific module
+	 * when false unregister the specific module
+	 */
+	registerConditionalModules() {
+		__register.modulesOnConditions.forEach((obj) => {
+			this.registerConditionalModule(obj);
+		});
+	}
+
+	registerConditionalModule(obj) {
+		if (this.constructor.makeConditionCheck(obj)) {
+			this.registerOne(obj);
+		} else {
+			this.unregisterOne(obj);
 		}
 	}
 
@@ -218,9 +249,13 @@ class Modules {
 
 	unregisterOne(obj) {
 		if (this.checkModuleInCache(obj.module, 'module') === true) {
-			this.removeFromCacheByKey(obj.module, 'module');
+			this.constructor.removeFromCacheByKey(obj.module, 'module');
 		}
 	}
+
+	// ------------------------
+	// INIT HANDLER
+	// ------------------------
 
 	/**
 	 * Initialize a module and render it and/or provide a callback function
@@ -233,7 +268,7 @@ class Modules {
 	 *
 	 */
 	initModules(obj) {
-		Veams.helpers.forEach(this.modulesInContext, (i, el) => {
+		Veams.helpers.forEach(__register.modulesInContext, (i, el) => {
 			this.initModule(Veams.helpers.extend({
 				el: el
 			}, obj));
@@ -245,14 +280,8 @@ class Modules {
 		let dataModules = obj.el.getAttribute(this.options.attrPrefix + '-module').split(' ');
 
 		if (dataModules.indexOf(obj.domName) !== -1) {
-
-			// Check condition
-			if (obj.conditions && typeof obj.conditions === 'function' && obj.conditions() !== true) {
-				return;
-			}
-
 			// Check init state
-			if (this.checkModule(obj.el) === true) {
+			if (this.checkModuleInCache(obj.el) === true) {
 				console.info('VeamsModules :: Element is already in cache and initialized: ');
 				console.log(obj.el);
 				return;
@@ -268,7 +297,7 @@ class Modules {
 				options: mergedOptions
 			});
 
-			this.addToCache({
+			this.constructor.addToCache({
 				element: obj.el,
 				module: obj.module,
 				instance: module,
@@ -313,7 +342,7 @@ class Modules {
 								console.info('VeamsModules :: Recording new module: ', addedNode, domName);
 							}
 
-							for (let module of this.modulesRegister) {
+							for (let module of __register.modulesInRegister) {
 								if (module.domName === domName) {
 									let obj = Veams.helpers.extend({
 										el: addedNode
@@ -327,7 +356,7 @@ class Modules {
 						}
 
 						if (this.getModulesInContext(addedNode).length) {
-							this.modulesInContext = this.getModulesInContext(addedNode);
+							__register.modulesInContext = this.getModulesInContext(addedNode);
 
 							if (this.options.logs) {
 								console.info('VeamsModules :: Recording new context. When available new modules will be initialised in: ', addedNode);
@@ -349,19 +378,19 @@ class Modules {
 								console.info('VeamsModules :: Recording deletion of module: ', removedNode, domName);
 							}
 
-							this.removeFromCacheByKey(removedNode);
+							this.constructor.removeFromCacheByKey(removedNode);
 
 						}
 
 						if (this.getModulesInContext(removedNode).length) {
-							this.modulesInContext = this.getModulesInContext(removedNode);
+							__register.modulesInContext = this.getModulesInContext(removedNode);
 
 							if (this.options.logs) {
 								console.info('VeamsModules :: Recording deletion of DOM element. When available modules will be unbound in ', removedNode);
 							}
 
-							this.modulesInContext.forEach((node) => {
-								this.removeFromCacheByKey(node);
+							__register.modulesInContext.forEach((node) => {
+								this.constructor.removeFromCacheByKey(node);
 							});
 						}
 					}
@@ -393,6 +422,8 @@ const VeamsModules = {
 		DEBUG: false,
 		attrPrefix: 'data-js',
 		logs: false,
+		internalCacheOnly: true,
+		internalRegisterOnly: false,
 		useMutationObserver: false
 	},
 	pluginName: 'ModulesHandler',
