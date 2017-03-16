@@ -1,9 +1,24 @@
+/**
+ * Represents a component constructor which supports
+ * options merging,
+ * binding and unbinding of events and subscriptions with template strings,
+ * rendering of templates
+ * and a destroy behaviour.
+ *
+ * Keep in mind, that this class is a dependent of Veams.
+ *
+ * TODO: Make a native one which does not need any Veams specific stuff.
+ *
+ * @module VeamsComponent
+ * @author Sebastian Fitzner
+ */
+
 if (!Veams) {
 	throw new Error('Please initialize Veams!');
 }
 
-if (!Veams.helpers.mixin || !Veams.helpers.extend) {
-	throw new Error('The mixin or extend helper is missing!');
+if (!Veams.helpers.mixin || !Veams.helpers.extend || !Veams.helpers.makeId) {
+	throw new Error('The mixin, makeId or extend helper is missing!');
 }
 
 if (!Veams.$) {
@@ -13,10 +28,9 @@ if (!Veams.$) {
 /**
  * Imports
  */
-import makeIdHelper from '../utils/helpers/make-id';
-import stringHelpers from '../utils/internal-helpers/string';
 import getStringValue from '../utils/internal-helpers/get-string-value';
 import tplEngine from '../utils/internal-helpers/template-engine';
+import stringHelpers from '../utils/internal-helpers/string';
 
 /**
  * Custom Functions
@@ -28,7 +42,7 @@ function buildEvtId(evtKeyArr, fnName) {
 /**
  * Variables
  */
-const $ = Veams.$;
+const $ = Veams.$ || window.$;
 
 class VeamsComponent {
 
@@ -54,7 +68,7 @@ class VeamsComponent {
 		this.evtNamespace = '.' + this.metaData.name;
 		this._options = obj.options;
 
-		if (Veams.$) {
+		if ($) {
 			this.$el = $(obj.el);
 		}
 
@@ -62,7 +76,9 @@ class VeamsComponent {
 		this._create();
 	}
 
-	// GETTER AND SETTER
+	// ----------------------------------------------------------
+	// GETTER & SETTERS
+	// ----------------------------------------------------------
 
 	/**
 	 * Return options
@@ -92,7 +108,7 @@ class VeamsComponent {
 	}
 
 	set instanceId(id) {
-		this._instanceId = `${id}_` + Date.now() + '_' + makeIdHelper();
+		this._instanceId = `${id}_` + Date.now() + '_' + Veams.helpers.makeId();
 	}
 
 	/**
@@ -123,6 +139,7 @@ class VeamsComponent {
 		}
 
 		this.__subscribers[obj.id] = {
+			delegate: obj.delegate,
 			type: obj.type,
 			event: obj.event,
 			handler: obj.handler
@@ -133,7 +150,9 @@ class VeamsComponent {
 		return this.__subscribers;
 	}
 
+	// ----------------------------------------------------------
 	// STANDARD METHODS
+	// ----------------------------------------------------------
 
 	/**
 	 * Private method to create all necessary elements and bindings.
@@ -155,18 +174,39 @@ class VeamsComponent {
 		return this;
 	}
 
-	// MOUNT PROCESSES
-	// ------------------------------------------------
-	willMount() {
+	/**
+	 * Bind local and global events
+	 *
+	 * @public
+	 */
+	bindEvents() {
 	}
 
-	willUnmount() {
+	/**
+	 * Unbind events
+	 *
+	 * @public
+	 */
+	unbindEvents() {
 	}
 
-	didMount() {
+	/**
+	 * Pre-Render templates
+	 * which can be used to render content into it
+	 *
+	 * @public
+	 */
+	preRender() {
+		return this;
 	}
 
-	didUnmount() {
+	/**
+	 * Render your module
+	 *
+	 * @public
+	 */
+	render() {
+		return this;
 	}
 
 	/**
@@ -180,9 +220,54 @@ class VeamsComponent {
 	}
 
 	/**
-	 * Register multiple events which are saved in an object.
+	 * Render template with data
 	 *
-	 * TODO: Clean up global flag
+	 * @param {String} tplName - Template name which gets returned as rendered element.
+	 * @param {Object} data - Data which gets handled by the template.
+	 */
+	renderTemplate(tplName, data) {
+		if (!Veams.templater) {
+			console.error(`It seems that you haven\'t added the VeamsTemplater plugin. In order to work with 'renderTemplate()' you need to add it!`);
+		} else {
+			return Veams.templater.render(tplName, data);
+		}
+	}
+
+	// ----------------------------------------------------------
+	// MOUNT PROCESS METHODS
+	// Mount process methods will be handled by the VeamsModules plugin
+	// ----------------------------------------------------------
+
+	/**
+	 * This method will be executed after initialise
+	 */
+	willMount() {
+	}
+
+	/**
+	 * This method will be executed before unregistering events
+	 */
+	willUnmount() {
+	}
+
+	/**
+	 * This method will be executed after render
+	 */
+	didMount() {
+	}
+
+	/**
+	 * This method will be executed after unregistering events
+	 */
+	didUnmount() {
+	}
+
+	// ----------------------------------------------------------
+	// EVENTS METHODS
+	// ----------------------------------------------------------
+
+	/**
+	 * Register multiple events which are saved in an object.
 	 *
 	 * @param {Object} evts - Events object which contains an object with events as key and functions as value.
 	 * @param {Boolean} global - Flag to switch between global and local events.
@@ -200,8 +285,6 @@ class VeamsComponent {
 	/**
 	 * Register an event by using a simple template engine and
 	 * a key/value pair.
-	 *
-	 * TODO: Clean up global flag
 	 *
 	 * @param {String} evtKey - Event key which contains event and additionally a delegated element.
 	 * @param {String} fn - Function defined as string which will be bound to this.
@@ -238,7 +321,7 @@ class VeamsComponent {
 
 		// Bind on this.$el
 		if (arrlen === 1 && !global) {
-			this.$el.on(evtType + this.evtNamespace, bindFn);
+			this.$el.on(evtType, bindFn);
 
 			this._subscribers = {
 				type: 'event',
@@ -259,14 +342,36 @@ class VeamsComponent {
 		} else {
 			let delegate = getStringValue.apply(this, [tplEngine(evtKeyArr[1])]);
 
+			console.log('delegate: ', delegate);
+
 			this.$el.on(evtType, delegate, bindFn);
 
 			this._subscribers = {
 				type: 'delegatedEvent',
+				delegate: delegate,
 				id: id,
 				event: evtType,
 				handler: bindFn
 			};
+		}
+	}
+
+	/**
+	 * Delete all registered events.
+	 */
+	unregisterEvents() {
+		for (let key in this._subscribers) {
+			if (this._subscribers.hasOwnProperty(key)) {
+				let obj = this._subscribers[key];
+
+				if (obj.type === 'globalEvent') {
+					Veams.Vent.unsubscribe(obj.event, obj.handler);
+				} else if (obj.type === 'delegatedEvent') {
+					this.$el.off(obj.event, obj.delegate, obj.handler);
+				} else {
+					this.$el.off(obj.event, obj.handler);
+				}
+			}
 		}
 	}
 
@@ -295,73 +400,17 @@ class VeamsComponent {
 
 			if (obj.type === 'globalEvent') {
 				Veams.Vent.unsubscribe(obj.event, obj.handler);
+			} else if (obj.type === 'delegatedEvent') {
+				this.$el.off(obj.event, obj.delegate, obj.handler);
 			} else {
 				this.$el.off(obj.event, obj.handler);
 			}
 		}
 	}
-
-	unregisterEvents() {
-		for (let key in this._subscribers) {
-			if (this._subscribers.hasOwnProperty(key)) {
-				let obj = this._subscribers[key];
-
-				if (obj.type === 'globalEvent') {
-					Veams.Vent.unsubscribe(obj.event, obj.handler);
-				} else {
-					this.$el.off(obj.event, obj.handler);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Bind local and global events
-	 */
-	bindEvents() {
-	}
-
-	/**
-	 * Unbind events
-	 *
-	 * @public
-	 *
-	 */
-	unbindEvents() {
-	}
-
-	/**
-	 * Pre-Render templates
-	 * which can be used to render content into it
-	 */
-	preRender() {
-		return this;
-	}
-
-	/**
-	 * Render template with data
-	 *
-	 * @param {String} tplName - Template name which gets returned as rendered element.
-	 * @param {Object} data - Data which gets handled by the template.
-	 */
-	renderTemplate(tplName, data) {
-		if (!Veams.templater) {
-			console.error(`It seems that you haven\'t added the VeamsTemplater plugin. In order to work with 'renderTemplate()' you need to add it!`);
-		} else {
-			return Veams.templater.render(tplName, data);
-		}
-	}
-
-	/**
-	 * Render your module
-	 */
-	render() {
-		return this;
-	}
 }
 
 /**
- * Add mixin functionality to extend module class
+ * Add mixin functionality to extend module class by using simple objects
  */
 VeamsComponent.mixin = Veams.helpers.mixin;
 
