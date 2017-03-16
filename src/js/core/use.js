@@ -7,7 +7,7 @@
 
 export default function (plugin, ...args) {
 	if (plugin.pluginName) {
-		window.Veams.plugins[plugin.pluginName] = plugin;
+		window.Veams.Plugins[plugin.pluginName] = plugin;
 	}
 
 	plugin.initialize(window.Veams, ...args);

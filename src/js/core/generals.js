@@ -20,12 +20,12 @@ let defaults = {
 	options: {
 		namespace: 'App'
 	},
-	plugins: {},
+	Plugins: {},
 	detections: {
 		width: window.innerWidth,
 		height: window.innerHeight
 	},
-	version: '5.0.0-rc9'
+	version: '5.0.0-rc10'
 };
 let Veams = Veams || defaults;
 
