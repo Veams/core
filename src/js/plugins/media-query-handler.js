@@ -34,7 +34,7 @@ const VeamsMediaQueryHandler = {
 
 				Veams.currentMedia = currentMedia;
 
-				console.log('VeamsMediaQueryHandler :: Current media ', Veams.currentMedia);
+				console.info(`VeamsMediaQueryHandler :: Current media is ${Veams.currentMedia}`);
 
 				if (Veams.Vent) {
 					Veams.Vent.trigger(Veams.EVENTS.mediachange, {
