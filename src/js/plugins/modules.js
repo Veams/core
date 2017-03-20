@@ -248,8 +248,8 @@ class Modules {
 	}
 
 	unregisterOne(obj) {
-		if (this.checkModuleInCache(obj.module, 'module') === true) {
-			this.constructor.removeFromCacheByKey(obj.module, 'module');
+		if (this.checkModuleInCache(obj.domName, 'namespace') === true) {
+			this.constructor.removeFromCacheByKey(obj.domName, 'namespace');
 		}
 	}
 
