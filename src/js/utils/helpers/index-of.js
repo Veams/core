@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Find index of a specific item in an array.
  *

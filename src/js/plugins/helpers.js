@@ -1,3 +1,5 @@
+'use strict';
+
 import extendHelper from '../utils/helpers/extend';
 import mixinsHelper from '../utils/helpers/mixin';
 import methodExtendHelper from '../utils/helpers/method-extend';

@@ -1,4 +1,5 @@
 'use strict';
+
 let Veams = {};
 let __cache = [];
 let __register = {
@@ -400,6 +401,7 @@ class Modules {
 
 							this.constructor.removeFromCacheByKey(removedNode);
 
+							__register.modulesInContext = this.getModulesInContext(document);
 						}
 
 						if (this.getModulesInContext(removedNode).length) {

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Get dom elements in an array
  *

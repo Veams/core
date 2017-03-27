@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Simple template engine for event system.
  *

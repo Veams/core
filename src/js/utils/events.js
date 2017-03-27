@@ -1,4 +1,5 @@
 'use strict';
+
 /**
  * Const for events (pub/sub)
  *

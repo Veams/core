@@ -1,3 +1,5 @@
+'use strict';
+
 import defaultsHelper from './defaults';
 import methodExtendHelper from './method-extend';
 

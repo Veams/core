@@ -1,3 +1,5 @@
+'use strict';
+
 const VeamsLogger = {
 	pluginName: 'Logger',
 	initialize: function (Veams) {

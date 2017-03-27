@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Get value out of variable string.
  *

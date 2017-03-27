@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Represents a simple plugin system in which `this` is Veams.
  * @module plugin

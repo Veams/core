@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Check if element is in viewport
  *

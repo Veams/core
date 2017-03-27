@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Helper method to extend an already existing method.
  *

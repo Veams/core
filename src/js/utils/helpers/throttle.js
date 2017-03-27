@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Throttle method for resize events and more
  *

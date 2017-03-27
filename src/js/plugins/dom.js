@@ -1,3 +1,5 @@
+'use strict';
+
 const VeamsDOM = {
 	options: {
 		DOM: false

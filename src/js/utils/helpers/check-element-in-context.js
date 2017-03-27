@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Check if element is in a specific context
  * and return state as boolean

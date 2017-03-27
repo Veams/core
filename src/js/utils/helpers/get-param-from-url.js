@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Get value of parameter for given url
  *

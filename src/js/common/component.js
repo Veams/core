@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Represents a component constructor which supports
  * options merging,

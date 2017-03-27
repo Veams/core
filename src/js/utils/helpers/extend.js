@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Simple extend method to extend the properties of an object.
  *

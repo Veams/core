@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Detect transitionend event.
  */

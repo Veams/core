@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Add/Update multiple parameters for given url
  *

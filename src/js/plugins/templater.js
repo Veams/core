@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Represents a templater plugin which you can use to render your precompiled handlebars templates.
  * You can also register custom helpers by providing them in an array!
@@ -65,7 +67,7 @@ const VeamsTemplater = {
 		Veams.templater = {
 			engine: this.options.engine,
 			templates: this.options.templates(this.options.engine),
-			partials: this.options.partials ? this.options.partials(this.options.engine): {},
+			partials: this.options.partials ? this.options.partials(this.options.engine) : {},
 			helpers: this.options.helpers,
 			render: function (tplName, data) {
 				if (!data && Veams.templater.templates[tplName]) {
