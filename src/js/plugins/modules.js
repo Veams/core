@@ -363,6 +363,8 @@ class Modules {
 							}
 
 							this.registerAll();
+
+							__register.modulesInContext = this.getModulesInContext(document);
 						}
 					}
 				}
@@ -380,6 +382,7 @@ class Modules {
 
 							this.constructor.removeFromCacheByKey(removedNode);
 
+							__register.modulesInContext = this.getModulesInContext(document);
 						}
 
 						if (this.getModulesInContext(removedNode).length) {
@@ -392,6 +395,8 @@ class Modules {
 							__register.modulesInContext.forEach((node) => {
 								this.constructor.removeFromCacheByKey(node);
 							});
+
+							__register.modulesInContext = this.getModulesInContext(document);
 						}
 					}
 				}
