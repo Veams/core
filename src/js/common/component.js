@@ -13,24 +13,13 @@
  * @author Sebastian Fitzner
  */
 
-if (!Veams) {
-	throw new Error('Please initialize Veams!');
-}
-
-if (!Veams.helpers.mixin || !Veams.helpers.extend || !Veams.helpers.makeId) {
-	throw new Error('The mixin, makeId or extend helper is missing!');
-}
-
-if (!Veams.$) {
-	console.info('Please add a DOM handler like jQuery to the window object!');
-}
-
 /**
  * Imports
  */
 import getStringValue from '../utils/internal-helpers/get-string-value';
 import tplEngine from '../utils/internal-helpers/template-engine';
 import stringHelpers from '../utils/internal-helpers/string';
+import mixinHelper from '../utils/helpers/mixin';
 
 /**
  * Custom Functions
@@ -38,11 +27,6 @@ import stringHelpers from '../utils/internal-helpers/string';
 function buildEvtId(evtKeyArr, fnName) {
 	return evtKeyArr.join('_') + '_' + fnName;
 }
-
-/**
- * Variables
- */
-const $ = Veams.$ || window.$;
 
 class VeamsComponent {
 
@@ -56,11 +40,26 @@ class VeamsComponent {
 	 * @param {Object} options [{}] - Object which contains options of the extended class.
 	 */
 	constructor(obj = {}, options = {}) {
+		if (!obj.appInstance) {
+			throw new Error('VeamsComponent :: Please provide your app instance!');
+		}
+
+		this.appInstance = obj.appInstance;
+
+		if (!this.appInstance.helpers.mixin || !this.appInstance.helpers.extend || !this.appInstance.helpers.makeId) {
+			throw new Error('VeamsComponent :: The mixin, makeId or extend helper is missing!');
+		}
+
+		if (!this.appInstance.$) {
+			console.info('VeamsComponent :: Please add a DOM handler like jQuery to the app instance!');
+		}
+
 		if (!obj.namespace) {
 			console.log('You should pass an object with a namespace for your component!');
 		} else {
 			this.namespace = obj.namespace;
 		}
+
 		this.instanceId = this.namespace;
 		this.el = obj.el;
 		this.options = options;
@@ -68,8 +67,8 @@ class VeamsComponent {
 		this.evtNamespace = '.' + this.metaData.name;
 		this._options = obj.options;
 
-		if ($) {
-			this.$el = $(obj.el);
+		if (this.appInstance.$) {
+			this.$el = this.appInstance.$(obj.el);
 		}
 
 		this.initialize(obj, options);
@@ -91,7 +90,7 @@ class VeamsComponent {
 	 * Save options by merging default options with passed options
 	 */
 	set _options(options) {
-		this.options = Veams.helpers.extend(this.options, options || {});
+		this.options = this.appInstance.helpers.extend(this.options, options || {});
 	}
 
 	/**
@@ -108,7 +107,7 @@ class VeamsComponent {
 	}
 
 	set instanceId(id) {
-		this._instanceId = `${id}_` + Date.now() + '_' + Veams.helpers.makeId();
+		this._instanceId = `${id}_` + Date.now() + '_' + this.appInstance.helpers.makeId();
 	}
 
 	/**
@@ -226,10 +225,12 @@ class VeamsComponent {
 	 * @param {Object} data - Data which gets handled by the template.
 	 */
 	renderTemplate(tplName, data) {
-		if (!Veams.templater) {
-			console.error(`It seems that you haven\'t added the VeamsTemplater plugin. In order to work with 'renderTemplate()' you need to add it!`);
+		if (!this.appInstance.templater) {
+			console.error(`
+				VeamsComponent :: It seems that you haven\'t added the VeamsTemplater plugin. In order to work with 'renderTemplate()' you need to add it!
+			`);
 		} else {
-			return Veams.templater.render(tplName, data);
+			return this.appInstance.templater.render(tplName, data);
 		}
 	}
 
@@ -331,7 +332,7 @@ class VeamsComponent {
 			};
 
 		} else if (arrlen === 1 && global) {
-			Veams.Vent.subscribe(evtType, bindFn);
+			this.appInstance.Vent.subscribe(evtType, bindFn);
 
 			this._subscribers = {
 				type: 'globalEvent',
@@ -341,8 +342,6 @@ class VeamsComponent {
 			};
 		} else {
 			let delegate = getStringValue.apply(this, [tplEngine(evtKeyArr[1])]);
-
-			console.log('delegate: ', delegate);
 
 			this.$el.on(evtType, delegate, bindFn);
 
@@ -365,7 +364,7 @@ class VeamsComponent {
 				let obj = this._subscribers[key];
 
 				if (obj.type === 'globalEvent') {
-					Veams.Vent.unsubscribe(obj.event, obj.handler);
+					this.appInstance.Vent.unsubscribe(obj.event, obj.handler);
 				} else if (obj.type === 'delegatedEvent') {
 					this.$el.off(obj.event, obj.delegate, obj.handler);
 				} else {
@@ -399,7 +398,7 @@ class VeamsComponent {
 			let obj = this._subscribers[id];
 
 			if (obj.type === 'globalEvent') {
-				Veams.Vent.unsubscribe(obj.event, obj.handler);
+				this.appInstance.Vent.unsubscribe(obj.event, obj.handler);
 			} else if (obj.type === 'delegatedEvent') {
 				this.$el.off(obj.event, obj.delegate, obj.handler);
 			} else {
@@ -412,6 +411,6 @@ class VeamsComponent {
 /**
  * Add mixin functionality to extend module class by using simple objects
  */
-VeamsComponent.mixin = Veams.helpers.mixin;
+VeamsComponent.mixin = mixinHelper;
 
 export default VeamsComponent;

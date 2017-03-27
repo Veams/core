@@ -1,7 +1,7 @@
 /**
  * Imports
  */
-import Veams from './core/generals';
+import Veams from './generics/starter';
 
 /**
  * Variables

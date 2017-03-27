@@ -113,6 +113,10 @@ This method provides the possibility to register a plugin, see section [Creation
 
 The events object can be used to communicate between modules. It can be extended with further custom events. Just see [VeamsVent](#veamsvent).
 
+##### Veams.base.version {`String`}
+
+Display the current Veams version.
+
 ##### Veams.dectections {`Object`}
 
 The detections object contains the current width and height, as well as if you are on a touch device or not.
@@ -127,15 +131,12 @@ Veams has some helpers which you can use. Some of the helpers are optional, othe
 
 Veams provides some general options. These are:
 
-- _`namespace`_ {String} ['App'] - The custom namespace of your application.
+- _`namespace`_ {String} ['Veams'] - The custom namespace of your application.
+- _`addToGlobal`_ {Boolean} [false] - Add the namespace to the global window object.
 
-##### Veams.plugins {`Object`}
+##### Veams.Plugins {`Object`}
 
 All named plugins will be saved in this object. In the beginning it is empty.
-
-##### Veams.version {`String`}
-
-Display the current Veams version.
 
 ### Veams Helpers
 
@@ -146,6 +147,7 @@ __The following helper are provided as default helpers:__
 - [Extend Helper](#veamshelpersextenda-b)
 - [For Each Helper](#veamshelpersforeacharray-callback-scope)
 - [Touch Helper](#veamshelpersistouch)
+- [Make Id Helper](#veamshelpersmakeidsegments--1)
 - [Method Extend Helper](#veamshelpersmethodextendto-from-methodname)
 - [Mixin Helper](#veamshelpersmixinfrom-methods--initialize-render)
 - [Selector Helper](#veamshelpersqueryselectorarraysel-context)
@@ -161,7 +163,6 @@ These helpers need to be imported into your project and can be added to the Veam
 - [Get Param from URL Helper](#veamshelpersgetparamfromurlurl-param)
 - [Index Of Helper](#veamshelpersindexofarray-item)
 - [Is In Viewport Helper](#veamshelpersisinviewportelem-usebounds)
-- [Make Id Helper](#veamshelpersmakeidsegments--1)
 - [Transition End Helper](#veamshelperstransitionendevent)
 - [Update URL Helper](#veamshelpersupdateurlurl-params)
 
@@ -201,6 +202,12 @@ Simple forEach method which can be used to iterate over an array.
 #### Veams.helpers.isTouch()
 
 Touch detection helper which returns a boolean.
+
+#### Veams.helpers.makeId(segments = 1)
+
+* @param {Number} [segments=1] - number of segments of generated id (segments consist of 10 digits, separated by '-').
+
+Generates numeric id and returns a string.
 
 #### Veams.helpers.methodExtend(to, from, methodName)
 
@@ -272,12 +279,6 @@ Find index of a specific item in an array.
 * @param {boolean} useBounds - if true, whole element must be visible
 
 Check if element is in viewport.
-
-#### Veams.helpers.makeId(segments = 1)
-
-* @param {Number} [segments=1] - number of segments of generated id (segments consist of 10 digits, separated by '-').
-
-Generates numeric id and returns a string.
 
 #### Veams.helpers.transitionEndEvent()
 

@@ -14,42 +14,44 @@ const VeamsTemplater = {
 		},
 		partials: () => {
 		},
-		namespace: 'App'
+		helpers: [],
+		namespace: 'Veams'
 	},
 	pluginName: 'Templater',
-	initialize: function (Veams, obj) {
-		if (!obj.templates) {
+	initialize: function (Veams, {engine, templates, partials, helpers}) {
+		if (!templates) {
 			console.error(`VeamsTemplater :: You need to pass an object which contains your templates (obj.templates)!`);
 			return;
 		}
 
-		if (!obj.engine) {
+		if (!engine) {
 			console.error(`VeamsTemplater :: You need to pass a handlebars instance by providing obj.engine!`);
 			return;
 		}
 
 		this.options.namespace = Veams.options.namespace || this.options.namespace;
-		this.options.templates = obj.templates;
-		this.options.engine = obj.engine;
-		Veams.templater = {};
+		this.options.templates = templates;
+		this.options.engine = engine;
 
-		if (obj.partials) {
-			this.options.partials = obj.partials;
-			this.registerPartials();
+		if (partials) {
+			this.options.partials = partials;
 		}
 
-		if (obj.helpers) this.registerHelpers(obj.helpers);
+		if (helpers) {
+			this.options.helpers = helpers;
+			this.registerHelpers();
+		}
 		this.addTemplater(Veams);
 	},
 
-	registerHelpers: function (helpers) {
-		if (!Array.isArray(helpers)) {
+	registerHelpers: function () {
+		if (!Array.isArray(this.options.helpers)) {
 			console.error(`VeamsTemplater :: You need to pass the helpers as an array!`);
 			return;
 		}
 
-		for (let i = 0; i < helpers.length; i++) {
-			let helper = helpers[i];
+		for (let i = 0; i < this.options.helpers.length; i++) {
+			let helper = this.options.helpers[i];
 
 			if (helper.register) {
 				this.options.engine.registerHelper(helper.register(this.options.engine));
@@ -59,25 +61,25 @@ const VeamsTemplater = {
 		}
 	},
 
-	registerPartials: function () {
-		this.options.partials(this.options.engine);
-	},
-
 	addTemplater: function (Veams) {
-		let Templates = this.options.templates(this.options.engine);
+		Veams.templater = {
+			engine: this.options.engine,
+			templates: this.options.templates(this.options.engine),
+			partials: this.options.partials ? this.options.partials(this.options.engine): {},
+			helpers: this.options.helpers,
+			render: function (tplName, data) {
+				if (!data && Veams.templater.templates[tplName]) {
+					console.error(`VeamsTemplater :: You need to provide some data for ${tplName}.`);
+					return;
+				}
 
-		Veams.templater.render = function (tplName, data) {
-			if (!data && Templates[tplName]) {
-				console.error(`VeamsTemplater :: You need to provide some data for ${tplName}.`);
-				return;
+				if (!Veams.templater.template[tplName]) {
+					console.error(`VeamsTemplater :: Template ${tplName} not found.`);
+					return;
+				}
+
+				return Veams.templater.template[tplName](data);
 			}
-
-			if (!Templates[tplName]) {
-				console.error(`VeamsTemplater :: Template ${tplName} not found.`);
-				return;
-			}
-
-			return Templates[tplName](data);
 		};
 	}
 };

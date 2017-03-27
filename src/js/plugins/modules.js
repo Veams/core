@@ -10,7 +10,6 @@ let __register = {
 
 /**
  * TODO: Clean up mutation observer
- * TODO: Add destructuring pattern
  */
 
 /**
@@ -78,16 +77,23 @@ class Modules {
 	/**
 	 * Save the module in __cache.
 	 *
-	 * @param {Object} obj.module - module metadata object (@see VeamsComponent.metaData())
-	 * @param {Object} obj.element - module element (this.el)
+	 * @param {Object} module - module metadata object (@see VeamsComponent.metaData())
+	 * @param {Object} element - module element (this.el)
+	 * @param {Object} instance - module instance
+	 * @param {Object} name - module namespace
 	 */
-	static addToCache(obj) {
-		__cache.push(obj);
+	static addToCache({module, element, instance, name}) {
+		__cache.push({
+			module,
+			element,
+			instance,
+			name
+		});
 
 		if (Veams.Vent) {
 			Veams.Vent.trigger(Veams.EVENTS.moduleCached, {
-				module: obj.module,
-				el: obj.element
+				module,
+				element
 			});
 		}
 	}
@@ -124,13 +130,13 @@ class Modules {
 	// CONDITIONS HANDLER
 	// ------------------------
 
-	static isCondition(obj) {
-		return obj.conditions && typeof obj.conditions === 'function';
+	static isCondition({conditions}) {
+		return conditions && typeof conditions === 'function';
 	}
 
-	static makeConditionCheck(obj) {
-		if (obj.conditions && typeof obj.conditions === 'function') {
-			return obj.conditions();
+	static makeConditionCheck({conditions}) {
+		if (conditions && typeof conditions === 'function') {
+			return conditions();
 		}
 	}
 
@@ -229,27 +235,34 @@ class Modules {
 	}
 
 	/**
-	 * Initialize a module and render it and/or provide a callback function
+	 * Register one module and init the elements in the specific context
 	 *
-	 * @param {Object} obj - Definition of our module
-	 * @param {string} obj.el - Required: element
-	 * @param {Object} obj.module - Required: class which will be used to render your module
-	 * @param {boolean} [obj.render=true] - Optional: render the class, if false the class will only be initialized
-	 * @param {function} [obj.cb] - Optional: provide a function which will be executed after initialisation
-	 * @param {Object} [obj.context] - Optional: context of module
-	 * @param {Object} [obj.options] - Optional: You can pass options to the module via JS (Useful for DOMChanged)
+	 * @param {String} namespace - Required: element name in DOM
+	 * @param {String} domName - Required: element name in DOM
+	 * @param {Object} module - Required: class which will be used to render your module
+	 * @param {boolean} [render=true] - Optional: render the class, if false the class will only be initialized
+	 * @param {function} [cb] - Optional: provide a function which will be executed after initialisation
+	 * @param {Object} [options] - Optional: You can pass options to the module via JS (Useful for DOMChanged)
 	 *
 	 */
-	registerOne(obj) {
-		if (!obj.domName) throw new Error('VeamsModules :: In order to work with register() you need to define the module name as string!');
-		if (!obj.module) throw new Error('VeamsModules :: In order to work with register() you need to define a module!');
+	registerOne({namespace, domName, module, render, cb, options}) {
+		let nameSpace = namespace ? namespace : domName;
 
-		this.initModules(obj);
+		if (!module) throw new Error('VeamsModules :: In order to work with register() you need to define a module!');
+		if (!nameSpace)throw new Error('VeamsModules :: In order to work with register() you need to define a module!');
+
+		this.initModules({
+			namespace: nameSpace,
+			module,
+			render,
+			cb,
+			options
+		});
 	}
 
-	unregisterOne(obj) {
-		if (this.checkModuleInCache(obj.domName, 'namespace') === true) {
-			this.constructor.removeFromCacheByKey(obj.domName, 'namespace');
+	unregisterOne({namespace}) {
+		if (this.checkModuleInCache(namespace, 'namespace') === true) {
+			this.constructor.removeFromCacheByKey(namespace, 'namespace');
 		}
 	}
 
@@ -260,61 +273,67 @@ class Modules {
 	/**
 	 * Initialize a module and render it and/or provide a callback function
 	 *
-	 * @param {string} obj.domName - Required: dom name of the element
-	 * @param {Object} obj.Module - Required: class which will be used to render your module
-	 * @param {boolean} [obj.render=true] - Optional: render the class, if false the class will only be initialized
-	 * @param {Object} [obj.options] - Optional: You can pass options to the module via JS (Useful for DOMChanged)
-	 * @param {function} [obj.cb] - Optional: provide a function which will be executed after initialisation
+	 * @param {string} namespace - Required: dom name of the element
+	 * @param {Object} module - Required: class which will be used to render your module
+	 * @param {boolean} [render=true] - Optional: render the class, if false the class will only be initialized
+	 * @param {Object} [options] - Optional: You can pass options to the module via JS (Useful for DOMChanged)
+	 * @param {function} [cb] - Optional: provide a function which will be executed after initialisation
 	 *
 	 */
-	initModules(obj) {
+	initModules({namespace, module, render, options, cb}) {
 		Veams.helpers.forEach(__register.modulesInContext, (i, el) => {
-			this.initModule(Veams.helpers.extend({
-				el: el
-			}, obj));
+			this.initModule({
+				el,
+				namespace,
+				options,
+				module,
+				render,
+				cb
+			});
 		});
 	}
 
-	initModule(obj) {
-		let noRender = obj.el.getAttribute(this.options.attrPrefix + '-no-render') || obj.render === false || false;
-		let dataModules = obj.el.getAttribute(this.options.attrPrefix + '-module').split(' ');
+	initModule({el, namespace, options, module, render, cb}) {
+		let noRender = el.getAttribute(this.options.attrPrefix + '-no-render') || render === false || false;
+		let dataModules = el.getAttribute(this.options.attrPrefix + '-module').split(' ');
 
-		if (dataModules.indexOf(obj.domName) !== -1) {
+		if (dataModules.indexOf(namespace) !== -1) {
 			// Check init state
-			if (this.checkModuleInCache(obj.el) === true) {
+			if (this.checkModuleInCache(el) === true) {
 				console.info('VeamsModules :: Element is already in cache and initialized: ');
-				console.log(obj.el);
+				console.log(el);
 				return;
 			}
 
 			// Go ahead when condition is true
-			let attrs = obj.el.getAttribute('data-js-options');
-			let mergedOptions = Veams.helpers.extend(JSON.parse(attrs), obj.options || {});
-			let Module = obj.module;
-			let module = new Module({
-				el: obj.el,
-				namespace: obj.domName,
-				options: mergedOptions
+			let attrs = el.getAttribute('data-js-options');
+			let mergedOptions = Veams.helpers.extend(JSON.parse(attrs), options || {});
+			let Module = module;
+			let instance = new Module({
+				el,
+				namespace,
+				options: mergedOptions,
+				appInstance: Veams
 			});
 
 			this.constructor.addToCache({
-				element: obj.el,
-				module: obj.module,
-				instance: module,
-				name: obj.domName
+				element: el,
+				module,
+				instance,
+				name: namespace
 			});
 
 			// Mount process
-			if (module.willMount) module.willMount();
+			if (instance.willMount) instance.willMount();
 
 			// Render after initial module loading
-			if (!noRender) module.render();
+			if (!noRender) instance.render();
 
 			// Provide callback function in which you can use module and options
-			if (obj.cb && typeof (obj.cb) === 'function') obj.cb(module, mergedOptions);
+			if (cb && typeof (cb) === 'function') cb(module, mergedOptions);
 
 			// Mount process
-			if (module.didMount) module.didMount();
+			if (instance.didMount) instance.didMount();
 		}
 	}
 
@@ -336,19 +355,19 @@ class Modules {
 
 					if (addedNode instanceof HTMLElement) {
 						if (addedNode.getAttribute(this.options.attrPrefix + '-module')) {
-							let domName = addedNode.getAttribute(this.options.attrPrefix + '-module');
+							let namespace = addedNode.getAttribute(this.options.attrPrefix + '-module');
 
 							if (this.options.logs) {
-								console.info('VeamsModules :: Recording new module: ', addedNode, domName);
+								console.info(`VeamsModules :: Recording a new module with the namespace ${namespace} at: `, addedNode);
 							}
 
 							for (let module of __register.modulesInRegister) {
-								if (module.domName === domName) {
-									let obj = Veams.helpers.extend({
-										el: addedNode
-									}, module);
-
-									this.initModule(obj);
+								if (module.namespace === namespace) {
+									this.initModule({
+										el: addedNode,
+										module: module.module,
+										namespace: module.namespace
+									});
 
 									break;
 								}
@@ -363,6 +382,8 @@ class Modules {
 							}
 
 							this.registerAll();
+
+							__register.modulesInContext = this.getModulesInContext(document);
 						}
 					}
 				}
@@ -372,10 +393,9 @@ class Modules {
 
 					if (removedNode instanceof HTMLElement) {
 						if (removedNode.getAttribute(this.options.attrPrefix + '-module')) {
-							let domName = removedNode.getAttribute(this.options.attrPrefix + '-module');
 
 							if (this.options.logs) {
-								console.info('VeamsModules :: Recording deletion of module: ', removedNode, domName);
+								console.info('VeamsModules :: Recording deletion of module: ', removedNode);
 							}
 
 							this.constructor.removeFromCacheByKey(removedNode);
@@ -392,6 +412,8 @@ class Modules {
 							__register.modulesInContext.forEach((node) => {
 								this.constructor.removeFromCacheByKey(node);
 							});
+
+							__register.modulesInContext = this.getModulesInContext(document);
 						}
 					}
 				}
@@ -422,7 +444,7 @@ const VeamsModules = {
 		DEBUG: false,
 		attrPrefix: 'data-js',
 		logs: false,
-		internalCacheOnly: true,
+		internalCacheOnly: false,
 		internalRegisterOnly: false,
 		useMutationObserver: false
 	},
@@ -434,3 +456,5 @@ const VeamsModules = {
 };
 
 export default VeamsModules;
+
+export { Modules };
