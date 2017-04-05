@@ -73,12 +73,12 @@ class Templater {
 					return;
 				}
 
-				if (!Veams.templater.template[tplName]) {
+				if (!Veams.templater.templates[tplName]) {
 					console.error(`VeamsTemplater :: Template ${tplName} not found.`);
 					return;
 				}
 
-				return Veams.templater.template[tplName](data);
+				return Veams.templater.templates[tplName](data);
 			}
 		};
 	}
