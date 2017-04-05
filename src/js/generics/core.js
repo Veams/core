@@ -21,7 +21,7 @@ class VeamsCore {
 
 		this.base = {
 			name: 'Veams',
-			version: '5.0.0-rc13'
+			version: '5.0.0-rc14'
 		};
 
 		this.use = use.bind(this);

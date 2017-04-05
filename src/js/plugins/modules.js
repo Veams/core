@@ -81,14 +81,14 @@ class Modules {
 	 * @param {Object} module - module metadata object (@see VeamsComponent.metaData())
 	 * @param {Object} element - module element (this.el)
 	 * @param {Object} instance - module instance
-	 * @param {Object} name - module namespace
+	 * @param {String} namespace - module namespace
 	 */
-	static addToCache({module, element, instance, name}) {
+	static addToCache({module, element, instance, namespace}) {
 		__cache.push({
 			module,
 			element,
 			instance,
-			name
+			namespace
 		});
 
 		if (Veams.Vent && Veams.EVENTS.moduleCached) {
@@ -325,7 +325,7 @@ class Modules {
 				element: el,
 				module,
 				instance,
-				name: namespace
+				namespace
 			});
 
 			// Mount process
