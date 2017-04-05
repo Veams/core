@@ -91,7 +91,7 @@ class Modules {
 			name
 		});
 
-		if (Veams.Vent) {
+		if (Veams.Vent && Veams.EVENTS.moduleCached) {
 			Veams.Vent.trigger(Veams.EVENTS.moduleCached, {
 				module,
 				element
@@ -117,12 +117,16 @@ class Modules {
 		if (deleteIndex) __cache.splice(deleteIndex, 1);
 	}
 
-	checkModuleInCache(obj, key = 'element') {
+	static checkModuleInCache(obj, key = 'element') {
 		let state = false;
 
-		__cache.forEach((module) => {
-			if (module[key] === obj) state = true;
-		});
+		for (let i = 0; i < __cache.length; i++) {
+			let cacheItem = __cache[i];
+
+			if (cacheItem[key] === obj) {
+				state = true;
+			}
+		}
 
 		return state;
 	}
@@ -262,7 +266,7 @@ class Modules {
 	}
 
 	unregisterOne({namespace}) {
-		if (this.checkModuleInCache(namespace, 'namespace') === true) {
+		if (this.constructor.checkModuleInCache(namespace, 'namespace') === true) {
 			this.constructor.removeFromCacheByKey(namespace, 'namespace');
 		}
 	}
@@ -300,7 +304,7 @@ class Modules {
 
 		if (dataModules.indexOf(namespace) !== -1) {
 			// Check init state
-			if (this.checkModuleInCache(el) === true) {
+			if (this.constructor.checkModuleInCache(el) === true) {
 				console.info('VeamsModules :: Element is already in cache and initialized: ');
 				console.log(el);
 				return;
@@ -446,7 +450,7 @@ const VeamsModules = {
 		DEBUG: false,
 		attrPrefix: 'data-js',
 		logs: false,
-		internalCacheOnly: false,
+		internalCacheOnly: true,
 		internalRegisterOnly: false,
 		useMutationObserver: false
 	},

@@ -1,26 +1,16 @@
 'use strict';
-
 /**
- * Represents a templater plugin which you can use to render your precompiled handlebars templates.
- * You can also register custom helpers by providing them in an array!
- *
- * @module VeamsTemplater
+ * Represents the Templater class which will be used in VeamsTemplater plugin.
+ * @module Templater
  *
  * @author Sebastian Fitzner
  */
-const VeamsTemplater = {
-	options: {
-		engine: () => {
-		},
-		templates: () => {
-		},
-		partials: () => {
-		},
-		helpers: [],
-		namespace: 'Veams'
-	},
-	pluginName: 'Templater',
-	initialize: function (Veams, {engine, templates, partials, helpers}) {
+let Veams = {};
+
+class Templater {
+	constructor(VEAMS = window.Veams, {engine, templates, partials, helpers}) {
+		Veams = VEAMS;
+
 		if (!templates) {
 			console.error(`VeamsTemplater :: You need to pass an object which contains your templates (obj.templates)!`);
 			return;
@@ -31,22 +21,26 @@ const VeamsTemplater = {
 			return;
 		}
 
-		this.options.namespace = Veams.options.namespace || this.options.namespace;
-		this.options.templates = templates;
-		this.options.engine = engine;
+		this.options = {
+			namespace: Veams.options.namespace,
+			engine,
+			templates,
+			partials,
+			helpers
+		};
 
-		if (partials) {
-			this.options.partials = partials;
-		}
+		this.initialize();
+	}
 
-		if (helpers) {
-			this.options.helpers = helpers;
+	initialize() {
+		if (this.options.helpers) {
 			this.registerHelpers();
 		}
-		this.addTemplater(Veams);
-	},
 
-	registerHelpers: function () {
+		this.addTemplater();
+	}
+
+	registerHelpers() {
 		if (!Array.isArray(this.options.helpers)) {
 			console.error(`VeamsTemplater :: You need to pass the helpers as an array!`);
 			return;
@@ -61,9 +55,13 @@ const VeamsTemplater = {
 				console.error(`VeamsTemplater :: Your helper does not have a register function, see: ${helper}`);
 			}
 		}
-	},
+	}
 
-	addTemplater: function (Veams) {
+	addTemplater() {
+		if (Veams.templater) {
+			console.warn('It seems that you are already using Veams.templater! Veams is overriding it now!');
+		}
+
 		Veams.templater = {
 			engine: this.options.engine,
 			templates: this.options.templates(this.options.engine),
@@ -84,6 +82,36 @@ const VeamsTemplater = {
 			}
 		};
 	}
+}
+
+/**
+ * Represents a templater plugin which you can use to render your precompiled handlebars templates.
+ * You can also register custom helpers by providing them in an array!
+ *
+ * @module VeamsTemplater
+ *
+ * @author Sebastian Fitzner
+ */
+const VeamsTemplater = {
+	options: {
+		engine: () => {
+		},
+		templates: () => {
+		},
+		partials: () => {
+		},
+		helpers: []
+	},
+	pluginName: 'Templater',
+	initialize: function (Veams, {engine, templates, partials, helpers}) {
+		new Templater(Veams, {
+			engine,
+			templates,
+			partials,
+			helpers
+		});
+	}
 };
 
 export default VeamsTemplater;
+export { Templater };

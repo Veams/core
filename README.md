@@ -75,7 +75,7 @@ import Veams from 'veams';
 Then initialize the core:
 
 ``` js
-Veams.core.initialize();
+Veams.initialize();
 ```
 
 _SCSS_
@@ -360,12 +360,12 @@ Please keep in mind that the order of the initialisation of your used plugins ca
 
 ```js
 // Intialize core of Veams
-Veams.core.initialize();
+Veams.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsDOM, {
     DOM: $
-}); // VeamsDOM is important for VeamsVent
+});
 Veams.use(VeamsVent); // VeamsVent enhances VeamsModules and VeamsMediaQueryHandler
 Veams.use(VeamsLogger);
 Veams.use(VeamsModules);
@@ -374,7 +374,7 @@ Veams.use(VeamsMediaQueryHandler);
 
 ##### VeamsDOM
 
-The VeamsDOM plugin is simple plugin for which you need to pass a DOM handler like jQuery. For many other plugins VeamsDOM is a requirement.
+The VeamsDOM plugin is simple plugin for which you need to pass a DOM handler like jQuery. For some other plugins VeamsDOM is a requirement.
 
 __How to__
 
@@ -384,7 +384,7 @@ import Veams from 'veams';
 import VeamsDOM from 'veams/lib/plugins/dom';
 
 // Intialize core of Veams
-Veams.core.initialize();
+Veams.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsDOM, {
@@ -399,7 +399,7 @@ _DOM_ {`Function`} [`() => {}`] (required) - Add a DOM handler by using this opt
 
 The VeamsVent plugin is a global publish and subscribe object. You can use this plugin to communicate between modules independently.
 
-Veams exposes a global event object (`Veams.EVENTS`) which can used and extended by this plugin.
+Veams exposes a global event object (`Veams.EVENTS`) which can be used and extended by this plugin.
 
 __How to__
 
@@ -409,7 +409,7 @@ import VeamsVent from 'veams/lib/plugins/vent';
 import EVENTS from './custom-events';
 
 // Intialize core of Veams
-Veams.core.initialize();
+Veams.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsVent, {
@@ -434,7 +434,7 @@ import Veams from 'veams';
 import VeamsLogger from 'veams/lib/plugins/logger';
 
 // Intialize core of Veams
-Veams.core.initialize();
+Veams.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsLogger);
@@ -453,7 +453,7 @@ import Veams from 'veams';
 import VeamsModules from 'veams/lib/plugins/modules';
 
 // Intialize core of Veams
-Veams.core.initialize();
+Veams.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsModules, {
@@ -519,7 +519,7 @@ import Veams from 'veams';
 import VeamsModules from 'veams/lib/plugins/modules';
 
 // Intialize core of Veams
-Veams.core.initialize();
+Veams.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsMediaQueryHandler, {
@@ -543,7 +543,7 @@ import Veams from 'veams';
 import VeamsMixins from 'veams/lib/plugins/mixins';
 
 // Intialize core of Veams
-Veams.core.initialize();
+Veams.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsMixins);
@@ -567,7 +567,7 @@ import VeamsMixins from 'veams/lib/plugins/mixins';
 import imageLoader from './utils/mixins/image-loader';
 
 // Intialize core of Veams
-Veams.core.initialize();
+Veams.initialize();
 
 // Add plugins to the Veams system
 Veams.use(VeamsMixins);

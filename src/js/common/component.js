@@ -314,7 +314,7 @@ class VeamsComponent {
 
 		let evtKeyArr = evtKey.split(' ');
 		let arrlen = evtKeyArr.length;
-		let evtType = getStringValue.apply(this, [tplEngine(evtKeyArr[0])]);
+		let evtType = getStringValue.apply(this, [tplEngine(evtKeyArr[0]), this.appInstance]);
 		let bindFn = this[fn].bind(this);
 		let id = buildEvtId(evtKeyArr, fn);
 

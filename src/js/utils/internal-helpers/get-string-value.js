@@ -7,11 +7,12 @@
  *
  * @return String
  */
-const getStringValue = function getStringValue(str) {
+const getStringValue = function getStringValue(str, instanceObject) {
 	if (str.indexOf('.') === -1) return str;
 	let arr = str.split('.');
 	let context = arr[0];
-	let finalStr = context === 'this' ? this : window[context];
+	let finalStr = context === 'this' ? this : instanceObject ? instanceObject : window[context];
+
 	let strReplacer = (el, prev) => {
 		return prev[el];
 	};
