@@ -1,32 +1,34 @@
-if (!window.Promise) {
+/**
+ * Represents a http service, which returns a promise.
+ *
+ * @module http
+ * @author Sebastian Fitzner
+ */
 
-	/**
-	 * Represents a http service, which returns a promise.
-	 *
-	 * Polyfills: npm install promise-polyfill --save-exact
-	 *
-	 * @module http
-	 * @author Sebastian Fitzner
-	 */
-	console.error('Veams-Http :: You should add a lightweight promise library like promise-polyfill!');
-}
+// Imports
+import VeamsBase from '../common/base';
 
-class VeamsHttp {
-	constructor(opts = {}) {
-		let options = {
+class VeamsHttp extends VeamsBase {
+	constructor(options = {}) {
+		let namespace = 'http';
+		let opts = {
 			url: false,
 			type: 'text',
 			method: 'GET',
 			fetchOnInit: false
 		};
 
-		this.options = Veams.helpers.extend(options, opts);
-		this.data = {};
+		super({namespace, options}, opts);
 
+		this.data = {};
 		this.initialize();
 	};
 
 	initialize() {
+		if (!window.Promise) {
+			console.error('Veams-Http :: You should add a lightweight promise library like promise-polyfill!');
+		}
+
 		if (this.options.fetchOnInit) {
 			return this.promiseRequest();
 		}

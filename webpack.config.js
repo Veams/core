@@ -16,7 +16,8 @@ var config = {
 	entry: {
 		'veams': __dirname + '/src/js/veams.js',
 		'veams-core': [__dirname + '/src/js/generics/core.js'],
-		'common/component': __dirname + '/src/js/common/component.js',
+		'common/component': [__dirname + '/src/js/common/component.js'],
+		'common/base': [__dirname + '/src/js/common/base.js'],
 		'services/http': __dirname + '/src/js/services/http.js',
 		'plugins/dom': __dirname + '/src/js/plugins/dom.js',
 		'plugins/logger': __dirname + '/src/js/plugins/logger.js',

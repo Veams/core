@@ -18,10 +18,9 @@
 /**
  * Imports
  */
+import VeamsBase from './base';
 import getStringValue from '../utils/internal-helpers/get-string-value';
 import tplEngine from '../utils/internal-helpers/template-engine';
-import stringHelpers from '../utils/internal-helpers/string';
-import mixinHelper from '../utils/helpers/mixin';
 
 /**
  * Custom Functions
@@ -30,7 +29,7 @@ function buildEvtId(evtKeyArr, fnName) {
 	return evtKeyArr.join('_') + '_' + fnName;
 }
 
-class VeamsComponent {
+class VeamsComponent extends VeamsBase {
 
 	/**
 	 * Constructor
@@ -42,32 +41,16 @@ class VeamsComponent {
 	 * @param {Object} options [{}] - Object which contains options of the extended class.
 	 */
 	constructor(obj = {}, options = {}) {
-		if (!obj.appInstance) {
+		super(obj, options);
+		this.appInstance = obj.appInstance || window.Veams;
+
+		if (!this.appInstance) {
 			throw new Error('VeamsComponent :: Please provide your app instance!');
-		}
-
-		this.appInstance = obj.appInstance;
-
-		if (!this.appInstance.helpers.mixin || !this.appInstance.helpers.extend || !this.appInstance.helpers.makeId) {
-			throw new Error('VeamsComponent :: The mixin, makeId or extend helper is missing!');
 		}
 
 		if (!this.appInstance.$) {
 			console.info('VeamsComponent :: Please add a DOM handler like jQuery to the app instance!');
 		}
-
-		if (!obj.namespace) {
-			console.log('You should pass an object with a namespace for your component!');
-		} else {
-			this.namespace = obj.namespace;
-		}
-
-		this.instanceId = this.namespace;
-		this.el = obj.el;
-		this.options = options;
-		this.namespace = null;
-		this.evtNamespace = '.' + this.metaData.name;
-		this._options = obj.options;
 
 		if (this.appInstance.$) {
 			this.$el = this.appInstance.$(obj.el);
@@ -80,37 +63,6 @@ class VeamsComponent {
 	// ----------------------------------------------------------
 	// GETTER & SETTERS
 	// ----------------------------------------------------------
-
-	/**
-	 * Return options
-	 */
-	get _options() {
-		return this.options;
-	}
-
-	/**
-	 * Save options by merging default options with passed options
-	 */
-	set _options(options) {
-		this.options = this.appInstance.helpers.extend(this.options, options || {});
-	}
-
-	/**
-	 * Get module information
-	 */
-	get metaData() {
-		return {
-			name: typeof this.namespace === 'string' ? stringHelpers.capitalizeFirstLetter(stringHelpers.toCamelCase(this.namespace)) : ''
-		};
-	}
-
-	get instanceId() {
-		return this._instanceId;
-	}
-
-	set instanceId(id) {
-		this._instanceId = `${id}_` + Date.now() + '_' + this.appInstance.helpers.makeId();
-	}
 
 	/**
 	 * Get and set events object
@@ -165,14 +117,6 @@ class VeamsComponent {
 		this.registerEvents(this.events, false);
 		this.registerEvents(this.subscribe, true);
 		this.bindEvents();
-	}
-
-	/**
-	 * Initialize your module class and
-	 * save some references.
-	 */
-	initialize() {
-		return this;
 	}
 
 	/**
@@ -409,10 +353,5 @@ class VeamsComponent {
 		}
 	}
 }
-
-/**
- * Add mixin functionality to extend module class by using simple objects
- */
-VeamsComponent.mixin = mixinHelper;
 
 export default VeamsComponent;
