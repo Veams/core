@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * Represents a base constructor which supports
  * options merging and
@@ -18,7 +17,6 @@ import extendHelper from '../utils/helpers/extend';
 import makeIdHelper from '../utils/helpers/make-id';
 
 class VeamsBase {
-
 	/**
 	 * Constructor
 	 *
@@ -35,8 +33,6 @@ class VeamsBase {
 		this.instanceId = this.namespace;
 		this.options = opts;
 		this._options = options;
-
-		console.log('opts: ', options);
 
 		if (el) {
 			this.el = el;
@@ -86,18 +82,6 @@ class VeamsBase {
 		return {
 			name: typeof this.namespace === 'string' ? stringHelpers.capitalizeFirstLetter(stringHelpers.toCamelCase(this.namespace)) : ''
 		};
-	}
-
-	// ----------------------------------------------------------
-	// STANDARD METHODS
-	// ----------------------------------------------------------
-
-	/**
-	 * Initialize your module class and
-	 * save some references.
-	 */
-	initialize() {
-		return this;
 	}
 }
 
