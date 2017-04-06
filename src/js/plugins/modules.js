@@ -15,8 +15,8 @@ let __register = {
 
 /**
  * - Get modules in DOM
- * - Get Classes and options from init process
- * - Split up conditional modules from other modules
+ * - Get classes and options from init process
+ * - Split up conditional modules from initial modules
  * - Init other modules
  * - Bind events when available from conditional modules
  * -
@@ -40,7 +40,7 @@ class Modules {
 	}
 
 	initialize() {
-		this.queryString = '[' + this.options.attrPrefix + '-module]';
+		this.queryString = `[${this.options.attrPrefix}-${this.options.attrName}]`;
 		__register.modulesInContext = Veams.helpers.querySelectorArray(this.queryString);
 
 		if (this.options.useMutationObserver) {
@@ -299,8 +299,8 @@ class Modules {
 	}
 
 	initModule({el, namespace, options, module, render, cb}) {
-		let noRender = el.getAttribute(this.options.attrPrefix + '-no-render') || render === false || false;
-		let dataModules = el.getAttribute(this.options.attrPrefix + '-module').split(' ');
+		let noRender = el.getAttribute(`${this.options.attrPrefix}-no-render`) || render === false || false;
+		let dataModules = el.getAttribute(`${this.options.attrPrefix}-${this.options.attrName}`).split(' ');
 
 		if (dataModules.indexOf(namespace) !== -1) {
 			// Check init state
@@ -311,7 +311,7 @@ class Modules {
 			}
 
 			// Go ahead when condition is true
-			let attrs = el.getAttribute('data-js-options');
+			let attrs = el.getAttribute(`${this.options.attrPrefix}-${this.options.attrOptions}`);
 			let mergedOptions = Veams.helpers.extend(JSON.parse(attrs), options || {});
 			let Module = module;
 			let instance = new Module({
@@ -359,8 +359,8 @@ class Modules {
 					let addedNode = mutations[i].addedNodes[j];
 
 					if (addedNode instanceof HTMLElement) {
-						if (addedNode.getAttribute(this.options.attrPrefix + '-module')) {
-							let namespace = addedNode.getAttribute(this.options.attrPrefix + '-module');
+						if (addedNode.getAttribute(`${this.options.attrPrefix}-${this.options.attrName}`)) {
+							let namespace = addedNode.getAttribute(`${this.options.attrPrefix}-${this.options.attrName}`);
 
 							if (this.options.logs) {
 								console.info(`VeamsModules :: Recording a new module with the namespace ${namespace} at: `, addedNode);
@@ -397,7 +397,7 @@ class Modules {
 					let removedNode = mutations[i].removedNodes[j];
 
 					if (removedNode instanceof HTMLElement) {
-						if (removedNode.getAttribute(this.options.attrPrefix + '-module')) {
+						if (removedNode.getAttribute(`${this.options.attrPrefix}-${this.options.attrName}`)) {
 
 							if (this.options.logs) {
 								console.info('VeamsModules :: Recording deletion of module: ', removedNode);
@@ -449,6 +449,8 @@ const VeamsModules = {
 	options: {
 		DEBUG: false,
 		attrPrefix: 'data-js',
+		attrName: 'module',
+		attrOptions: 'options',
 		logs: false,
 		internalCacheOnly: true,
 		internalRegisterOnly: false,
