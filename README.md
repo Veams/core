@@ -31,24 +31,24 @@ It is not opinionated, means use the stack which fits best to your project, in e
 ### Table of Content
 1. [Typical Use Cases for Veams](#typical-use-cases)
 2. [Usage](#usage)
-  - [Installation](#installation)
-  - [Import](#import)
+    - [Installation](#installation)
+    - [Import](#import)
 3. [Core](#veams-core)
-  - [General](#the-general-veams-object)
-  - [Helpers](#helpers)
+    - [General](#the-general-veams-object)
+    - [Helpers](#helpers)
 4. [Plugins](#plugins)
-  - [Usage of Plugins](#usage-of-plugins)
-  - [Creation of Plugins](#creation-of-plugins)
-  - [Available Plugins](#available-plugins)
+    - [Usage of Plugins](#usage-of-plugins)
+    - [Creation of Plugins](#creation-of-plugins)
+    - [Available Plugins](#available-plugins)
 5. [Common](#common)
-  - [VeamsComponent](#veamscomponent)
+    - [VeamsComponent](#veamscomponent)
 6. [Services](#services)
-  - [VeamsHttp](#veamshttp)
+    - [VeamsHttp](#veamshttp)
 7. [Roadmap of Veams](#roadmap)
 
 ### Typical Use Cases
 
-Veams is used in many projects of the agency I work for.
+Veams is used in many projects in the agency I work for.
 
 The majority of projects are portal like websites, they are mostly static (CMS) and get enhanced with (a lot of) JavaScript.
 
@@ -169,17 +169,15 @@ These helpers need to be imported into your project and can be added to the Veam
 _Example:_
 
 ```js
-import makeIdHelper from 'veams/src/utils/helpers/make-id';
-
-const helpers = {
-    makeId: makeIdHelper
-}
+import transitionEndHelper from 'veams/src/utils/helpers/transition-end';
 
 // Simple use a function and a helper name
-Veams.addHelper('makeId', makeIdHelper);
+Veams.addHelper('transitionEnd', transitionEndHelper);
 
 // Or pass an object to the method with your helpers in it
-Veams.addHelper(helpers);
+Veams.addHelper({
+    transitionEnd: transitionEndHelper
+});
 ```
 
 ---------------
@@ -605,16 +603,16 @@ The class provides a simple ajax system (`.get()`, `.post()`) which returns a pr
 There are many things left. So here you can see a short overview:
 
 1. __Extend/Enhance Plugins Repository__
-  - React Plugin
-  - Lazyload Modules Handler Plugin
-  - Extend Templater Plugin to support server side templates
-  - Add VDOM plugin for templater
+    - React Plugin
+    - Lazyload Modules Handler Plugin
+    - Extend Templater Plugin to support server side templates
+    - Add VDOM plugin for templater
 2. __Enhance Commons and Services__
-  - Create a native VeamsComponent
-  - Create a11y service
+    - Create a native VeamsComponent
+    - Create a11y service
 3. __Extend Helpers Repository__
-  - Add more useful helpers
-  - Update existing ones
+    - Add more useful helpers
+    - Update existing ones
 4. __Write tests__
 
 If you have other ideas, please open an issue on github, I would appreciate that!
