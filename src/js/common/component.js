@@ -106,6 +106,9 @@ class VeamsComponent extends VeamsBase {
 	// ----------------------------------------------------------
 	// STANDARD METHODS
 	// ----------------------------------------------------------
+	initialize() {
+		return this;
+	}
 
 	/**
 	 * Private method to create all necessary elements and bindings.
