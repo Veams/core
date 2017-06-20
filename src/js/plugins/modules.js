@@ -117,15 +117,15 @@ class Modules {
 		if (deleteIndex) __cache.splice(deleteIndex, 1);
 	}
 
-	static checkModuleInCache(obj, key = 'element') {
+	static checkModuleInCache(obj, key = 'element', namespace = undefined) {
 		let state = false;
 
 		for (let i = 0; i < __cache.length; i++) {
 			let cacheItem = __cache[i];
 
-			if (cacheItem[key] === obj) {
-				state = true;
-			}
+			state = (namespace !== undefined) ? cacheItem[key] === obj && cacheItem.namespace === namespace : cacheItem[key] === obj;
+
+			if (state) break;
 		}
 
 		return state;
@@ -304,7 +304,7 @@ class Modules {
 
 		if (dataModules.indexOf(namespace) !== -1) {
 			// Check init state
-			if (this.constructor.checkModuleInCache(el) === true) {
+			if (this.constructor.checkModuleInCache(el, 'element', namespace) === true) {
 				console.info('VeamsModules :: Element is already in cache and initialized: ');
 				console.log(el);
 				return;
