@@ -35,7 +35,7 @@ It is not opinionated, means use the stack which fits best to your project, in e
     - [Import](#import)
 3. [Core](#veams-core)
     - [General](#the-general-veams-object)
-    - [Helpers](#helpers)
+    - [Helpers](#veams-helpers)
 4. [Plugins](#plugins)
     - [Usage of Plugins](#usage-of-plugins)
     - [Creation of Plugins](#creation-of-plugins)
@@ -62,6 +62,7 @@ To use Veams as framework just install and import the library:
 
 ``` bash
 npm install veams --save
+yarn install veams
 ```
 
 #### Import
@@ -298,7 +299,7 @@ In general the plugin system is a really simple one.
 When you want to use a plugin you first need to import the plugin and then just execute the `use` method of Veams: 
 
 ```js
-import VeamsLogger from 'veams/lib/plugins/logger';
+import VeamsLogger from 'veams-plugin-logger';
 
 // Add plugins to the Veams system
 Veams.use(VeamsLogger);
@@ -307,7 +308,7 @@ Veams.use(VeamsLogger);
 You can pass in options to the plugin just by adding other parameters:
 
 ```js
-import VeamsMediaQueryHandler from 'veams/lib/plugins/media-query-handler';
+import VeamsMediaQueryHandler from 'veams-plugin-media-query-handler';
 
 // Add plugins to the Veams system
 Veams.use(VeamsMediaQueryHandler, {
@@ -346,239 +347,31 @@ That's it. You extended the general Veams object.
 
 There are multiple plugins available.
 
-1. [VeamsDOM](#veamsdom)
-2. [VeamsVent](#veamsvent)
-3. [VeamsLogger](#veamslogger)
-4. [VeamsModules](#veamsmodules)
-5. [VeamsMediaQueryHandler](#veamsmediaqueryhandler)
-6. [VeamsTemplater](#veamstemplater)
-7. [VeamsMixins](#veamsmixins)
+1. [VeamsDOM](https://github.com/Veams/veams-plugin-dom)
+2. [VeamsVent](https://github.com/Veams/veams-plugin-vent)
+3. [VeamsLogger](https://github.com/Veams/veams-plugin-logger)
+4. [VeamsModules](https://github.com/Veams/veams-plugin-modules)
+5. [VeamsMediaQueryHandler](https://github.com/Veams/veams-plugin-media-query-handler)
+6. [VeamsTemplater](https://github.com/Veams/veams-plugin-templater)
+7. [VeamsMixins](https://github.com/Veams/veams-plugin-mixins)
 
 Please keep in mind that the order of the initialisation of your used plugins can be important. In general it makes sense to use the following order: 
 
 ```js
 // Intialize core of Veams
-Veams.initialize();
+Veams.onInitialize(() => {
 
-// Add plugins to the Veams system
-Veams.use(VeamsDOM, {
-    DOM: $
+    // Add plugins to the Veams system
+    Veams.use(VeamsDOM, {
+        DOM: $
+    });
+    Veams.use(VeamsVent); // VeamsVent enhances VeamsModules and VeamsMediaQueryHandler
+    Veams.use(VeamsLogger);
+    Veams.use(VeamsModules);
+    Veams.use(VeamsMediaQueryHandler);
 });
-Veams.use(VeamsVent); // VeamsVent enhances VeamsModules and VeamsMediaQueryHandler
-Veams.use(VeamsLogger);
-Veams.use(VeamsModules);
-Veams.use(VeamsMediaQueryHandler);
+
 ```
-
-##### VeamsDOM
-
-The VeamsDOM plugin is simple plugin for which you need to pass a DOM handler like jQuery. For some other plugins VeamsDOM is a requirement.
-
-__How to__
-
-```js
-import $ from 'jquery';
-import Veams from 'veams';
-import VeamsDOM from 'veams/lib/plugins/dom';
-
-// Intialize core of Veams
-Veams.initialize();
-
-// Add plugins to the Veams system
-Veams.use(VeamsDOM, {
-    DOM: $
-});
-```
-_Options_
-
-_DOM_ {`Function`} [`() => {}`] (required) - Add a DOM handler by using this option. It should have the same api like jQuery.
-
-##### VeamsVent
-
-The VeamsVent plugin is a global publish and subscribe object. You can use this plugin to communicate between modules independently.
-
-Veams exposes a global event object (`Veams.EVENTS`) which can be used and extended by this plugin.
-
-__How to__
-
-```js
-import Veams from 'veams';
-import VeamsVent from 'veams/lib/plugins/vent';
-import EVENTS from './custom-events';
-
-// Intialize core of Veams
-Veams.initialize();
-
-// Add plugins to the Veams system
-Veams.use(VeamsVent, {
-    furtherEvents: EVENTS
-});
-```
-
-_Options_
-
-- _furtherEvents_ {`Object`} [`false`] - Add your custom events to the global events object of Veams.
-
-##### VeamsLogger
-
-The VeamsLogger plugin disables `console` logs by default. You can provide parameters (`?devmode`) in the URL to show the logs in your console.
-
-Furthermore it gives you the possibility to add a logger (`?logger`) which will be displayed on other devices.
-
-__How to__
-
-```js
-import Veams from 'veams';
-import VeamsLogger from 'veams/lib/plugins/logger';
-
-// Intialize core of Veams
-Veams.initialize();
-
-// Add plugins to the Veams system
-Veams.use(VeamsLogger);
-```
-
-##### VeamsModules
-
-The VeamsModules plugin provides a whole system to initialize, render, save and destroy your modules.
-
-It uses mutation observer to observe added and removed nodes and handles your components, as long as the component has the same API like [VeamsComponent](#veamscomponent).
-
-__How to__
-
-```js
-import Veams from 'veams';
-import VeamsModules from 'veams/lib/plugins/modules';
-
-// Intialize core of Veams
-Veams.initialize();
-
-// Add plugins to the Veams system
-Veams.use(VeamsModules, {
-    useMutationObserver: true
-});
-```
-
-_API_
-
-When enabled you can register a module like that:
-
-```js
-import CustomModule from './modules/custom';
-
-Veams.modules.register([
-    domName: 'custom',
-    module: CustomModule
-]);
-```
-
-_Options_
-
-- _attrPrefix_ {`String`} [`'data-js'`] - You can override the javascript module indicator in your markup which will be searched in the context.
-- _logs_ {`Boolean`} [`false`] - Hide or print the logs to the console.
-- _useMutationObserver_ {`Boolean`} [`false`] - You can set this option to true to use mutation observer for ajax handling. You can also use `Veams.EVENTS.DOMchanged` as before.
-
-##### VeamsMediaQueryHandler
-
-The VeamsMediaQueryHandler plugin provides to you a possibility to get the current media query name from your css.
-
-If you want to use the media query support then just add the following lines to a custom scss file and modify it like you want:
-
-``` scss
-head {
-	font-family: desktop;
-
-	@include bp(1024px) {
-		font-family: tablet-l;
-	}
-
-	@include bp(768px) {
-		font-family: tablet-p;
-	}
-
-	@include bp(657px) {
-		font-family: mobile-l;
-	}
-
-	@include bp(480px) {
-		font-family: mobile-p;
-	}
-
-	@include bp(360px) {
-		font-family: mobile-s;
-	}
-}
-```
-
-Then you only need to import and use the plugin from the Veams package: 
-
-```js
-import Veams from 'veams';
-import VeamsModules from 'veams/lib/plugins/modules';
-
-// Intialize core of Veams
-Veams.initialize();
-
-// Add plugins to the Veams system
-Veams.use(VeamsMediaQueryHandler, {
-    delay: 200
-});
-```
-
-_Options:_
-
-You can pass a second parameter with an options object. Available options are: 
-
-- `mediaQueryProp` {String} ['font-family'] - Define a media query property which you have added to the head element.
-- `delay` {Number} [300] - Define the delay value for the throttle handling which is responsible to trigger an event and set the `currentMedia` value.
-
-##### VeamsMixins
-
-The VeamsMixins plugin is something where you can save global mixins. Mixins are object with functions in it which can be used to extend methods in other classes/modules.
-
-```js
-import Veams from 'veams';
-import VeamsMixins from 'veams/lib/plugins/mixins';
-
-// Intialize core of Veams
-Veams.initialize();
-
-// Add plugins to the Veams system
-Veams.use(VeamsMixins);
-```
-
-_API:_
-
-When enabled the API provides a way to add a mixin to the container `Veams.mixins`.
-
-###### Veams.addMixin('name', mixinFunction)
-
-* @param {`String`} name - Mixin name which will be used in the registration process.
-* @param {`Function`} mixinFunction - The mixin function should return an object with methods.
-
-The method allows the registration of provided or custom mixins.
-
-```js
-import Veams from 'veams';
-import VeamsMixins from 'veams/lib/plugins/mixins';
-
-import imageLoader from './utils/mixins/image-loader';
-
-// Intialize core of Veams
-Veams.initialize();
-
-// Add plugins to the Veams system
-Veams.use(VeamsMixins);
-Veams.addMixin('imageLoader', imageLoader);
-```
-
-Later you can use this specific mixin in other modules:
-
-```js
-myClass.mixin(Veams.mixins.imageLoader);
-```
-
-Here you see that you need to extend your custom class with the helper function `mixin`, which is available in `Veams.helpers`.
 
 ### Common
 

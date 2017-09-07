@@ -18,14 +18,7 @@ var config = {
 		'veams-core': [__dirname + '/src/js/generics/core.js'],
 		'common/component': [__dirname + '/src/js/common/component.js'],
 		'common/base': [__dirname + '/src/js/common/base.js'],
-		'services/http': __dirname + '/src/js/services/http.js',
-		'plugins/dom': __dirname + '/src/js/plugins/dom.js',
-		'plugins/logger': __dirname + '/src/js/plugins/logger.js',
-		'plugins/media-query-handler': __dirname + '/src/js/plugins/media-query-handler.js',
-		'plugins/mixins': __dirname + '/src/js/plugins/mixins.js',
-		'plugins/modules': __dirname + '/src/js/plugins/modules.js',
-		'plugins/templater': __dirname + '/src/js/plugins/templater.js',
-		'plugins/vent': __dirname + '/src/js/plugins/vent.js'
+		'services/http': __dirname + '/src/js/services/http.js'
 	},
 	devtool: 'source-map',
 	output: {
