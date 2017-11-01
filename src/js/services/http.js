@@ -1,5 +1,5 @@
 /**
- * Represents a http service, which returns a promise.
+ * Represents a simple http service, which returns a promise.
  *
  * @module http
  * @author Sebastian Fitzner
@@ -15,7 +15,8 @@ class VeamsHttp extends VeamsBase {
 			url: false,
 			type: 'text',
 			method: 'GET',
-			fetchOnInit: false
+			fetchOnInit: false,
+			headers: null
 		};
 
 		super({namespace, options}, opts);
@@ -35,12 +36,30 @@ class VeamsHttp extends VeamsBase {
 	};
 
 	// Request lifecycle
-	requestWillOpen(request, obj) {}
-	requestDidOpen(request, obj) {}
-	requestWillLoad(request, obj) {}
-	requestDidLoad(request, obj) {}
-	requestWillSend(request, obj) {}
-	requestDidSend(request, obj) {}
+	requestWillOpen(request, obj) {
+	}
+
+	requestDidOpen(request, obj) {
+		if (this.options.headers) {
+			for (let header in this.options.headers) {
+				if (this.options.headers.hasOwnProperty(header)) {
+					request.setRequestHeader(header, this.options.headers[header]);
+				}
+			}
+		}
+	}
+
+	requestWillLoad(request, obj) {
+	}
+
+	requestDidLoad(request, obj) {
+	}
+
+	requestWillSend(request, obj) {
+	}
+
+	requestDidSend(request, obj) {
+	}
 
 	// Request function
 	promiseRequest(obj) {
@@ -78,34 +97,43 @@ class VeamsHttp extends VeamsBase {
 			};
 
 			this.requestWillSend(request, obj);
-			request.send(obj.data);
+			request.send(JSON.stringify(obj.data));
 			this.requestDidSend(request, obj);
 		});
 	};
 
-	get(obj) {
+	get(url = false) {
 		let requestObject = {};
 
-		requestObject.data = obj.data ? obj.data : null;
-
-		if (obj) {
-			this.options.method = requestObject.method = 'GET';
-			this.options.url = requestObject.url = obj.url || this.options.url;
-			this.options.type = requestObject.type = obj.type || this.options.type;
-		}
+		this.options.method = requestObject.method = 'GET';
+		this.options.url = requestObject.url = url || this.options.url;
+		this.options.type = requestObject.type = this.options.type;
 
 		return this.promiseRequest(requestObject);
 	};
 
-	post(obj) {
+	remove(url = false) {
 		let requestObject = {};
 
-		requestObject.data = obj.data ? obj.data : null;
+		requestObject.method = 'DELETE';
+		requestObject.url = url || this.options.url;
+		// requestObject.type = this.options.type;
 
-		if (obj) {
-			this.options.method = requestObject.method = 'POST';
-			this.options.url = requestObject.url = obj.url || this.options.url;
-			this.options.type = requestObject.type = obj.type || this.options.type;
+		return this.promiseRequest(requestObject);
+	}
+
+	post(url = false, data) {
+		let requestObject = {};
+
+		requestObject.data = data ? data : null;
+		requestObject.method = 'POST';
+		requestObject.url = url || this.options.url;
+		requestObject.type = this.options.type;
+
+		if (this.options.type === 'json' && this.options.headers === null) {
+			this.options.headers = {
+				'content-type': 'application/json'
+			};
 		}
 
 		return this.promiseRequest(requestObject);
