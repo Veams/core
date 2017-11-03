@@ -112,7 +112,7 @@ class VeamsHttp extends VeamsBase {
 		return this.promiseRequest(requestObject);
 	};
 
-	remove(url = false) {
+	delete(url = false) {
 		let requestObject = {};
 
 		requestObject.method = 'DELETE';
@@ -127,6 +127,23 @@ class VeamsHttp extends VeamsBase {
 
 		requestObject.data = data ? data : null;
 		requestObject.method = 'POST';
+		requestObject.url = url || this.options.url;
+		requestObject.type = this.options.type;
+
+		if (this.options.type === 'json' && this.options.headers === null) {
+			this.options.headers = {
+				'content-type': 'application/json'
+			};
+		}
+
+		return this.promiseRequest(requestObject);
+	}
+
+	put(url = false, data) {
+		let requestObject = {};
+
+		requestObject.data = data ? data : null;
+		requestObject.method = 'PUT';
 		requestObject.url = url || this.options.url;
 		requestObject.type = this.options.type;
 
