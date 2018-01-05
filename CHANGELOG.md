@@ -1,3 +1,6 @@
+### v5.1.1
+- Add deep extend to base class
+
 ### v5.0.2
 - Update http service
 

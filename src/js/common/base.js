@@ -11,9 +11,9 @@
 /**
  * Imports
  */
+import deepExtend from 'deep-extend';
 import stringHelpers from '../utils/internal-helpers/string';
 import mixinHelper from '../utils/helpers/mixin';
-import extendHelper from '../utils/helpers/extend';
 import makeIdHelper from '../utils/helpers/make-id';
 
 class VeamsBase {
@@ -64,7 +64,7 @@ class VeamsBase {
 	}
 
 	set _options(options) {
-		this.options = extendHelper(this.options, options || {});
+		this.options = deepExtend(this.options, options || {});
 	}
 
 	set el(element) {
