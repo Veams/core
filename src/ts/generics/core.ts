@@ -7,12 +7,49 @@
 import '../utils/polyfills/custom-event';
 import use from './use';
 
-import EVENTS from '../utils/events';
-import VeamsHelpers from '../plugins/helpers';
+import EVENTS, { EVENTSType } from '../utils/events';
+import VeamsHelpers, { VeamsHelpersType } from '../plugins/helpers';
+import { VeamsOptions } from './veamsOptions';
 
 let initState = false;
 
 class VeamsCore {
+	_initialized: any;
+	
+	/**
+	 * Current Veams Version
+	 */
+	_version: any;
+
+	/**
+	 * 
+	 */
+	detections: { width: number; height: number; };
+
+	/**
+	 * Registered Veamshelpers
+	 */
+	helpers: VeamsHelpersType
+
+	/**
+	 * Available Events
+	 */
+	EVENTS: EVENTSType;
+	
+	
+	Plugins: {};
+	use: any;
+
+	/**
+	 * Base information about veams
+	 */
+	base: { name: string; version: string; };
+
+	/**
+	 * Veams options
+	 */
+	_options: VeamsOptions;
+
 	constructor(opts) {
 		this._options = {
 			namespace: 'Veams',
@@ -62,7 +99,11 @@ class VeamsCore {
 		return this._options;
 	}
 
-	setup(opts) {
+	/**
+	 * Setup Veams core
+	 * @param opts 
+	 */
+	setup(opts: VeamsOptions) {
 		this.use(VeamsHelpers);
 
 		this.detections = this.helpers.extend({
@@ -72,7 +113,11 @@ class VeamsCore {
 		this.options = opts;
 	}
 
-	initialize(opts) {
+	/**
+	 * Initialize veams core
+	 * @param opts Options
+	 */
+	initialize(opts?: VeamsOptions) {
 		if (initState === true) {
 			return console.info('Veams :: You already initialized Veams!');
 		}
@@ -91,7 +136,11 @@ class VeamsCore {
 		initState = true;
 	}
 
-	onInitialize(cb) {
+	/**
+	 * On init lifecyle hook
+	 * @param cb 
+	 */
+	onInitialize(cb: () => any): any {
 		if (!cb || typeof cb !== 'function') {
 			console.log('Veams :: Callback is not a function!');
 			return;
@@ -104,7 +153,11 @@ class VeamsCore {
 		cb();
 	}
 
-	onDOMReady(cb) {
+	/**
+	 * On DOM ready livecycle hook
+	 * @param cb 
+	 */
+	onDOMReady(cb: () => any) {
 		if (typeof cb !== 'function') {
 			console.log('Veams :: Callback is not a function!');
 			return;

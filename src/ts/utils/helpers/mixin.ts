@@ -31,3 +31,5 @@ export default function mixin(from, methods = ['initialize', 'render']) {
 		methodExtendHelper(to, from, method);
 	});
 };
+
+export type mixinType = (from: {}, methods: string[]) => any;

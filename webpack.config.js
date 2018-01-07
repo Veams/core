@@ -14,37 +14,32 @@ if (env === 'build') {
 
 var config = {
 	entry: {
-		'veams': __dirname + '/src/js/veams.js',
-		'veams-core': [__dirname + '/src/js/generics/core.js'],
-		'common/component': [__dirname + '/src/js/common/component.js'],
-		'common/base': [__dirname + '/src/js/common/base.js'],
-		'services/http': __dirname + '/src/js/services/http.js'
+		'veams': __dirname + '/src/js/veams.ts',
+		'veams-core': [__dirname + '/src/ts/generics/core.ts'],
+		'common/component': [__dirname + '/src/ts/common/component.ts'],
+		'common/base': [__dirname + '/src/ts/common/base.ts'],
+		'services/http': __dirname + '/src/ts/services/http.js'
 	},
-	devtool: 'source-map',
+    devtool: 'inline-source-map',
 	output: {
 		path: __dirname + '/lib',
 		filename: outputFile,
-		library: [libraryName, "[name]"],
+		library: [libraryName, '[name]'],
 		libraryTarget: 'umd',
 		umdNamedDefine: true
 	},
 	module: {
 		loaders: [
 			{
-				test: /(\.jsx|\.js)$/,
-				loader: 'babel',
+				test: /(\.tsx|\.ts)$/,
+				loader: 'ts-loader',
 				exclude: /(node_modules|bower_components)/
-			},
-			{
-				test: /(\.jsx|\.js)$/,
-				loader: "eslint-loader",
-				exclude: /node_modules/
 			}
 		]
 	},
 	resolve: {
 		root: path.resolve('./src'),
-		extensions: ['', '.js']
+		extensions: ['', '.ts']
 	},
 	plugins: plugins
 };

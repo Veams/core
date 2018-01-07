@@ -6,10 +6,11 @@
  * @author: Sebastian Fitzner
  */
 
-/**
+
+
+ /**
  * Events Global
  */
-
 const EVENTS = {
 	blur: 'blur',
 	change: 'change',
@@ -38,3 +39,7 @@ const EVENTS = {
 };
 
 export default EVENTS;
+
+export type EVENTSType = {
+	[key: string]: string
+};

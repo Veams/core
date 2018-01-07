@@ -13,10 +13,17 @@
  */
 import deepExtend from 'deep-extend';
 import stringHelpers from '../utils/internal-helpers/string';
-import mixinHelper from '../utils/helpers/mixin';
+import mixinHelper, { mixinType } from '../utils/helpers/mixin';
 import makeIdHelper from '../utils/helpers/make-id';
 
 class VeamsBase {
+
+	options: {};
+	_namespace: string;
+	_instanceId: string|number;
+	_el: HTMLElement;
+	mixin: mixinType;
+
 	/**
 	 * Constructor
 	 *

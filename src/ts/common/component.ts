@@ -30,6 +30,7 @@ function buildEvtId(evtKeyArr, fnName) {
 }
 
 class VeamsComponent extends VeamsBase {
+	private appInstance: any;
 
 	/**
 	 * Constructor

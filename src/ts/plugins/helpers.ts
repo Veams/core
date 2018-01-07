@@ -60,3 +60,7 @@ const VeamsHelpers = {
 };
 
 export default VeamsHelpers;
+
+export type VeamsHelpersType = {
+	[key: string]: (...any) => any
+};

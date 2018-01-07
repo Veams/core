@@ -9,6 +9,11 @@
 import VeamsBase from '../common/base';
 
 class VeamsHttp extends VeamsBase {
+
+	data: {
+		[key: string]: {}
+	}
+	
 	constructor(options = {}) {
 		let namespace = 'http';
 		let opts = {
