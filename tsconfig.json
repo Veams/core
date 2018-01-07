@@ -1,11 +1,23 @@
 {
     "compilerOptions": {
-        "module": "es6",
-        "target": "es5",
+        "outDir": "./dist",
+        "module": "es2015",
+        "target": "es2015",
         "sourceMap": true,
         "declaration": true,
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "moduleResolution": "node",
+        "typeRoots": [
+			"node_modules/@types"
+		],
+		"lib": [
+			"es2016",
+			"dom"
+		]
     },
+    "include": [
+        "src/ts/**/*.ts"
+    ],
     "exclude": [
         "node_modules"
     ]

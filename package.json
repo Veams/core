@@ -9,11 +9,12 @@
 		]
 	},
 	"scripts": {
-		"build": "webpack --mode=dev && webpack --mode=build",
+		"build": "webpack --env=build",
 		"dev": "webpack --progress --colors --watch --mode=dev",
 		"test": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
 	},
 	"devDependencies": {
+		"@types/jquery": "^3.2.17",
 		"babel": "6.3.13",
 		"babel-core": "6.1.18",
 		"babel-eslint": "5.0.0",
@@ -28,7 +29,7 @@
 		"mocha": "2.3.4",
 		"ts-loader": "^3.2.0",
 		"typescript": "^2.6.2",
-		"webpack": "1.12.9",
+		"webpack": "^3.10.0",
 		"yargs": "3.32.0"
 	},
 	"repository": {
@@ -48,6 +49,7 @@
 	},
 	"homepage": "https://veams.org/",
 	"dependencies": {
-		"deep-extend": "^0.5.0"
+		"deep-extend": "^0.5.0",
+		"promise-polyfill": "^7.0.0"
 	}
 }
