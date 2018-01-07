@@ -18,9 +18,22 @@
 /**
  * Imports
  */
-import VeamsBase from './base';
+import VeamsBase, { VeamsBaseConfig } from './base';
 import getStringValue from '../utils/internal-helpers/get-string-value';
 import tplEngine from '../utils/internal-helpers/template-engine';
+import { VeamsCollection } from '../utils/internal-helpers/collection';
+
+export interface VeamsComponentConfig extends VeamsBaseConfig {
+	appInstance?: any; // @TODO: Check type
+}
+
+export interface VeamsSubscriber {
+	id?: string;
+	delegate?: any;
+	type: any;
+	event: any;
+	handler: any;
+}
 
 /**
  * Custom Functions
@@ -29,8 +42,19 @@ function buildEvtId(evtKeyArr, fnName) {
 	return evtKeyArr.join('_') + '_' + fnName;
 }
 
-class VeamsComponent extends VeamsBase {
+abstract class VeamsComponent extends VeamsBase {
+	_events: {
+		[key: string]: string
+	};
+
+	_subscribe: {
+		[key: string]: string
+	}
+
+	__subscribers: VeamsCollection<VeamsSubscriber>;
+
 	private appInstance: any;
+	$el: JQuery;
 
 	/**
 	 * Constructor
@@ -41,7 +65,7 @@ class VeamsComponent extends VeamsBase {
 	 * @param {Object} obj [{}] - Object which contains el, options from the DOM and namespace.
 	 * @param {Object} options [{}] - Object which contains options of the extended class.
 	 */
-	constructor(obj = {}, options = {}) {
+	constructor(obj: VeamsComponentConfig = {}, options = {}) {
 		super(obj, options);
 		this.appInstance = obj.appInstance || window.Veams;
 
@@ -87,7 +111,7 @@ class VeamsComponent extends VeamsBase {
 		return this._subscribe;
 	}
 
-	set _subscribers(obj) {
+	addSubscriber(obj: VeamsSubscriber) {
 		if (!this.__subscribers) {
 			this.__subscribers = {};
 		}
@@ -100,16 +124,14 @@ class VeamsComponent extends VeamsBase {
 		};
 	}
 
-	get _subscribers() {
+	get _subscribers(): VeamsCollection<VeamsSubscriber> {
 		return this.__subscribers;
 	}
 
 	// ----------------------------------------------------------
 	// STANDARD METHODS
 	// ----------------------------------------------------------
-	initialize() {
-		return this;
-	}
+	abstract initialize(...args);
 
 	/**
 	 * Private method to create all necessary elements and bindings.
@@ -128,16 +150,14 @@ class VeamsComponent extends VeamsBase {
 	 *
 	 * @public
 	 */
-	bindEvents() {
-	}
+	abstract bindEvents();
 
 	/**
 	 * Unbind events
 	 *
 	 * @public
 	 */
-	unbindEvents() {
-	}
+	abstract unbindEvents();
 
 	/**
 	 * Pre-Render templates
@@ -192,26 +212,22 @@ class VeamsComponent extends VeamsBase {
 	/**
 	 * This method will be executed after initialise
 	 */
-	willMount() {
-	}
+	abstract willMount();
 
 	/**
 	 * This method will be executed before unregistering events
 	 */
-	willUnmount() {
-	}
+	abstract willUnmount();
 
 	/**
 	 * This method will be executed after render
 	 */
-	didMount() {
-	}
+	abstract didMount();
 
 	/**
 	 * This method will be executed after unregistering events
 	 */
-	didUnmount() {
-	}
+	abstract didUnmount();
 
 	// ----------------------------------------------------------
 	// EVENTS METHODS
@@ -274,34 +290,34 @@ class VeamsComponent extends VeamsBase {
 		if (arrlen === 1 && !global) {
 			this.$el.on(evtType, bindFn);
 
-			this._subscribers = {
+			this.addSubscriber({
 				type: 'event',
 				id: id,
 				event: evtType,
 				handler: bindFn
-			};
+			});
 
 		} else if (arrlen === 1 && global) {
 			this.appInstance.Vent.subscribe(evtType, bindFn);
 
-			this._subscribers = {
+			this.addSubscriber({
 				type: 'globalEvent',
 				id: id,
 				event: evtType,
 				handler: bindFn
-			};
+			});
 		} else {
 			let delegate = getStringValue.apply(this, [tplEngine(evtKeyArr[1])]);
 
 			this.$el.on(evtType, delegate, bindFn);
 
-			this._subscribers = {
+			this.addSubscriber({
 				type: 'delegatedEvent',
 				delegate: delegate,
 				id: id,
 				event: evtType,
 				handler: bindFn
-			};
+			});
 		}
 	}
 
@@ -309,9 +325,9 @@ class VeamsComponent extends VeamsBase {
 	 * Delete all registered events.
 	 */
 	unregisterEvents() {
-		for (let key in this._subscribers) {
-			if (this._subscribers.hasOwnProperty(key)) {
-				let obj = this._subscribers[key];
+		for (let key in this.addSubscriber) {
+			if (this.addSubscriber.hasOwnProperty(key)) {
+				let obj = this.addSubscriber[key];
 
 				if (obj.type === 'globalEvent') {
 					this.appInstance.Vent.unsubscribe(obj.event, obj.handler);
@@ -344,8 +360,8 @@ class VeamsComponent extends VeamsBase {
 		let evtKeyArr = evtKey.split(' ');
 		let id = buildEvtId(evtKeyArr, fn);
 
-		if (this._subscribers[id]) {
-			let obj = this._subscribers[id];
+		if (this.addSubscriber[id]) {
+			let obj = this.addSubscriber[id];
 
 			if (obj.type === 'globalEvent') {
 				this.appInstance.Vent.unsubscribe(obj.event, obj.handler);

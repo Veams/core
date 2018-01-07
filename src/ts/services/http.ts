@@ -8,11 +8,16 @@
 // Imports
 import VeamsBase from '../common/base';
 
+export interface RequestObject {
+    method?: string;
+    url?: string;
+    type?: string;
+    data?: string;
+}
+
 class VeamsHttp extends VeamsBase {
 
-	data: {
-		[key: string]: {}
-	}
+	data: any;
 	
 	constructor(options = {}) {
 		let namespace = 'http';
@@ -41,10 +46,10 @@ class VeamsHttp extends VeamsBase {
 	};
 
 	// Request lifecycle
-	requestWillOpen(request, obj) {
+	requestWillOpen(request: XMLHttpRequest, obj) {
 	}
 
-	requestDidOpen(request, obj) {
+	requestDidOpen(request: XMLHttpRequest, obj) {
 		if (this.options.headers) {
 			for (let header in this.options.headers) {
 				if (this.options.headers.hasOwnProperty(header)) {
@@ -54,20 +59,20 @@ class VeamsHttp extends VeamsBase {
 		}
 	}
 
-	requestWillLoad(request, obj) {
+	requestWillLoad(request: XMLHttpRequest, obj) {
 	}
 
-	requestDidLoad(request, obj) {
+	requestDidLoad(request: XMLHttpRequest, obj) {
 	}
 
-	requestWillSend(request, obj) {
+	requestWillSend(request: XMLHttpRequest, obj) {
 	}
 
-	requestDidSend(request, obj) {
+	requestDidSend(request: XMLHttpRequest, obj) {
 	}
 
 	// Request function
-	promiseRequest(obj) {
+	promiseRequest(obj?: RequestObject) {
 		return new Promise((resolve, reject) => {
 			let request = new XMLHttpRequest();
 
@@ -108,7 +113,7 @@ class VeamsHttp extends VeamsBase {
 	};
 
 	get(url = false) {
-		let requestObject = {};
+		let requestObject: RequestObject = {};
 
 		this.options.method = requestObject.method = 'GET';
 		this.options.url = requestObject.url = url || this.options.url;
@@ -118,7 +123,7 @@ class VeamsHttp extends VeamsBase {
 	};
 
 	delete(url = false) {
-		let requestObject = {};
+		let requestObject: RequestObject = {};
 
 		requestObject.method = 'DELETE';
 		requestObject.url = url || this.options.url;
@@ -128,7 +133,7 @@ class VeamsHttp extends VeamsBase {
 	}
 
 	post(url = false, data) {
-		let requestObject = {};
+		let requestObject: RequestObject = {};
 
 		requestObject.data = data ? data : null;
 		requestObject.method = 'POST';
@@ -145,7 +150,7 @@ class VeamsHttp extends VeamsBase {
 	}
 
 	put(url = false, data) {
-		let requestObject = {};
+		let requestObject: RequestObject = {};
 
 		requestObject.data = data ? data : null;
 		requestObject.method = 'PUT';

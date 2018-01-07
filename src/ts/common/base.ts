@@ -16,9 +16,15 @@ import stringHelpers from '../utils/internal-helpers/string';
 import mixinHelper, { mixinType } from '../utils/helpers/mixin';
 import makeIdHelper from '../utils/helpers/make-id';
 
+export interface VeamsBaseConfig {
+	namespace?: string, 
+	el?: HTMLElement, 
+	options?: any
+};
+
 class VeamsBase {
 
-	options: {};
+	options: any;
 	_namespace: string;
 	_instanceId: string|number;
 	_el: HTMLElement;
@@ -35,11 +41,12 @@ class VeamsBase {
 	 * @param {Object} options - Options passed by init process.
 	 * @param {Object} opts [{}] - Object which contains options of the extended class.
 	 */
-	constructor({namespace, el, options}, opts = {}) {
+	constructor({namespace, el, options}: VeamsBaseConfig, opts = {}) {
 		this.namespace = namespace || 'base';
 		this.instanceId = this.namespace;
 		this.options = opts;
 		this._options = options;
+		this.mixin = mixinHelper;
 
 		if (el) {
 			this.el = el;
@@ -91,10 +98,5 @@ class VeamsBase {
 		};
 	}
 }
-
-/**
- * Add mixin functionality to extend module class by using simple objects
- */
-VeamsBase.mixin = mixinHelper;
 
 export default VeamsBase;

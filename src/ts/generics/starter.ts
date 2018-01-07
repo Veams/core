@@ -10,7 +10,7 @@ import '../utils/polyfills/custom-event';
  */
 import VeamsCore from './core';
 
-let Veams = {};
+let Veams: VeamsCore;
 
 (function (window, document, undefined) {
 	'use strict';

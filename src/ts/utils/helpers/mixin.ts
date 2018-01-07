@@ -19,11 +19,13 @@ export default function mixin(from, methods = ['initialize', 'render']) {
 	let to = this.prototype;
 
 	/** Add those methods which exists on `from` but not on `to` to the latter */
-	defaultsHelper(to, from);
+	defaultsHelper({to, from});
 
 	/** we do the same for events */
 	if (to.events) {
-		defaultsHelper(to.events, from.events);
+		const toEvents = to.events;
+		const fromEvents = from.events;
+		defaultsHelper({toEvents, fromEvents});
 	}
 
 	// Extend to's methods

@@ -1,6 +1,8 @@
+import { VeamsCollection } from "./collection";
+
 'use strict';
 
-const stringHelpers = {};
+const stringHelpers: VeamsCollection<(str: string) => string> = {} ;
 
 /**
  * CamelCase strings by replacing hyphens, white space and points.
