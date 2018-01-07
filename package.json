@@ -9,7 +9,7 @@
 		]
 	},
 	"scripts": {
-		"build": "webpack --env=build",
+		"build": "webpack --env=dev && webpack --env=build",
 		"dev": "webpack --progress --colors --watch --mode=dev",
 		"test": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
 	},
