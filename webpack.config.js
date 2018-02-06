@@ -1,45 +1,44 @@
-var webpack = require("webpack");
-var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-var path = require("path");
-var libraryName = "[name]";
-var plugins = [],
-	outputFile;
+const webpack = require('webpack');
+const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+const path = require('path');
+const libraryName = '[name]';
+const plugins = [];
+let outputFile;
 
 module.exports = env => {
-	if (env === "build") {
+	if (env === 'build') {
 		plugins.push(new UglifyJsPlugin({ minimize: true }));
-		outputFile = libraryName + ".min.js";
+		outputFile = libraryName + '.min.js';
 	} else {
-		outputFile = libraryName + ".js";
+		outputFile = libraryName + '.js';
 	}
 
 	return {
 		entry: {
-			veams: __dirname + "/src/ts/veams.ts",
-			"veams-core": [__dirname + "/src/ts/generics/core.ts"],
-			"common/component": [__dirname + "/src/ts/common/component.ts"],
-			"common/base": [__dirname + "/src/ts/common/base.ts"],
-			"services/http": __dirname + "/src/ts/services/http.ts"
+			veams: __dirname + '/src/ts/veams.ts',
+			'veams-core': [__dirname + '/src/ts/generics/core.ts'],
+			'common/component': [__dirname + '/src/ts/common/component.ts'],
+			'common/base': [__dirname + '/src/ts/common/base.ts']
 		},
 		output: {
-			path: path.resolve(__dirname, "lib"),
+			path: path.resolve(__dirname, 'lib'),
 			filename: outputFile,
-			library: [libraryName, "[name]"],
-			libraryTarget: "umd",
+			library: [libraryName, '[name]'],
+			libraryTarget: 'umd',
 			umdNamedDefine: true
 		},
 		module: {
 			rules: [
 				{
 					test: /(\.tsx|\.ts|\.js)$/,
-					loader: "ts-loader",
+					loader: 'ts-loader',
 					exclude: /(node_modules|bower_components)/
 				}
 			]
 		},
 		plugins: plugins,
 		resolve: {
-			extensions: [".ts", ".js"]
+			extensions: ['.ts', '.js']
 		}
 	};
 };
