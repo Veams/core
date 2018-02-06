@@ -1,4 +1,4 @@
-import { mixinType } from '../utils/helpers/mixin';
+import { mixinType } from "../utils/helpers/mixin";
 export interface VeamsBaseConfig {
     namespace?: string;
     el?: HTMLElement;

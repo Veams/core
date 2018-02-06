@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /**
  * Represents a base constructor which supports
  * options merging and
@@ -11,22 +11,21 @@
 /**
  * Imports
  */
-import deepExtend from 'deep-extend';
-import stringHelpers from '../utils/internal-helpers/string';
-import mixinHelper, { mixinType } from '../utils/helpers/mixin';
-import makeIdHelper from '../utils/helpers/make-id';
+// import deepExtend from 'deep-extend';
+import stringHelpers from "../utils/internal-helpers/string";
+import mixinHelper, { mixinType } from "../utils/helpers/mixin";
+import makeIdHelper from "../utils/helpers/make-id";
 
 export interface VeamsBaseConfig {
-	namespace?: string, 
-	el?: HTMLElement, 
-	options?: any
-};
+	namespace?: string;
+	el?: HTMLElement;
+	options?: any;
+}
 
 class VeamsBase {
-
 	options: any;
 	_namespace: string;
-	_instanceId: string|number;
+	_instanceId: string | number;
 	_el: HTMLElement;
 	mixin: mixinType;
 
@@ -41,8 +40,8 @@ class VeamsBase {
 	 * @param {Object} options - Options passed by init process.
 	 * @param {Object} opts [{}] - Object which contains options of the extended class.
 	 */
-	constructor({namespace, el, options}: VeamsBaseConfig, opts = {}) {
-		this.namespace = namespace || 'base';
+	constructor({ namespace, el, options }: VeamsBaseConfig, opts = {}) {
+		this.namespace = namespace || "base";
 		this.instanceId = this.namespace;
 		this.options = opts;
 		this._options = options;
@@ -70,7 +69,7 @@ class VeamsBase {
 	}
 
 	set instanceId(id) {
-		this._instanceId = `${id}_` + Date.now() + '_' + makeIdHelper();
+		this._instanceId = `${id}_` + Date.now() + "_" + makeIdHelper();
 	}
 
 	get _options() {
@@ -78,7 +77,7 @@ class VeamsBase {
 	}
 
 	set _options(options) {
-		this.options = deepExtend(this.options, options || {});
+		this.options = Object.assign(this.options, options || {});
 	}
 
 	set el(element) {
@@ -94,7 +93,12 @@ class VeamsBase {
 	 */
 	get metaData() {
 		return {
-			name: typeof this.namespace === 'string' ? stringHelpers.capitalizeFirstLetter(stringHelpers.toCamelCase(this.namespace)) : ''
+			name:
+				typeof this.namespace === "string"
+					? stringHelpers.capitalizeFirstLetter(
+							stringHelpers.toCamelCase(this.namespace)
+						)
+					: ""
 		};
 	}
 }
