@@ -6,8 +6,7 @@ var plugins = [], outputFile;
 
 
 module.exports = (env) => {
-
-	if (env.env === 'build') {
+	if (env === 'build') {
 		plugins.push(new UglifyJsPlugin({ minimize: true }));
 		outputFile = libraryName + '.min.js';
 	} else {
