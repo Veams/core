@@ -7,6 +7,7 @@ declare global  {
         msCrypto: any;
     }
 }
+
 /**
  * Imports
  */
@@ -15,5 +16,4 @@ import Veams from './generics/starter';
 /**
  * Variables
  */
-
 export default Veams;

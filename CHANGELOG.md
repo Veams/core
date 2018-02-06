@@ -1,3 +1,6 @@
+### v5.2.0
+- Add typescript support
+
 ### v5.1.1
 - Add deep extend to base class
 

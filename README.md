@@ -458,3 +458,11 @@ All components can be found here: https://github.com/Veams
 ## veams.org
 
 The website is built with Veams, of course. Here ist the repository: https://github.com/Sebastian-Fitzner/veams.org
+
+
+## Contributors
+
+Thanks for contributing to the project:
+
+- [Andy Gutsche](https://github.com/andy-gutsche)
+- [Sven Friedemann](https://github.com/3makkk)
