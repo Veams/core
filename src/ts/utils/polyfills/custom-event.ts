@@ -3,7 +3,7 @@
 	if (typeof window.CustomEvent === 'function') return false;
 
 	function CustomEvent(event, params) {
-		var evt = document.createEvent('CustomEvent');
+		const evt = document.createEvent('CustomEvent');
 
 		params = params || {bubbles: false, cancelable: false, detail: undefined};
 

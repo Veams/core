@@ -7,7 +7,7 @@
  *
  * @return String
  */
-const templateEngine = function templateEngine(tplStr) {
+const templateEngine = function templateEngine(tplStr: string): string {
 	let reg = new RegExp('(\{\{\s?)(.+)(\s?\}\})');
 	let match = reg.exec(tplStr);
 	let returnVal = '';

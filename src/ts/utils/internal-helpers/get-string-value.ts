@@ -7,7 +7,7 @@
  *
  * @return String
  */
-const getStringValue = function getStringValue(str, instanceObject) {
+const getStringValue = function getStringValue(str, instanceObject): string {
 	if (str.indexOf('.') === -1) return str;
 	let arr = str.split('.');
 	let context = arr[0];

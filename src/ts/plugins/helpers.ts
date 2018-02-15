@@ -1,13 +1,15 @@
 'use strict';
 
-import extendHelper from '../utils/helpers/extend';
-import mixinsHelper from '../utils/helpers/mixin';
-import methodExtendHelper from '../utils/helpers/method-extend';
-import touchHelper from '../utils/helpers/is-touch';
-import throttleHelper from '../utils/helpers/throttle';
-import selectorHelper from '../utils/helpers/query-selector-array';
-import foreachHelper from '../utils/helpers/for-each';
-import makeIdHelper from '../utils/helpers/make-id';
+import {
+	extend as extendHelper,
+	mixin as mixinsHelper,
+	methodExtend as methodExtendHelper,
+	isTouch as touchHelper,
+	throttle as throttleHelper,
+	querySelectorArray as selectorHelper,
+	forEach as foreachHelper,
+	makeId as makeIdHelper
+} from '@veams/helpers';
 
 const VeamsHelpers = {
 	pluginName: 'Helpers',

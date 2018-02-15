@@ -4,7 +4,6 @@ declare global  {
         Promise: Promise<any>;
         CustomEvent: any;
         Event: any;
-        msCrypto: any;
     }
 }
 
