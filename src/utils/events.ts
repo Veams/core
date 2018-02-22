@@ -6,8 +6,6 @@
  * @author: Sebastian Fitzner
  */
 
-
-
  /**
  * Events Global
  */

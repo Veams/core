@@ -1,64 +1,92 @@
 /**
+ * Imports
+ */
+
+// Helpers
+import extend from '@veams/helpers/lib/object/extend';
+import isTouch from '@veams/helpers/lib/detection/is-touch';
+
+// Polyfill
+import '../utils/polyfills/custom-event';
+
+// Plugin System
+import use from './use';
+
+// Plugin
+import VeamsHelpers, { VeamsHelpersType } from '../plugins/helpers';
+
+// Events
+import EVENTS, { EVENTSType } from '../utils/events';
+import { VeamsOptions } from './veamsOptions';
+
+/**
+ * Default values
+ */
+let initState = false;
+let defaultOptions = {
+	namespace: 'Veams',
+	addToGlobal: false
+};
+
+/**
  * Represents VeamsCore.
  * @module VeamsCore
  *
  * @author Sebastian Fitzner
  */
-import '../utils/polyfills/custom-event';
-import use from './use';
-
-import EVENTS, { EVENTSType } from '../utils/events';
-import VeamsHelpers, { VeamsHelpersType } from '../plugins/helpers';
-import { VeamsOptions } from './veamsOptions';
-
-let initState = false;
-
-class VeamsCore {
+class Core {
 	_initialized: any;
-	
+
 	/**
 	 * Current Veams Version
 	 */
 	_version: any;
 
 	/**
-	 * 
+	 * Detection object
 	 */
-	detections: { width: number; height: number; };
+	detections: {
+		width?: number;
+		height?: number;
+	};
 
 	/**
 	 * Registered Veamshelpers
 	 */
-	helpers: VeamsHelpersType
+	helpers: VeamsHelpersType;
 
 	/**
 	 * Available Events
 	 */
 	EVENTS: EVENTSType;
-	
-	
+
+	/**
+	 * Plugins Object
+	 */
 	Plugins: {};
 	use: any;
 
 	/**
 	 * Base information about veams
 	 */
-	base: { name: string; version: string; };
+	base: {
+		name: string;
+		version: string;
+	};
 
 	/**
 	 * Veams options
 	 */
 	_options: VeamsOptions;
 
-	constructor(opts) {
-		this._options = {
-			namespace: 'Veams',
-			addToGlobal: false
-		};
-
+	/**
+	 * Constructor
+	 */
+	constructor(opts: VeamsOptions) {
+		this._options = defaultOptions;
 		this.base = {
 			name: 'Veams',
-			version: '5.0.1'
+			version: '5.2.0'
 		};
 
 		this.use = use.bind(this);
@@ -75,6 +103,9 @@ class VeamsCore {
 		this.setup(opts);
 	}
 
+	/**
+	 * Getter & Setter
+	 */
 	set version(version) {
 		this._version = version;
 	}
@@ -92,7 +123,7 @@ class VeamsCore {
 	}
 
 	set options(options) {
-		this._options = this.helpers.extend(this.options, options || {});
+		this._options = extend(this.options, options || defaultOptions);
 	}
 
 	get options() {
@@ -101,13 +132,13 @@ class VeamsCore {
 
 	/**
 	 * Setup Veams core
-	 * @param opts 
+	 * @param opts
 	 */
 	setup(opts: VeamsOptions) {
 		this.use(VeamsHelpers);
 
-		this.detections = this.helpers.extend({
-			touch: this.helpers.isTouch()
+		this.detections = extend({
+			touch: isTouch()
 		}, this.detections);
 
 		this.options = opts;
@@ -137,8 +168,9 @@ class VeamsCore {
 	}
 
 	/**
-	 * On init lifecyle hook
-	 * @param cb 
+	 * On initialize lifecyle hook
+	 *
+	 * @param cb
 	 */
 	onInitialize(cb: () => any): any {
 		if (!cb || typeof cb !== 'function') {
@@ -154,8 +186,23 @@ class VeamsCore {
 	}
 
 	/**
-	 * On DOM ready livecycle hook
-	 * @param cb 
+	 * After initialize lifecycle hook
+	 *
+	 * @param cb
+	 */
+	afterInitialize(cb: () => any): void {
+		if (!cb || typeof cb !== 'function') {
+			console.log('Veams :: Callback is not a function!');
+			return;
+		}
+
+		cb();
+	}
+
+	/**
+	 * On DOM ready lifecycle hook
+	 *
+	 * @param cb
 	 */
 	onDOMReady(cb: () => any) {
 		if (typeof cb !== 'function') {
@@ -166,4 +213,4 @@ class VeamsCore {
 	}
 }
 
-export default VeamsCore;
+export default Core;

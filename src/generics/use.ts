@@ -6,8 +6,16 @@
  *
  * @author Sebastian Fitzner
  */
+export interface Plugin {
+	options?: object,
+	pluginName?: string,
+	initialize: any
+}
 
-export default function (plugin, ...args) {
+/**
+ * Simple plugin functionality
+ */
+export default function (plugin: Plugin, ...args) {
 	if (plugin.pluginName) {
 		this.Plugins[plugin.pluginName] = plugin;
 	}

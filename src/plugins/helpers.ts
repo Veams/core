@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Imports
+ */
 import {
 	extend as extendHelper,
 	mixin as mixinsHelper,
@@ -11,9 +14,36 @@ import {
 	makeId as makeIdHelper
 } from '@veams/helpers';
 
-const VeamsHelpers = {
+/**
+ * Interfaces
+ */
+export interface IHelpers {
+	[key: string]: any
+}
+
+export interface IVeamsExtendByHelpers {
+	addHelper: any,
+	helpers: IHelpers
+}
+
+export interface IHelpersPlugin {
+	pluginName: string,
+	initialize: any
+}
+
+/**
+ * Types
+ */
+export type VeamsHelpersType = {
+	[key: string]: (...any) => any
+};
+
+/**
+ * Helpers Plugin
+ */
+const HelpersPlugin: IHelpersPlugin = {
 	pluginName: 'Helpers',
-	initialize: function (Veams) {
+	initialize: function (Veams): IVeamsExtendByHelpers {
 		Veams.addHelper = function addHelper(...args) {
 			let params = [...args];
 
@@ -46,23 +76,25 @@ const VeamsHelpers = {
 			}
 		};
 
-		this.addDefaultHelpers(Veams);
+		return addDefaultHelpers(Veams);
 	},
 
-	addDefaultHelpers: function (Veams) {
-		Veams.addHelper('querySelectorArray', selectorHelper);
-		Veams.addHelper('extend', extendHelper);
-		Veams.addHelper('isTouch', touchHelper);
-		Veams.addHelper('mixin', mixinsHelper);
-		Veams.addHelper('methodExtend', methodExtendHelper);
-		Veams.addHelper('throttle', throttleHelper);
-		Veams.addHelper('forEach', foreachHelper);
-		Veams.addHelper('makeId', makeIdHelper);
-	}
 };
 
-export default VeamsHelpers;
+/**
+ * Add default helpers
+ */
+function addDefaultHelpers(Veams) {
+	Veams.addHelper('querySelectorArray', selectorHelper);
+	Veams.addHelper('extend', extendHelper);
+	Veams.addHelper('isTouch', touchHelper);
+	Veams.addHelper('mixin', mixinsHelper);
+	Veams.addHelper('methodExtend', methodExtendHelper);
+	Veams.addHelper('throttle', throttleHelper);
+	Veams.addHelper('forEach', foreachHelper);
+	Veams.addHelper('makeId', makeIdHelper);
 
-export type VeamsHelpersType = {
-	[key: string]: (...any) => any
-};
+	return Veams;
+}
+
+export default HelpersPlugin;

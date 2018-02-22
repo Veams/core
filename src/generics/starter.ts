@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * Polyfills
  */
@@ -8,14 +7,17 @@ import '../utils/polyfills/custom-event';
 /**
  * Imports
  */
-import VeamsCore from './core';
+import Core from './core';
 
-let Veams: VeamsCore;
+/**
+ * Veams Core Instance
+ */
+let Veams: Core;
 
 (function (window, document, undefined) {
 	'use strict';
 
-	Veams = new VeamsCore({
+	Veams = new Core({
 		namespace: 'Veams',
 		addToGlobal: true
 	});

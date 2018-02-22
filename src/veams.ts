@@ -11,8 +11,10 @@ declare global  {
  * Imports
  */
 import Veams from './generics/starter';
+import Core from './generics/core';
 
 /**
  * Variables
  */
 export default Veams;
+export { Core };
