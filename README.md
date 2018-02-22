@@ -48,11 +48,21 @@ It is not opinionated, means use the stack which fits best to your project, for 
 
 ### Typical Use Cases
 
+#### Static Page Application
+
 Veams is used in many projects in the agency I work for.
 
 The majority of projects are portal like websites, they are mostly static (CMS) and get enhanced with (a lot of) JavaScript.
 
 That's why all plugins or components are heavily optimised for that project type.
+
+#### Single Page Application
+
+Veams can also be used in SPA projects. With the new CLI you can scaffold React projects as well. There are a few blueprints which can be used to easily scaffold components.
+
+Just take a look at: 
+- [React Container Blueprint](https://github.com/Veams/bp-react-container)
+- [Redux Blueprint](https://github.com/Veams/bp-redux)
 
 ----------------
 
@@ -201,7 +211,7 @@ Veams.use(PluginXY, {
 
 When you want to create a plugin you only need to export an object with an `initialize` method in it. It is really easy. 
 
-Let's say you want to add jQuery as DOM handler in Veams and want to share one instance along the project: 
+Let's say you want to add jQuery as DOM handler in Veams and want to share one single instance in the project: 
 
 1. First you need to import the jQuery library
 2. Then you create a simple object 
