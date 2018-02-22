@@ -1,51 +1,34 @@
 {
-	"name": "veams",
-	"version": "5.1.1",
+	"name": "@veams/core",
+	"version": "5.2.0",
 	"description": "Veams exposes a framework which you can use as a simple starting point and can be enhanced and extended by an easy plugin system to build your own project based framework in a simple, fast, scalable and understandable way.",
-	"main": "lib/veams.js",
-	"browserify": {
-		"transform": [
-			"babelify"
-		]
-	},
+	"main": "./lib/veams.js",
+	"types": "./lib/veams.d.ts",
 	"scripts": {
-		"build": "webpack --mode=dev && webpack --mode=build",
-		"dev": "webpack --progress --colors --watch --mode=dev",
-		"test": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
+		"build": "tsc --project tsconfig.json --outDir lib --declarationDir lib --declaration --module commonjs",
+		"start": "tsc --project tsconfig.json --watch --outDir lib --declarationDir lib --declaration --module commonjs",
+		"prepublish": "npm run build"
 	},
 	"devDependencies": {
-		"babel": "6.3.13",
-		"babel-core": "6.1.18",
-		"babel-eslint": "5.0.0",
-		"babel-loader": "6.1.0",
-		"babel-plugin-add-module-exports": "^0.1.2",
-		"babel-preset-es2015": "^6.9.0",
-		"babel-preset-stage-0": "^6.16.0",
-		"babelify": "^7.3.0",
-		"chai": "3.4.1",
-		"eslint": "1.7.2",
-		"eslint-loader": "1.1.0",
-		"mocha": "2.3.4",
-		"webpack": "1.12.9",
-		"yargs": "3.32.0"
+		"@types/jquery": "^3.2.17",
+		"typescript": "^2.7.1"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/veams/veams.git"
+		"url": "https://github.com/veams/core.git"
 	},
 	"keywords": [
 		"veams",
-		"veams-plugins",
-		"handlebars",
-		"templates"
+		"veams-plugins"
 	],
 	"author": "Sebastian Fitzner",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/veams/veams/issues"
+		"url": "https://github.com/veams/core/issues"
 	},
 	"homepage": "https://veams.org/",
 	"dependencies": {
-		"deep-extend": "^0.5.0"
+		"@veams/helpers": "^1.2.2",
+		"promise-polyfill": "^7.0.0"
 	}
 }
