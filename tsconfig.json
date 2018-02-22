@@ -10,6 +10,6 @@
 		"typeRoots": ["node_modules/@types"],
 		"lib": ["es2016", "dom"]
 	},
-	"include": ["src/ts/**/*.ts"],
+	"include": ["src/**/*.ts"],
 	"exclude": ["node_modules"]
 }

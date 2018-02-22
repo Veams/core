@@ -148,16 +148,16 @@ class Core {
 	 * Initialize veams core
 	 * @param opts Options
 	 */
-	initialize(opts?: VeamsOptions) {
+	initialize(opts?: VeamsOptions = this.options) {
 		if (initState === true) {
-			return console.info('Veams :: You already initialized Veams!');
+			return console.info('@veams/core :: You already initialized Veams!');
 		}
 
 		/**
 		 * Set global options on initialize
 		 */
 		this.options = opts;
-
+		
 		if (this.options.addToGlobal) {
 			if (window && !window[this.options.namespace]) {
 				window[this.options.namespace] = this || {};
@@ -174,7 +174,7 @@ class Core {
 	 */
 	onInitialize(cb: () => any): any {
 		if (!cb || typeof cb !== 'function') {
-			console.log('Veams :: Callback is not a function!');
+			console.log('@veams/core :: Callback is not a function!');
 			return;
 		}
 
@@ -192,7 +192,7 @@ class Core {
 	 */
 	afterInitialize(cb: () => any): void {
 		if (!cb || typeof cb !== 'function') {
-			console.log('Veams :: Callback is not a function!');
+			console.log('@veams/core :: Callback is not a function!');
 			return;
 		}
 
@@ -206,7 +206,7 @@ class Core {
 	 */
 	onDOMReady(cb: () => any) {
 		if (typeof cb !== 'function') {
-			console.log('Veams :: Callback is not a function!');
+			console.log('@veams/core :: Callback is not a function!');
 			return;
 		}
 		document.addEventListener('DOMContentLoaded', cb);
