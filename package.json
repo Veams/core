@@ -1,6 +1,6 @@
 {
 	"name": "@veams/core",
-	"version": "5.2.0",
+	"version": "1.0.0",
 	"description": "Veams exposes a framework which you can use as a simple starting point and can be enhanced and extended by an easy plugin system to build your own project based framework in a simple, fast, scalable and understandable way.",
 	"main": "./lib/veams.js",
 	"types": "./lib/veams.d.ts",
