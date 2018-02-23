@@ -79,7 +79,7 @@ npm install @veams/core --save
 #### Yarn 
 
 ``` bash
-yarn install @veams/core 
+yarn add @veams/core 
 ```
 
 ----------------
