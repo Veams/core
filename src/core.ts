@@ -7,17 +7,24 @@ import extend from '@veams/helpers/lib/object/extend';
 import isTouch from '@veams/helpers/lib/detection/is-touch';
 
 // Polyfill
-import '../utils/polyfills/custom-event';
+import './utils/polyfills/custom-event';
 
 // Plugin System
-import use from './use';
+import use from './plugins/use';
 
 // Plugin
-import VeamsHelpers, { VeamsHelpersType } from '../plugins/helpers';
+import VeamsHelpers, { VeamsHelpersType } from './plugins/helpers';
 
 // Events
-import EVENTS, { EVENTSType } from '../utils/events';
-import { VeamsOptions } from './veamsOptions';
+import EVENTS, { EVENTSType } from './utils/events';
+
+/**
+ * Interfaces
+ */
+export interface VeamsOptions {
+	namespace?: string;
+	addToGlobal?: boolean;
+}
 
 /**
  * Default values
@@ -148,7 +155,7 @@ class Core {
 	 * Initialize veams core
 	 * @param opts Options
 	 */
-	initialize(opts?: VeamsOptions = this.options) {
+	initialize(opts: VeamsOptions = this.options) {
 		if (initState === true) {
 			return console.info('@veams/core :: You already initialized Veams!');
 		}

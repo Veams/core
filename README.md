@@ -113,7 +113,7 @@ That's it. The framework is integrated.
 You can also create your own instance of the core by using the `Core` class. 
 
 ``` js
-import Core from '@veams/core/lib/generics/core';
+import Core from '@veams/core/lib/core';
 
 let app = new Core({
     namespace: 'App',

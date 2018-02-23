@@ -1,6 +1,7 @@
-### v5.2.0
+### v1.0.0
 - Add typescript support
 - Rename veams to core
+- Refactor structure
 
 ### v5.1.1
 - Add deep extend to base class
