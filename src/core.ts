@@ -29,7 +29,6 @@ export interface VeamsOptions {
 /**
  * Default values
  */
-let initState = false;
 let defaultOptions = {
 	namespace: 'Veams',
 	addToGlobal: false
@@ -42,7 +41,7 @@ let defaultOptions = {
  * @author Sebastian Fitzner
  */
 class Core {
-	_initialized: any;
+	_initialized: boolean = false;
 
 	/**
 	 * Current Veams Version
@@ -93,7 +92,7 @@ class Core {
 		this._options = defaultOptions;
 		this.base = {
 			name: 'Veams',
-			version: '5.2.0'
+			version: '1.0.2'
 		};
 
 		this.use = use.bind(this);
@@ -104,8 +103,6 @@ class Core {
 			width: window.innerWidth,
 			height: window.innerHeight
 		};
-
-		initState = false;
 
 		this.setup(opts);
 	}
@@ -156,7 +153,7 @@ class Core {
 	 * @param opts Options
 	 */
 	initialize(opts: VeamsOptions = this.options) {
-		if (initState === true) {
+		if (this.initialized === true) {
 			return console.info('@veams/core :: You already initialized Veams!');
 		}
 
@@ -171,7 +168,7 @@ class Core {
 			}
 		}
 
-		initState = true;
+		this.initialized = true;
 	}
 
 	/**
@@ -185,7 +182,7 @@ class Core {
 			return;
 		}
 
-		if (initState === false) {
+		if (this.initialized === false) {
 			this.initialize();
 		}
 
