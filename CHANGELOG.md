@@ -1,7 +1,16 @@
+### v1.0.2 
+- Clean up
+- Version bump
+- Set right state when initialized
+
 ### v1.0.0
 - Add typescript support
 - Rename veams to core
 - Refactor structure
+
+---------------
+
+## Without namespace
 
 ### v5.1.1
 - Add deep extend to base class
