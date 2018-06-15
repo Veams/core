@@ -1,8 +1,3 @@
-<p align="center"><img src="https://www.veams.org/img/svg/icons/veams-std.svg"></p>
-<p align="center">Head to the <a href="http://veams.org/">site</a> for detailed instructions.
-<br><br>
-<a href="https://gitter.im/Sebastian-Fitzner/Veams?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge"><img src="https://badges.gitter.im/Sebastian-Fitzner/Veams.svg" alt="Gitter Chat" /></a></p>
-
 # What is Veams?
 
 __Veams is one of the most flexible and efficient system to build scalable Web Apps, HTML5 web interfaces and Prototypes. It is extremely extensible and efficiently architected.__
