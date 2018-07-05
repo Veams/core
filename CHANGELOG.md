@@ -1,3 +1,6 @@
+### v1.0.4
+- Add touch events to events.js
+
 ### v1.0.2 
 - Clean up
 - Version bump
