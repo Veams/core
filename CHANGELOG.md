@@ -1,5 +1,8 @@
+### v1.0.5
+- Add focus, resizeVertical, resizeFull to events
+
 ### v1.0.4
-- Add touch events to events.js
+- Add touch events to events
 
 ### v1.0.2 
 - Clean up
