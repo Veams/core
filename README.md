@@ -1,29 +1,4 @@
-# What is Veams?
-
-__Veams is one of the most flexible and efficient system to build scalable Web Apps, HTML5 web interfaces and Prototypes. It is extremely extensible and efficiently architected.__
-
-Veams contains various (pluggable) instruments which are controlled by our custom command line interface.
-
-## Overview
-
-1. [Veams as Framework](#veams-as-framework)
-    - Core Framework with plugins, helpers and common classes and services
-1. [Veams-Cli](#veams-cli)
-    - Generator for projects, components, services and more
-1. [Veams-Components](#veams-components)
-    - Configurable Veams Components with documentation
-1. [Veams-Methodology](#veams-methodology)
-    - Frontend Methodology to work with static site applications
-
-------------
-
-## Veams as Framework
-
-Veams exposes a framework (`@veams/core`) which you can use as a simple starting point. This starting point can be enhanced and extended by an easy plugin system.
-
-The purpose of Veams is to individually build up a __project based framework__ in a simple, fast, scalable and understandable way.
-
-It is not opinionated, means use the stack which fits best to your project, for example Backbone, React, Foundation or something else.
+# The Core of the Veams framework
 
 ### Table of Content
 
@@ -41,23 +16,6 @@ It is not opinionated, means use the stack which fits best to your project, for 
     - [Available Plugins](#available-plugins)
 1. [Common Classes & Services](#common-classes-and-services)
 
-### Typical Use Cases
-
-#### Static Page Application
-
-Veams is used in many projects in the agency I work for.
-
-The majority of projects are portal like websites, they are mostly static (CMS) and get enhanced with (a lot of) JavaScript.
-
-That's why all plugins or components are heavily optimised for that project type.
-
-#### Single Page Application
-
-Veams can also be used in SPA projects. With the new CLI you can scaffold React projects as well. There are a few blueprints which can be used to easily scaffold components.
-
-Just take a look at: 
-- [React Container Blueprint](https://github.com/Veams/bp-react-container)
-- [Redux Blueprint](https://github.com/Veams/bp-redux)
 
 ----------------
 
