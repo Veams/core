@@ -133,22 +133,6 @@ The detections object will be updated when you use [@veams/plugin-media-query-ha
 
 All named plugins will be saved in this object. In the beginning it is empty.
 
----------------
-
-## Helpers
-
-`VEAMS` has multiple helpers you can choose from. Therefore exists its own repository: https://github.com/Veams/helpers.
-
-------------- 
-
-## Common Classes and Services
-
-`VEAMS` provide some more classes which are handled in its own repository.
-
-1. [Veams Base](https://github.com/Veams/base)
-1. [Veams Component](https://github.com/Veams/component)
-1. [Veams Http Service](https://github.com/Veams/http-service)
-
 [//]: #         ({{/wrapWith}})
 [//]: #     ({{/wrapWith}})
 
