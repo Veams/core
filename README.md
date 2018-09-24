@@ -1,7 +1,7 @@
 [//]: # ({{#wrapWith "content-section"}})
 
 [//]: #     ({{#wrapWith "grid-row"}})
-[//]: #         ({{#wrapWith "grid-col" colClasses="is-col-mobile-l-8"}})
+[//]: #         ({{#wrapWith "grid-col" colClasses="is-col-tablet-l-8"}})
 
 # Core of `VEAMS` framework
 
