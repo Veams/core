@@ -27,7 +27,7 @@
 	},
 	"homepage": "https://veams.org/",
 	"dependencies": {
-		"@veams/helpers": "^1.2.2",
-		"promise-polyfill": "^7.0.0"
+		"@veams/helpers": "^1.4.0",
+		"promise-polyfill": "^8.1.0"
 	}
 }

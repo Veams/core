@@ -1,3 +1,12 @@
+### v1.1.0
+- Remove unnecessary helpers to shrink size and delete forEach helper out of core helper. 
+
+### v1.0.5
+- Add focus, resizeVertical, resizeFull to events
+
+### v1.0.4
+- Add touch events to events
+
 ### v1.0.2 
 - Clean up
 - Version bump
