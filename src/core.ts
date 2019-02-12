@@ -92,7 +92,7 @@ class Core {
 		this._options = defaultOptions;
 		this.base = {
 			name: 'Veams',
-			version: '1.0.2'
+			version: '1.1.1'
 		};
 
 		this.use = use.bind(this);

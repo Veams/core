@@ -27,6 +27,7 @@ const EVENTS = {
     mousedown: 'mousedown',
     mouseenter: 'mouseenter',
     mouseleave: 'mouseleave',
+    mousemove: 'mousemove',
     mouseout: 'mouseout',
     mouseover: 'mouseover',
     mouseup: 'mouseup',

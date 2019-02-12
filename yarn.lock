@@ -2,13 +2,15 @@
 # yarn lockfile v1
 
 
-"@veams/helpers@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@veams/helpers/-/helpers-1.2.2.tgz#18fd9a0be65563b3084e2b8b0d03df8f8412a6ec"
+"@veams/helpers@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@veams/helpers/-/helpers-1.4.0.tgz#21bed28040066b6e346d434cca3848ab8026fdae"
+  integrity sha512-qGLGHQb0J8vufpabgUeM615GonhwnykEOO+1W+q0EUtM+b7GN2oyomgsH94cgVAjueAaSbh2w3gisE8F7p4bJw==
 
-promise-polyfill@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-7.0.0.tgz#c665b6da1f97e21c3f2f7aa0543c90209127cb15"
+promise-polyfill@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-8.1.0.tgz#30059da54d1358ce905ac581f287e184aedf995d"
+  integrity sha512-OzSf6gcCUQ01byV4BgwyUCswlaQQ6gzXc23aLQWhicvfX9kfsUiUhgt3CCQej8jDnl8/PhGF31JdHX2/MzF3WA==
 
 typescript@^2.7.1:
   version "2.7.2"

@@ -1,3 +1,6 @@
+### v1.1.1
+- Add `mousemove` to events
+
 ### v1.1.0
 - Remove unnecessary helpers to shrink size and delete forEach helper out of core helper. 
 
