@@ -5,25 +5,7 @@
 
 # Core of `VEAMS` framework
 
-`VEAMS` provides a simple but extendable frontend framework. When you have scaffolded the project with the `@veams/cli`, it will be automatically integrated into your project.
-
 > When you have scaffolded the project with the CLI you can skip the Installation and Usage section!
-
-## Table of Content
-
-1. [Typical Use Cases for Veams](#typical-use-cases)
-1. [Installation](#installation)
-1. [Basic Usage](#basic-usage)
-1. [Advanced Usage](#advanced-usage)
-1. [Core](#veams-core)
-    - [Options](#veams-core-options)
-    - [Api](#veams-core-api)
-1. [Helpers](#veams-helpers)
-1. [Plugins](#plugins)
-    - [Usage of Plugins](#usage-of-plugins)
-    - [Creation of Plugins](#creation-of-plugins)
-    - [Available Plugins](#available-plugins)
-1. [Common Classes & Services](#common-classes-and-services)
 
 ----------------
 
